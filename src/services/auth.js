@@ -112,7 +112,7 @@ export const requestResetToken = async (email) => {
     }
   );
 
-  const link = `${config.domain}/reset-pwd?token=${resetToken}`;
+  const link = `${config.domain}/api/auth/reset-pwd?token=${resetToken}`;
   console.log("🚀 ~ requestResetToken ~ link:", link);
 
   const resetPasswordTemplatePath = path.join(
