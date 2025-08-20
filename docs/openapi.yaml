@@ -8,7 +8,7 @@ info:
   description: API for managing user contacts
 tags:
   - name: Contacts
-    description: A RESTful API for managing a user's contact list, including creation, retrieval, updating, and deletion of contacts.
+    description: A RESTful API for managing a user's recipe list, including creation, adding to favorites, and deletion of recipes. The API also supports filtering by categories and ingredients.
 servers:
   - url: http://localhost:3000
   - url: https://tasteorama-backend-dcjy.onrender.com
