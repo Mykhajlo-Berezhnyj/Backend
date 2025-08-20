@@ -1,7 +1,7 @@
 import createHttpError from "http-errors";
-import { User } from "../db/models/User.js";
+import { User } from "../db/models/user.js";
 import bcrypt from "bcrypt";
-import { Session } from "../db/models/Session.js";
+import { Session } from "../db/models/session.js";
 import {
   FIFTEEN_MINUTES,
   TEMPLATES_DIR,
