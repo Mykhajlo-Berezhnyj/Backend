@@ -38,7 +38,7 @@ export const setupServer = () => {
 
   app.use("/uploads", express.static(UPLOAD_DIR));
 
-  app.use("/api-docs", swaggerDocs());
+  app.use("/docs", swaggerDocs());
 
   app.use(notFoundHandler);
 

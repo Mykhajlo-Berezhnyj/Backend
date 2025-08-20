@@ -1,0 +1,29 @@
+description: >
+  Not Found — the requested resource could not be found.
+  Possible reasons include:
+   - "Resource not found" — the requested item does not exist.
+   - "User not found" — no user was found for the given email or token.
+   - "Contact not found" — no contact was found for the given contactId.
+
+   Not all of these cases apply to every endpoint.
+   For more information see examples
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/errors/404.yaml
+    examples:
+      resourceNotFound:
+        summary: Generic not found
+        value:
+          status: 404
+          message: Resource not found
+      userNotFound:
+        summary: User not found
+        value:
+          status: 404
+          message: User not found
+      ContactNotFound:
+        summary: Contact not found
+        value:
+          status: 404
+          message: Contact not found

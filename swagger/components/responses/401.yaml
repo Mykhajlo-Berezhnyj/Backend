@@ -1,0 +1,73 @@
+description: >
+  Unauthorized — request lacks valid authentication
+   The specific cause of the 401 error may vary depending on the endpoint. 
+   Possible reasons include:
+    - Missing or malformed Authorization header
+    - Expired or invalid access token
+    - Session not found 
+    - Session expired 
+    - Token expired
+    - Token invalid
+    - User not found
+
+  For more information see examples
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/errors/401.yaml
+    examples:
+      missingHeader:
+        summary: Missing Authorization header
+        value:
+          status: 401
+          message: Unauthorized
+          data:
+            message: Please provide Authorization header
+
+      malformedToken:
+        summary: Malformed Authorization header
+        value:
+          status: 401
+          message: Unauthorized
+          data:
+            message: Authorization header should be of type Bearer
+
+      sessionNotFound:
+        summary: Session not found
+        value:
+          status: 401
+          message: Unauthorized
+          data:
+            message: Session not found
+
+      sessionExpired:
+        summary: Session expired
+        value:
+          status: 401
+          message: Unauthorized
+          data:
+            message: Session expired
+
+      tokenExpired:
+        summary: jwt expired
+        value:
+          status: 401
+          message: Unauthorized
+          data:
+            message: jwt expired
+
+      tokenInvalid:
+        summary: jwt invalid
+        value:
+          status: 401
+          message: Unauthorized
+          data:
+            message: invalid signature
+
+      userNotFound:
+        summary: User not found
+        value:
+          status: 401
+          message: Unauthorized
+          data:
+            message: User not found

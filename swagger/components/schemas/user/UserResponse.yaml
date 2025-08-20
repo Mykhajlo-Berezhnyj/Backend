@@ -1,0 +1,43 @@
+type: object
+required:
+  - status
+  - message
+  - data
+properties:
+  status:
+    type: integer
+    description: status code
+    example: 201
+  message:
+    type: string
+    description: Response message
+    example: Successfully registered a user!
+  data:
+    type: object
+    required:
+      - _id
+      - name
+      - email
+      - createdAt
+      - updatedAt
+    properties:
+      name:
+        description: "User's name"
+        type: string
+        example: 'John Doe'
+      email:
+        description: "User's email"
+        type: string
+        example: 'john@example.com'
+      _id:
+        description: "User's id"
+        type: string
+        example: 688319f519bc98717111a6b5
+      createdAt:
+        type: string
+        format: date-time
+        example: '2025-07-30T18:35:01.046Z'
+      updatedAt:
+        type: string
+        format: date-time
+        example: '2025-08-04T16:06:04.521Z'
