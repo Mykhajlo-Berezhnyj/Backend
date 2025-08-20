@@ -1,27 +1,27 @@
-import createHttpError from 'http-errors';
-import { User } from '../db/models/User.js';
-import bcrypt from 'bcrypt';
-import { Session } from '../db/models/Session.js';
+import createHttpError from "http-errors";
+import { User } from "../db/models/User.js";
+import bcrypt from "bcrypt";
+import { Session } from "../db/models/Session.js";
 import {
   FIFTEEN_MINUTES,
   TEMPLATES_DIR,
   THIRTY_DAY,
-} from '../constants/index.js';
-import { randomBytes } from 'crypto';
-import jwt from 'jsonwebtoken';
-import { config } from '../config.js';
-import { sendMail } from '../utils/sendMail.js';
-import path from 'node:path';
-import fs from 'node:fs/promises';
-import handlebars from 'handlebars';
+} from "../constants/index.js";
+import { randomBytes } from "crypto";
+import jwt from "jsonwebtoken";
+import { config } from "../config.js";
+import { sendMail } from "../utils/sendMail.js";
+import path from "node:path";
+import fs from "node:fs/promises";
+import handlebars from "handlebars";
 
 export const registerUser = async (payload) => {
   const user = await User.findOne({ email: payload.email });
 
   if (user)
-    throw createHttpError(409, 'Conflict error', {
+    throw createHttpError(409, "Conflict error", {
       data: {
-        message: 'Email is already in use',
+        message: "Email is already in use",
       },
     });
 
@@ -30,7 +30,7 @@ export const registerUser = async (payload) => {
   await sendMail({
     from: config.smtp.from,
     to: payload.email,
-    subject: 'Hello',
+    subject: "Hello",
     html: `<p>Hello, ${payload.name}. Congratulation on your succesfull registration</p>`,
   });
 
@@ -38,8 +38,8 @@ export const registerUser = async (payload) => {
 };
 
 const createSession = () => {
-  const accessToken = randomBytes(30).toString('base64');
-  const refreshToken = randomBytes(30).toString('base64');
+  const accessToken = randomBytes(30).toString("base64");
+  const refreshToken = randomBytes(30).toString("base64");
 
   return {
     accessToken,
@@ -52,11 +52,11 @@ const createSession = () => {
 export const loginUser = async (payload) => {
   const user = await User.findOne({ email: payload.email });
 
-  if (!user) throw createHttpError(401, 'User not found');
+  if (!user) throw createHttpError(401, "User not found");
 
   const isEqual = await bcrypt.compare(payload.password, user.password);
 
-  if (!isEqual) throw createHttpError(401, 'Unauthorized');
+  if (!isEqual) throw createHttpError(401, "Unauthorized");
 
   await Session.deleteOne({ userId: user._id });
 
@@ -75,12 +75,12 @@ export const logoutUser = async (sessionId) => {
 export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
   const session = await Session.findOne({ _id: sessionId, refreshToken });
 
-  if (!session) throw createHttpError(401, 'Session not found');
+  if (!session) throw createHttpError(401, "Session not found");
 
   const isSessionTokenExpired =
     new Date() > new Date(session.refreshTokenValidUntil);
 
-  if (isSessionTokenExpired) throw createHttpError(401, 'Session expired');
+  if (isSessionTokenExpired) throw createHttpError(401, "Session expired");
 
   const newSession = createSession();
 
@@ -96,7 +96,7 @@ export const requestResetToken = async (email) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw createHttpError(404, 'User not found');
+    throw createHttpError(404, "User not found");
   }
 
   const expires = 5;
@@ -109,17 +109,18 @@ export const requestResetToken = async (email) => {
     config.secret,
     {
       expiresIn: `${expires}m`,
-    },
+    }
   );
 
   const link = `${config.domain}/reset-pwd?token=${resetToken}`;
+  console.log("🚀 ~ requestResetToken ~ link:", link);
 
   const resetPasswordTemplatePath = path.join(
     TEMPLATES_DIR,
-    'reset-password-email.html',
+    "reset-password-email.html"
   );
 
-  const templateSource = await fs.readFile(resetPasswordTemplatePath, 'utf-8');
+  const templateSource = await fs.readFile(resetPasswordTemplatePath, "utf-8");
 
   const template = handlebars.compile(templateSource);
 
@@ -132,7 +133,7 @@ export const requestResetToken = async (email) => {
   await sendMail({
     from: config.smtp.from,
     to: email,
-    subject: 'Reset your password',
+    subject: "Reset your password",
     html,
   });
 };
@@ -144,7 +145,7 @@ export const resetPassword = async (payload) => {
     entries = jwt.verify(payload.token, config.secret);
   } catch (err) {
     if (err instanceof Error) {
-      throw createHttpError(401, 'Unauthorized', {
+      throw createHttpError(401, "Unauthorized", {
         data: { message: err.message },
       });
     }
@@ -156,7 +157,7 @@ export const resetPassword = async (payload) => {
     _id: entries.sub,
   });
   if (!user) {
-    throw createHttpError(404, 'User not found');
+    throw createHttpError(404, "User not found");
   }
 
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
@@ -165,6 +166,6 @@ export const resetPassword = async (payload) => {
     {
       _id: user._id,
     },
-    { password: encryptedPassword },
+    { password: encryptedPassword }
   );
 };

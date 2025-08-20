@@ -4,16 +4,16 @@ import {
   logoutUserController,
   refreshUserSessionController,
   registerUserController,
-  // requestResetEmailController,
-  // resetPasswordController,
+  requestResetEmailController,
+  resetPasswordController,
 } from "../controllers/auth.js";
 import { validateBody } from "../middlewares/validateBody.js";
 import { ctrlWrapper } from "../utils/ctrlWrapper.js";
 import {
   loginUserSchema,
   registerUserSchema,
-  // requestResetEmailSchema,
-  // resetPasswordSchema,
+  requestResetEmailSchema,
+  resetPasswordSchema,
 } from "../validation/users.js";
 
 const router = Router();
@@ -34,16 +34,16 @@ router.post("/logout", ctrlWrapper(logoutUserController));
 
 router.post("/refresh", ctrlWrapper(refreshUserSessionController));
 
-// router.post(
-//   '/send-reset-email',
-//   validateBody(requestResetEmailSchema),
-//   ctrlWrapper(requestResetEmailController),
-// );
+router.post(
+  "/send-reset-email",
+  validateBody(requestResetEmailSchema),
+  ctrlWrapper(requestResetEmailController)
+);
 
-// router.post(
-//   '/reset-pwd',
-//   validateBody(resetPasswordSchema),
-//   ctrlWrapper(resetPasswordController),
-// );
+router.post(
+  "/reset-pwd",
+  validateBody(resetPasswordSchema),
+  ctrlWrapper(resetPasswordController)
+);
 
 export default router;

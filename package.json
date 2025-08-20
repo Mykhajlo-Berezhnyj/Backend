@@ -14,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mykhajlo-Berezhnyj/Back.git"
+    "url": "git+https://github.com/Mykhajlo-Berezhnyj/Backend.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Mykhajlo-Berezhnyj/Back/issues"
+    "url": "https://github.com/Mykhajlo-Berezhnyj/Backend/issues"
   },
-  "homepage": "https://github.com/Mykhajlo-Berezhnyj/Back#readme",
+  "homepage": "https://github.com/Mykhajlo-Berezhnyj/Backend#readme",
   "devDependencies": {
     "@eslint/js": "^9.33.0",
     "@redocly/cli": "^2.0.6",

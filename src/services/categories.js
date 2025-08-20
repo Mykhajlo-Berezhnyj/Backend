@@ -1,6 +1,6 @@
 import { Category } from "../db/models/categories.js";
 
 export const getCategories = async () => {
-  const ingredients = await Category.find();
-  return ingredients;
+  const data = await Category.find();
+  return data;
 };
