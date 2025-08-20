@@ -3,7 +3,7 @@ import {
   logoutUser,
   refreshUsersSession,
   registerUser,
-  requestResetToken,
+  // requestResetToken,
   resetPassword,
 } from '../services/auth.js';
 import { setupSession } from '../utils/setupSession.js';
@@ -61,7 +61,7 @@ export const refreshUserSessionController = async (req, res) => {
 };
 
 export const requestResetEmailController = async (req, res) => {
-  await requestResetToken(req.body.email);
+  // await requestResetToken(req.body.email);
 
   res.status(200).json({
     status: 200,

@@ -4,16 +4,16 @@ import bcrypt from 'bcrypt';
 import { Session } from '../db/models/Session.js';
 import {
   FIFTEEN_MINUTES,
-  TEMPLATES_DIR,
+  // TEMPLATES_DIR,
   THIRTY_DAY,
 } from '../constants/index.js';
 import { randomBytes } from 'crypto';
 import jwt from 'jsonwebtoken';
 import { config } from '../config.js';
-import { sendMail } from '../utils/sendMail.js';
-import path from 'node:path';
-import fs from 'node:fs/promises';
-import handlebars from 'handlebars';
+// import { sendMail } from '../utils/sendMail.js';
+// import path from 'node:path';
+// import fs from 'node:fs/promises';
+// import handlebars from 'handlebars';
 
 export const registerUser = async (payload) => {
   const user = await User.findOne({ email: payload.email });
@@ -27,12 +27,12 @@ export const registerUser = async (payload) => {
 
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
-  await sendMail({
-    from: config.smtp.from,
-    to: payload.email,
-    subject: 'Hello',
-    html: `<p>Hello, ${payload.name}. Congratulation on your succesfull registration</p>`,
-  });
+  // await sendMail({
+  //   from: config.smtp.from,
+  //   to: payload.email,
+  //   subject: 'Hello',
+  //   html: `<p>Hello, ${payload.name}. Congratulation on your succesfull registration</p>`,
+  // });
 
   return await User.create({ ...payload, password: encryptedPassword });
 };
@@ -92,50 +92,50 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
   });
 };
 
-export const requestResetToken = async (email) => {
-  const user = await User.findOne({ email });
+// export const requestResetToken = async (email) => {
+//   const user = await User.findOne({ email });
 
-  if (!user) {
-    throw createHttpError(404, 'User not found');
-  }
+//   if (!user) {
+//     throw createHttpError(404, 'User not found');
+//   }
 
-  const expires = 5;
+//   // const expires = 5;
 
-  const resetToken = jwt.sign(
-    {
-      sub: user._id,
-      email,
-    },
-    config.secret,
-    {
-      expiresIn: `${expires}m`,
-    },
-  );
+//   // const resetToken = jwt.sign(
+//   //   {
+//   //     sub: user._id,
+//   //     email,
+//   //   },
+//   //   config.secret,
+//   //   {
+//   //     expiresIn: `${expires}m`,
+//   //   },
+//   // );
 
-  const link = `${config.domain}/reset-pwd?token=${resetToken}`;
+//   // const link = `${config.domain}/reset-pwd?token=${resetToken}`;
 
-  const resetPasswordTemplatePath = path.join(
-    TEMPLATES_DIR,
-    'reset-password-email.html',
-  );
+//   // const resetPasswordTemplatePath = path.join(
+//   //   TEMPLATES_DIR,
+//   //   'reset-password-email.html',
+//   // );
 
-  const templateSource = await fs.readFile(resetPasswordTemplatePath, 'utf-8');
+//   // const templateSource = await fs.readFile(resetPasswordTemplatePath, 'utf-8');
 
-  const template = handlebars.compile(templateSource);
+//   // const template = handlebars.compile(templateSource);
 
-  const html = template({
-    name: user.name,
-    link: link,
-    expires,
-  });
+//   // const html = template({
+//   //   name: user.name,
+//   //   link: link,
+//   //   expires,
+//   // });
 
-  await sendMail({
-    from: config.smtp.from,
-    to: email,
-    subject: 'Reset your password',
-    html,
-  });
-};
+//   // await sendMail({
+//   //   from: config.smtp.from,
+//   //   to: email,
+//   //   subject: 'Reset your password',
+//   //   html,
+//   // });
+// };
 
 export const resetPassword = async (payload) => {
   let entries;
