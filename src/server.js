@@ -28,13 +28,13 @@ export const setupServer = () => {
 
   app.use(express.json());
 
-  app.use(router);
+  app.use("/api", router);
 
-  app.get("/api", (req, res) => {
-    res
-      .status(200)
-      .json({ status: 200, message: "Hello. Welcome to Tasteorama!" });
-  });
+  // app.get("/api", (req, res) => {
+  //   res
+  //     .status(200)
+  //     .json({ status: 200, message: "Hello. Welcome to Tasteorama!" });
+  // });
 
   app.use("/uploads", express.static(UPLOAD_DIR));
 

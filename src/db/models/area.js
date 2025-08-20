@@ -6,7 +6,8 @@ export const areaSchema = new Schema(
       type: String,
       required: true,
     },
+  },
   { timestamps: false, versionKey: false, strict: "throw" }
 );
 
-export const Recipies = model("Recipie", recipiesSchema);
+export const Area = model("Area", areaSchema);
