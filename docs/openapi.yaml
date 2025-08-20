@@ -11,7 +11,7 @@ tags:
     description: A RESTful API for managing a user's contact list, including creation, retrieval, updating, and deletion of contacts.
 servers:
   - url: http://localhost:3000
-  - url: http://localhost:3000
+  - url: https://tasteorama-backend-dcjy.onrender.com
 paths:
   # /api/recipes:
   #   get:
