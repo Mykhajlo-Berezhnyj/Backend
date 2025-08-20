@@ -1,4 +1,5 @@
-import { model, Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
+import { Recipe } from "./recipes.js";
 
 export const userSchema = new Schema(
   {
@@ -36,6 +37,11 @@ export const userSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "user",
       },
+    ],
+    favoriteRecipes: [
+      {
+        type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'
+      }
     ],
   },
   { timestamps: true, versionKey: false }
