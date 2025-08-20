@@ -13,25 +13,25 @@ servers:
   - url: http://localhost:3000
   - url: http://localhost:3000
 paths:
-  /api/recipes:
-    get:
-      $ref: ../swagger/paths/recipes/get.yaml
-    post:
-      $ref: ../swagger/paths/recipes/post.yaml
-  /api/recipes/own:
-    get:
-      $ref: ../swagger/paths/recipes/own/get.yaml
-  /api/recipes/favorites:
-    get:
-      $ref: ../swagger/paths/recipes/favorites/get.yaml
+  # /api/recipes:
+  #   get:
+  #     $ref: ../swagger/paths/recipes/get.yaml
+  #   post:
+  #     $ref: ../swagger/paths/recipes/post.yaml
+  # /api/recipes/own:
+  #   get:
+  #     $ref: ../swagger/paths/recipes/own/get.yaml
+  # /api/recipes/favorites:
+  #   get:
+  #     $ref: ../swagger/paths/recipes/favorites/get.yaml
 
-  /api/recipes/{id}:
-    get:
-      $ref: ../swagger/paths/recipes/{id}/get.yaml
-    post:
-      $ref: ../swagger/paths/recipes/{id}/favorite/post.yaml
-    delete:
-      $ref: ../swagger/paths/recipes/{id}/favorite/delete.yaml
+  # /api/recipes/{id}:
+  #   get:
+  #     $ref: ../swagger/paths/recipes/{id}/get.yaml
+  #   post:
+  #     $ref: ../swagger/paths/recipes/{id}/favorite/post.yaml
+  #   delete:
+  #     $ref: ../swagger/paths/recipes/{id}/favorite/delete.yaml
 
   /api/auth/register:
     post:
@@ -61,13 +61,13 @@ paths:
     post:
       $ref: ../swagger/paths/auth/reset-pwd.yaml
 
-  /api/ingredients:
-    get:
-      $ref: ../swagger/paths/ingredients/get.yaml
+  # /api/ingredients:
+  #   get:
+  #     $ref: ../swagger/paths/ingredients/get.yaml
 
-  /api/categories:
-    get:
-      $ref: ../swagger/paths/categories/get.yaml
+  # /api/categories:
+  #   get:
+  #     $ref: ../swagger/paths/categories/get.yaml
 
 components:
   securitySchemes:
