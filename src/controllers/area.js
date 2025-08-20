@@ -1,0 +1,1 @@
+export const areaController = async (req, res) => {};

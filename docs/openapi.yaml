@@ -1,0 +1,78 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Contacts App
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: API for managing user contacts
+tags:
+  - name: Contacts
+    description: A RESTful API for managing a user's contact list, including creation, retrieval, updating, and deletion of contacts.
+servers:
+  - url: http://localhost:3000
+  - url: http://localhost:3000
+paths:
+  /api/recipes:
+    get:
+      $ref: ../swagger/paths/recipes/get.yaml
+    post:
+      $ref: ../swagger/paths/recipes/post.yaml
+  /api/recipes/own:
+    get:
+      $ref: ../swagger/paths/recipes/own/get.yaml
+  /api/recipes/favorites:
+    get:
+      $ref: ../swagger/paths/recipes/favorites/get.yaml
+
+  /api/recipes/{id}:
+    get:
+      $ref: ../swagger/paths/recipes/{id}/get.yaml
+    post:
+      $ref: ../swagger/paths/recipes/{id}/favorite/post.yaml
+    delete:
+      $ref: ../swagger/paths/recipes/{id}/favorite/delete.yaml
+
+  /api/auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register.yaml
+
+  /api/auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+
+  /api/auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout.yaml
+
+  /api/auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh.yaml
+
+  /api/auth/send-reset-email:
+    post:
+      $ref: ../swagger/paths/auth/send-reset-email.yaml
+
+  /api/auth/reset-pwd:
+    post:
+      $ref: ../swagger/paths/auth/reset-pwd.yaml
+
+  /api/user:
+    post:
+      $ref: ../swagger/paths/auth/reset-pwd.yaml
+
+  /api/ingredients:
+    get:
+      $ref: ../swagger/paths/ingredients/get.yaml
+
+  /api/categories:
+    get:
+      $ref: ../swagger/paths/categories/get.yaml
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []
