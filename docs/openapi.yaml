@@ -1,13 +1,13 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: Contacts App
+  title: Tasteorama
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: API for managing user contacts
+  description: API for managing user recipes
 tags:
-  - name: Contacts
+  - name: Tasteorama
     description: A RESTful API for managing a user's recipe list, including creation, adding to favorites, and deletion of recipes. The API also supports filtering by categories and ingredients.
 servers:
   - url: http://localhost:3000
