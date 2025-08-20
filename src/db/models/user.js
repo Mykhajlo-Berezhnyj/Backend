@@ -19,6 +19,12 @@ export const userSchema = new Schema(
       type: String,
       required: true,
     },
+    favorites: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Recipe",
+      },
+    ],
     followers: [
       {
         type: Schema.Types.ObjectId,
