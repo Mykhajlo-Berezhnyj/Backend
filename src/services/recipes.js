@@ -3,6 +3,7 @@ import { Recipe } from '../db/models/recipes.js';
 
 import createHttpError from 'http-errors';
 import { User } from '../db/models/user.js';
+import mongoose from 'mongoose';
 
 export const getAllRecipes = async ({
   page,
@@ -22,17 +23,19 @@ export const getAllRecipes = async ({
   }
 
   if (ingredient) {
-    filter['ingredients.id'] = ingredient; // шукаємо по id інгредієнта
+    filter['ingredients.id'] = ingredient;
   }
 
   if (search) {
     filter.title = { $regex: search, $options: 'i' }; // пошук по назві (без урахування регістру)
   }
 
+  console.log(filter);
+
   // Запит до БД
   const recipesQuery = Recipe.find(filter)
-    .populate('category', 'name') // підтягнемо тільки name категорії
-    .populate('ingredients.id'); // підтягнемо всі поля інгредієнтів
+    .populate('category')
+    .populate({ path: 'ingredients.id', select: 'name' });
 
   const recipesCount = await Recipe.countDocuments(filter);
 

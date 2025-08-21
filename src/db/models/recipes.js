@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 export const recipeSchema = new Schema(
   {
@@ -8,16 +8,16 @@ export const recipeSchema = new Schema(
     },
     category: {
       type: Schema.Types.ObjectId,
-      ref: "Category",
+      ref: 'Category',
       required: true,
     },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
     area: {
       type: Schema.Types.ObjectId,
-      ref: "Area",
+      ref: 'Area',
     },
     instructions: {
       type: String,
@@ -39,13 +39,12 @@ export const recipeSchema = new Schema(
     },
     ingredients: [
       {
-        id: { type: Schema.Types.ObjectId, ref: "Ingredient", required: true },
-        name: { type: String },
+        id: { type: Schema.Types.ObjectId, ref: 'Ingredient', required: true },
         measure: { type: String, required: true },
       },
     ],
   },
-  { timestamps: true, versionKey: false, strict: "throw" }
+  { timestamps: true, versionKey: false, strict: 'throw' },
 );
 
-export const Recipe = model("Recipe", recipeSchema);
+export const Recipe = model('Recipe', recipeSchema);

@@ -4,6 +4,7 @@ import { getAllRecipesController } from '../controllers/recipes.js';
 import favoriteRouter from './favorites.js';
 
 const router = Router();
+
 router.get('/', ctrlWrapper(getAllRecipesController));
 
 // router.use(authenticate);
