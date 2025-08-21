@@ -57,17 +57,17 @@ paths:
     post:
       $ref: ../swagger/paths/auth/reset-pwd.yaml
 
-  /api/user:
+  /api/users:
     post:
-      $ref: ../swagger/paths/auth/reset-pwd.yaml
+      $ref: ../swagger/paths/users/user.yaml
 
-  # /api/ingredients:
-  #   get:
-  #     $ref: ../swagger/paths/ingredients/get.yaml
+  /api/ingredients:
+    get:
+      $ref: ../swagger/paths/ingredients/get.yaml
 
-  # /api/categories:
-  #   get:
-  #     $ref: ../swagger/paths/categories/get.yaml
+  /api/categories:
+    get:
+      $ref: ../swagger/paths/category/get.yaml
 
 components:
   securitySchemes:

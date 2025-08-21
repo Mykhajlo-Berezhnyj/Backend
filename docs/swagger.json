@@ -373,50 +373,39 @@
         }
       }
     },
-    "/api/user": {
+    "/api/users": {
       "post": {
         "tags": [
-          "Auth"
+          "Users"
         ],
-        "summary": "Reset user password",
-        "operationId": "resetPassword",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "token",
-                  "password"
-                ],
-                "properties": {
-                  "token": {
-                    "type": "string",
-                    "example": "yeJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODg4ZDgwYzg2ZjZkNTExNDBlZDJlNTIiLCJlbWFpbCI6ImJtdmUyMUB1a3IubmV0IiwiaWF0IjoxNzUzODY1NzIwLCJleHAiOjE3NTM4NjYwMjB9.Xp60X675SgqtwhR9_QSQwNmNXdnathXTAXH0mlP5xpg5"
-                  },
-                  "password": {
-                    "type": "string",
-                    "format": "password",
-                    "example": "NewPassw0rd!"
-                  }
-                }
-              }
+        "summary": "User information",
+        "description": "Retrieves current authenticated user's profile details.",
+        "operationId": "UserInformation",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "cookie",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "refreshToken",
+            "in": "cookie",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Password reset successful",
+            "description": "fetching user details",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -424,28 +413,133 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Password has been successfully reset."
+                      "example": "Current user info"
                     },
                     "data": {
                       "type": "object",
-                      "example": {}
+                      "required": [
+                        "_id",
+                        "name",
+                        "avatar",
+                        "email",
+                        "favoriteRecipes",
+                        "followers",
+                        "following"
+                      ],
+                      "properties": {
+                        "_id": {
+                          "description": "User's id",
+                          "type": "string",
+                          "example": "688319f519bc98717111a6b5"
+                        },
+                        "name": {
+                          "description": "User's name",
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "avatar": {
+                          "description": "User's avatar URL",
+                          "type": "string",
+                          "format": "uri",
+                          "example": "https://example.com/avatar.jpg"
+                        },
+                        "email": {
+                          "description": "User's email",
+                          "type": "string",
+                          "example": "john@example.com"
+                        },
+                        "favoriteRecipes": {
+                          "description": "User's favorites recipes",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "example": []
+                        },
+                        "followers": {
+                          "description": "User's followers",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "example": []
+                        },
+                        "following": {
+                          "description": "User's following",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "example": []
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
           "401": {
             "$ref": "#/components/responses/401"
           },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
           "500": {
             "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/api/ingredients": {
+      "get": {
+        "tags": [
+          "Ingredients"
+        ],
+        "summary": "Retrieve a list of all ingredients",
+        "description": "Returns an array of ingredient objects including their name, description, and image URL.",
+        "operationId": "IngredientsInformation",
+        "responses": {
+          "200": {
+            "description": "Ingredients list successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ingredientsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request – invalid parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/categories": {
+      "get": {
+        "tags": [
+          "Сategories"
+        ],
+        "summary": "Retrieve a list of all сategory",
+        "operationId": "СategoriesInformation",
+        "description": "Returns an array of сategory objects including their id and name.",
+        "responses": {
+          "200": {
+            "description": "Сategories list successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/categoryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request – invalid parameters"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -694,6 +788,79 @@
                 "type": "string",
                 "example": "myQ57pVSqU92uN0LZK3rTJRgeqIorXYcbTIlqAyT"
               }
+            }
+          }
+        }
+      },
+      "ingredient": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640c2dd963a319ea671e37aa"
+          },
+          "name": {
+            "type": "string",
+            "example": "Squid"
+          },
+          "desc": {
+            "type": "string",
+            "example": "A type of cephalopod with a soft, cylindrical body and long tentacles..."
+          },
+          "img": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e37aa.png"
+          }
+        }
+      },
+      "ingredientsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "Successfully found ingredients!"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ingredient"
+            }
+          }
+        }
+      },
+      "category": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640c2dd963a319ea671e37aa"
+          },
+          "name": {
+            "type": "string",
+            "example": "Squid"
+          }
+        }
+      },
+      "categoryResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "Successfully found category!"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/category"
             }
           }
         }

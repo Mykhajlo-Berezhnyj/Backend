@@ -20,9 +20,9 @@ export const userSchema = new Schema(
       type: String,
       required: true,
     },
-    favorites: [
+    favoriteRecipes: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Recipe",
       },
     ],
@@ -37,11 +37,6 @@ export const userSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "user",
       },
-    ],
-    favoriteRecipes: [
-      {
-        type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'
-      }
     ],
   },
   { timestamps: true, versionKey: false }
