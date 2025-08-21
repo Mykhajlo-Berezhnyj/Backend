@@ -69,6 +69,10 @@ paths:
     get:
       $ref: ../swagger/paths/category/get.yaml
 
+  /api/recipes/favorite/{recipeId}:
+    post:
+      $ref: ../swagger/paths/recipes/favorite/{recipeId}/post.yaml
+
 components:
   securitySchemes:
     bearerAuth:

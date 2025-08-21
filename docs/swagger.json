@@ -31,7 +31,9 @@
   "paths": {
     "/api/auth/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Register a new user",
         "operationId": "registerUser",
         "security": [],
@@ -79,7 +81,9 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Log in a user",
         "operationId": "loginUser",
         "requestBody": {
@@ -114,7 +118,9 @@
     },
     "/api/auth/logout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Log out the current user",
         "operationId": "logoutUser",
         "security": [
@@ -158,7 +164,9 @@
     },
     "/api/auth/refresh": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Refresh access token",
         "operationId": "refreshUser",
         "parameters": [
@@ -220,7 +228,9 @@
     },
     "/api/auth/send-reset-email": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Request reset password email",
         "operationId": "requestResetEmail",
         "requestBody": {
@@ -230,7 +240,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["email"],
+                "required": [
+                  "email"
+                ],
                 "properties": {
                   "email": {
                     "type": "string",
@@ -249,7 +261,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -282,7 +298,9 @@
     },
     "/api/auth/reset-pwd": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Reset user password",
         "operationId": "resetPassword",
         "requestBody": {
@@ -291,7 +309,10 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["token", "password"],
+                "required": [
+                  "token",
+                  "password"
+                ],
                 "properties": {
                   "token": {
                     "type": "string",
@@ -314,7 +335,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -477,22 +502,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "required": ["status", "message", "data"],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Password has been successfully reset."
-                    },
-                    "data": {
-                      "type": "object",
-                      "example": {}
-                    }
-                  }
                   "$ref": "#/components/schemas/ingredientsResponse"
                 }
               }
@@ -534,6 +543,76 @@
           }
         }
       }
+    },
+    "/api/recipes/favorite/{recipeId}": {
+      "post": {
+        "tags": [
+          "Favorite"
+        ],
+        "summary": "Add recipe to favorite",
+        "operationId": "addRecipeFavorite",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "recipeId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the recipe to add to favorites"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Recipe added to favorites",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Recipe added to favorites"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Recipe"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -546,7 +625,11 @@
     "schemas": {
       "400": {
         "type": "object",
-        "required": ["status", "message", "data"],
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
         "properties": {
           "status": {
             "type": "integer",
@@ -558,7 +641,10 @@
           },
           "data": {
             "type": "object",
-            "required": ["message", "errors"],
+            "required": [
+              "message",
+              "errors"
+            ],
             "properties": {
               "message": {
                 "type": "string",
@@ -576,7 +662,10 @@
       },
       "401": {
         "type": "object",
-        "required": ["status", "message"],
+        "required": [
+          "status",
+          "message"
+        ],
         "properties": {
           "status": {
             "type": "integer",
@@ -588,7 +677,9 @@
           },
           "data": {
             "type": "object",
-            "required": ["message"],
+            "required": [
+              "message"
+            ],
             "properties": {
               "message": {
                 "type": "string",
@@ -600,7 +691,10 @@
       },
       "404": {
         "type": "object",
-        "required": ["status", "message"],
+        "required": [
+          "status",
+          "message"
+        ],
         "properties": {
           "status": {
             "type": "integer",
@@ -614,7 +708,11 @@
       },
       "500": {
         "type": "object",
-        "required": ["status", "message", "error"],
+        "required": [
+          "status",
+          "message",
+          "error"
+        ],
         "properties": {
           "status": {
             "type": "integer",
@@ -632,7 +730,11 @@
       },
       "User": {
         "type": "object",
-        "required": ["name", "email", "password"],
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
         "properties": {
           "name": {
             "description": "User's name must not exceed 128 characters.",
@@ -655,7 +757,11 @@
       },
       "UserResponse": {
         "type": "object",
-        "required": ["status", "message", "data"],
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
         "properties": {
           "status": {
             "type": "integer",
@@ -669,7 +775,13 @@
           },
           "data": {
             "type": "object",
-            "required": ["_id", "name", "email", "createdAt", "updatedAt"],
+            "required": [
+              "_id",
+              "name",
+              "email",
+              "createdAt",
+              "updatedAt"
+            ],
             "properties": {
               "name": {
                 "description": "User's name",
@@ -702,7 +814,10 @@
       },
       "UserLogin": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "email": {
             "description": "User's email",
@@ -719,7 +834,11 @@
       },
       "LoginResponse": {
         "type": "object",
-        "required": ["status", "message", "data"],
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
         "properties": {
           "status": {
             "type": "integer",
@@ -731,7 +850,9 @@
           },
           "data": {
             "type": "object",
-            "required": ["accessToken"],
+            "required": [
+              "accessToken"
+            ],
             "properties": {
               "accessToken": {
                 "type": "string",
@@ -813,6 +934,49 @@
             }
           }
         }
+      },
+      "Ingredient": {
+        "type": "object"
+      },
+      "Recipe": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64efb8c1a2b4c5d6f7e8g9h"
+          },
+          "title": {
+            "type": "string",
+            "example": "Spaghetti Carbonara"
+          },
+          "owner": {
+            "type": "string",
+            "example": "64efb8c1a2b4c5d6f7e8g9h"
+          },
+          "instructions": {
+            "type": "string",
+            "example": "Step 1.... \n Step 2...."
+          },
+          "description": {
+            "type": "string",
+            "example": "The best recipe for you..."
+          },
+          "thumb": {
+            "type": "string",
+            "example": "https://example.com/image.jpg"
+          },
+          "time": {
+            "type": "integer",
+            "example": 30
+          },
+          "ingredients": {
+            "$ref": "#/components/schemas/Ingredient"
+          },
+          "category": {
+            "type": "string",
+            "example": "Italian"
+          }
+        }
       }
     },
     "responses": {
@@ -832,7 +996,9 @@
                   "message": "Bad request",
                   "data": {
                     "message": "Please provide data details before submitting",
-                    "errors": ["No fields were provided"]
+                    "errors": [
+                      "No fields were provided"
+                    ]
                   }
                 }
               },
@@ -844,7 +1010,9 @@
                   "message": "Bad request",
                   "data": {
                     "message": "Validation failed",
-                    "errors": ["recipes name is required"]
+                    "errors": [
+                      "recipes name is required"
+                    ]
                   }
                 }
               },
@@ -1017,7 +1185,11 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message", "data"],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1029,7 +1201,9 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": ["message"],
+                  "required": [
+                    "message"
+                  ],
                   "properties": {
                     "message": {
                       "type": "string",

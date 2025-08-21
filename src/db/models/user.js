@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 export const userSchema = new Schema(
   {
@@ -21,31 +21,31 @@ export const userSchema = new Schema(
     },
     favoriteRecipes: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Recipe",
+        type: Schema.Types.ObjectId,
+        ref: 'Recipe',
       },
     ],
     followers: [
       {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
       },
     ],
     following: [
       {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
       },
     ],
   },
-  { timestamps: true, versionKey: false }
+  { timestamps: true, versionKey: false },
 );
 
-userSchema.set("toJSON", {
+userSchema.set('toJSON', {
   transform(doc, obj) {
     delete obj.password;
     return obj;
   },
 });
 
-export const User = model("User", userSchema);
+export const User = model('User', userSchema);

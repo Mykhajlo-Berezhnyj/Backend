@@ -22,7 +22,7 @@ properties:
     type: integer
     example: 30
   ingredients:
-    $ref: '#/components/schemas/ingredient/Ingredients'
+    $ref: ../ingredient/Ingredients.yaml
   category:
     type: string
     example: 'Italian'

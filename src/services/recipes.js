@@ -5,16 +5,16 @@ import { Recipe } from '../db/models/recipes.js';
 export const addFavoriteRecipe = async (recipeId, userId) => {
   const user = await User.findById(userId);
 
-  const alreadyFavorite = user.favorites.some(
+  const alreadyFavorite = user.favoriteRecipes.some(
     (recipe) => recipe.toString() === recipeId.toString(),
   );
 
   if (!alreadyFavorite) {
-    user.favorites.push(recipeId);
+    user.favoriteRecipes.push(recipeId);
     await user.save();
   }
 
-  return user;
+  return user.favoriteRecipes;
 };
 
 export const deleteFavoriteRecipeById = async (recipeId, userId) => {

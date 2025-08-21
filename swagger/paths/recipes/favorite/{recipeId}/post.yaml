@@ -30,13 +30,14 @@ responses:
               type: string
               example: Recipe added to favorites
             data:
-              type: object
-              $ref: '#/components/schemas/Recipes'
+              type: array
+              items:
+                $ref: '../../../../components/schemas/recipe/Recipe.yaml'
   '400':
-    $ref: '#/components/responses/400'
+    $ref: '../../../../components/responses/400.yaml'
   '401':
-    $ref: '#/components/responses/401'
+    $ref: '../../../../components/responses/401.yaml'
   '404':
-    $ref: '#/components/responses/404'
+    $ref: '../../../../components/responses/404.yaml'
   '500':
-    $ref: '#/components/responses/500'
+    $ref: '../../../../components/responses/500.yaml'

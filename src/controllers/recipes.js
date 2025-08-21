@@ -12,8 +12,6 @@ export const addToFavoriteController = async (req, res) => {
 
   const user = await addFavoriteRecipe(recipeId, userId);
 
-  await user.populate('favorites');
-
   res.status(201).json({
     status: 201,
     message: 'Recipe added to favorites',
