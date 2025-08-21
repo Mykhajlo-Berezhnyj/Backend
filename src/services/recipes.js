@@ -3,7 +3,7 @@ import { Recipe } from '../db/models/recipes.js';
 
 import createHttpError from 'http-errors';
 import { User } from '../db/models/user.js';
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 
 export const getAllRecipes = async ({
   page,
