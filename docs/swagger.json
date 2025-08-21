@@ -31,9 +31,7 @@
   "paths": {
     "/api/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Register a new user",
         "operationId": "registerUser",
         "security": [],
@@ -81,9 +79,7 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Log in a user",
         "operationId": "loginUser",
         "requestBody": {
@@ -118,9 +114,7 @@
     },
     "/api/auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Log out the current user",
         "operationId": "logoutUser",
         "security": [
@@ -164,9 +158,7 @@
     },
     "/api/auth/refresh": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Refresh access token",
         "operationId": "refreshUser",
         "parameters": [
@@ -228,9 +220,7 @@
     },
     "/api/auth/send-reset-email": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Request reset password email",
         "operationId": "requestResetEmail",
         "requestBody": {
@@ -240,9 +230,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "email"
-                ],
+                "required": ["email"],
                 "properties": {
                   "email": {
                     "type": "string",
@@ -261,11 +249,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -298,9 +282,7 @@
     },
     "/api/auth/reset-pwd": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Reset user password",
         "operationId": "resetPassword",
         "requestBody": {
@@ -309,10 +291,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "token",
-                  "password"
-                ],
+                "required": ["token", "password"],
                 "properties": {
                   "token": {
                     "type": "string",
@@ -335,11 +314,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -375,21 +350,16 @@
     },
     "/api/user": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Reset user password",
-        "operationId": "resetPassword",
+        "operationId": "createUser",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "token",
-                  "password"
-                ],
+                "required": ["token", "password"],
                 "properties": {
                   "token": {
                     "type": "string",
@@ -412,11 +382,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -461,11 +427,7 @@
     "schemas": {
       "400": {
         "type": "object",
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
+        "required": ["status", "message", "data"],
         "properties": {
           "status": {
             "type": "integer",
@@ -477,10 +439,7 @@
           },
           "data": {
             "type": "object",
-            "required": [
-              "message",
-              "errors"
-            ],
+            "required": ["message", "errors"],
             "properties": {
               "message": {
                 "type": "string",
@@ -498,10 +457,7 @@
       },
       "401": {
         "type": "object",
-        "required": [
-          "status",
-          "message"
-        ],
+        "required": ["status", "message"],
         "properties": {
           "status": {
             "type": "integer",
@@ -513,9 +469,7 @@
           },
           "data": {
             "type": "object",
-            "required": [
-              "message"
-            ],
+            "required": ["message"],
             "properties": {
               "message": {
                 "type": "string",
@@ -527,10 +481,7 @@
       },
       "404": {
         "type": "object",
-        "required": [
-          "status",
-          "message"
-        ],
+        "required": ["status", "message"],
         "properties": {
           "status": {
             "type": "integer",
@@ -544,11 +495,7 @@
       },
       "500": {
         "type": "object",
-        "required": [
-          "status",
-          "message",
-          "error"
-        ],
+        "required": ["status", "message", "error"],
         "properties": {
           "status": {
             "type": "integer",
@@ -566,11 +513,7 @@
       },
       "User": {
         "type": "object",
-        "required": [
-          "name",
-          "email",
-          "password"
-        ],
+        "required": ["name", "email", "password"],
         "properties": {
           "name": {
             "description": "User's name must not exceed 128 characters.",
@@ -593,11 +536,7 @@
       },
       "UserResponse": {
         "type": "object",
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
+        "required": ["status", "message", "data"],
         "properties": {
           "status": {
             "type": "integer",
@@ -611,13 +550,7 @@
           },
           "data": {
             "type": "object",
-            "required": [
-              "_id",
-              "name",
-              "email",
-              "createdAt",
-              "updatedAt"
-            ],
+            "required": ["_id", "name", "email", "createdAt", "updatedAt"],
             "properties": {
               "name": {
                 "description": "User's name",
@@ -650,10 +583,7 @@
       },
       "UserLogin": {
         "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "properties": {
           "email": {
             "description": "User's email",
@@ -670,11 +600,7 @@
       },
       "LoginResponse": {
         "type": "object",
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
+        "required": ["status", "message", "data"],
         "properties": {
           "status": {
             "type": "integer",
@@ -686,9 +612,7 @@
           },
           "data": {
             "type": "object",
-            "required": [
-              "accessToken"
-            ],
+            "required": ["accessToken"],
             "properties": {
               "accessToken": {
                 "type": "string",
@@ -716,9 +640,7 @@
                   "message": "Bad request",
                   "data": {
                     "message": "Please provide data details before submitting",
-                    "errors": [
-                      "No fields were provided"
-                    ]
+                    "errors": ["No fields were provided"]
                   }
                 }
               },
@@ -730,9 +652,7 @@
                   "message": "Bad request",
                   "data": {
                     "message": "Validation failed",
-                    "errors": [
-                      "recipes name is required"
-                    ]
+                    "errors": ["recipes name is required"]
                   }
                 }
               },
@@ -905,11 +825,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -921,9 +837,7 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": [
-                    "message"
-                  ],
+                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",
