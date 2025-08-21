@@ -18,7 +18,7 @@ export const getRecipeByIdController = async (req, res, next) => {
 
   res.status(200).json({
     status: 200,
-    message: 'done',
+    message: `Successfully found recipe with id ${recipeId}`,
     data: recipe,
   });
 };

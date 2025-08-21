@@ -1,1 +1,40 @@
-#
+tags:
+  - Recipes
+summary: Get detail info recipe
+description: 'Retrieve detailed information about a specific recipe by its ID.'
+operationId: getRecipeById
+parameters:
+  - name: id
+    in: path
+    required: true
+    description: The ID of the recipe to retrieve
+    schema:
+      type: string
+responses:
+  '200':
+    description: Successfully found recipe with id {id}!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully found recipe with id 6462a8f74c3d0ddd28897fce!'
+            data:
+              $ref: ../../../components/schemas/recipe/Recipe.yaml
+  '400':
+    description: Provide a valid ID
+    $ref: ../../../components/responses/400.yaml
+  '404':
+    description: Recipe not found
+    $ref: ../../../components/responses/404.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml

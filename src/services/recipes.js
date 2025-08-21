@@ -6,7 +6,6 @@ export const getRecipeById = (recipeId) =>
   Recipe.findById(recipeId).populate({
     path: 'ingredients.id',
     select: 'name',
-    model: 'Ingredient',
   });
 
 export const addFavoriteRecipe = async (recipeId, userId) => {
