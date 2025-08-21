@@ -1,16 +1,16 @@
 tags:
   - Сategories
 summary: Retrieve a list of all сategory
-operationId: СategoriesInformation
+operationId: categoriesInformation
 description: Returns an array of сategory objects including their id and name.
 responses:
-  "200":
+  '200':
     description: Сategories list successfully retrieved
     content:
       application/json:
         schema:
           $ref: ../../components/schemas/category/categoryResponse.yaml
-  "400":
+  '400':
     description: Bad request – invalid parameters
-  "500":
+  '500':
     description: Internal server error

@@ -543,6 +543,76 @@
           }
         }
       }
+    },
+    "/api/recipes/favorite/{recipeId}": {
+      "post": {
+        "tags": [
+          "Favorite"
+        ],
+        "summary": "Add recipe to favorite",
+        "operationId": "addRecipeFavorite",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "recipeId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the recipe to add to favorites"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Recipe added to favorites",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Recipe added to favorites"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Recipe"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -862,6 +932,49 @@
             "items": {
               "$ref": "#/components/schemas/category"
             }
+          }
+        }
+      },
+      "Ingredient": {
+        "type": "object"
+      },
+      "Recipe": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "64efb8c1a2b4c5d6f7e8g9h"
+          },
+          "title": {
+            "type": "string",
+            "example": "Spaghetti Carbonara"
+          },
+          "owner": {
+            "type": "string",
+            "example": "64efb8c1a2b4c5d6f7e8g9h"
+          },
+          "instructions": {
+            "type": "string",
+            "example": "Step 1.... \n Step 2...."
+          },
+          "description": {
+            "type": "string",
+            "example": "The best recipe for you..."
+          },
+          "thumb": {
+            "type": "string",
+            "example": "https://example.com/image.jpg"
+          },
+          "time": {
+            "type": "integer",
+            "example": 30
+          },
+          "ingredients": {
+            "$ref": "#/components/schemas/Ingredient"
+          },
+          "category": {
+            "type": "string",
+            "example": "Italian"
           }
         }
       }
