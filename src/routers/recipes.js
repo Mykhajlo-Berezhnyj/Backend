@@ -4,16 +4,25 @@ import { isValidId } from "../middlewares/isValidId.js";
 // import { validateBody } from "../middlewares/validateBody.js";
 import { authenticate } from "../middlewares/authenticate.js";
 // import { upload } from "../middlewares/multer.js";
-import { deleteFavoriteRecipeByIdController } from "../controllers/recipes.js";
+import {
+  deleteFavoriteRecipeByIdController,
+  getRecipeByIdController,
+} from "../controllers/recipes.js";
 
 const router = Router();
 
-router.use(authenticate)
+router.get(
+  "/:recipeId",
+  isValidId("recipeId"),
+  ctrlWrapper(getRecipeByIdController)
+);
+
+router.use(authenticate);
 
 router.delete(
-	'/deleteFavoriteRecipe/:recipeId',
-	isValidId('recipeId'),
-	ctrlWrapper(deleteFavoriteRecipeByIdController)
-)
+  "/deleteFavoriteRecipe/:recipeId",
+  isValidId("recipeId"),
+  ctrlWrapper(deleteFavoriteRecipeByIdController)
+);
 
 export default router;
