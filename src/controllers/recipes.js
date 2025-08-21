@@ -20,7 +20,6 @@ export const addToFavoriteController = async (req, res) => {
 };
 
 export const deleteFavoriteRecipeByIdController = async (req, res, next) => {
-  try {
     const { recipeId } = req.params;
     if (!recipeId) return next(createHttpError(400, 'Missing recipeId'));
 
@@ -28,7 +27,4 @@ export const deleteFavoriteRecipeByIdController = async (req, res, next) => {
     if (!user) return next(createHttpError(404, 'User not found'));
 
     res.status(204).send();
-  } catch (error) {
-    next(error);
-  }
 };
