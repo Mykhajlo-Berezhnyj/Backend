@@ -19,9 +19,9 @@ export const userSchema = new Schema(
       type: String,
       required: true,
     },
-    favorites: [
+    favoriteRecipes: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Recipe",
       },
     ],

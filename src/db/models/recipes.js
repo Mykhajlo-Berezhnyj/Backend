@@ -40,6 +40,7 @@ export const recipeSchema = new Schema(
     ingredients: [
       {
         id: { type: Schema.Types.ObjectId, ref: "Ingredient", required: true },
+        name: { type: String },
         measure: { type: String, required: true },
       },
     ],
