@@ -1,0 +1,28 @@
+type: object
+properties:
+  _id:
+    type: string
+    example: '64efb8c1a2b4c5d6f7e8g9h'
+  title:
+    type: string
+    example: 'Spaghetti Carbonara'
+  owner:
+    type: string
+    example: '64efb8c1a2b4c5d6f7e8g9h'
+  instructions:
+    type: string
+    example: "Step 1.... \n Step 2...."
+  description:
+    type: string
+    example: The best recipe for you...
+  thumb:
+    type: string
+    example: 'https://example.com/image.jpg'
+  time:
+    type: integer
+    example: 30
+  ingredients:
+    $ref: ../ingredient/Ingredients.yaml
+  category:
+    type: string
+    example: 'Italian'
