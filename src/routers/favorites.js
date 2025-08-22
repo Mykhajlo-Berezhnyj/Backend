@@ -5,6 +5,7 @@ import { authenticate } from '../middlewares/authenticate.js';
 import {
   addToFavoriteController,
   deleteFavoriteRecipeByIdController,
+  getFavoriteRecipesController,
 } from '../controllers/recipes.js';
 
 const router = Router();
@@ -22,5 +23,7 @@ router.delete(
   isValidId('recipeId'),
   ctrlWrapper(deleteFavoriteRecipeByIdController),
 );
+
+router.get('/favorites', ctrlWrapper(getFavoriteRecipesController));
 
 export default router;
