@@ -49,6 +49,12 @@ export const getAllRecipes = async ({
   };
 };
 
+export const getRecipeById = (recipeId) =>
+  Recipe.findById(recipeId).populate({
+    path: 'ingredients.id',
+    select: 'name',
+  });
+
 export const addFavoriteRecipe = async (recipeId, userId) => {
   const user = await User.findById(userId);
 
@@ -84,4 +90,14 @@ export const deleteFavoriteRecipeById = async (recipeId, userId) => {
   const updatedUser = await User.findById(userId).populate('favoriteRecipes');
 
   return updatedUser;
+};
+
+export const getFavoriteRecipes = async (userId) => {
+  const user = await User.findById(userId).populate('favoriteRecipes');
+
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  return user.favoriteRecipes;
 };
