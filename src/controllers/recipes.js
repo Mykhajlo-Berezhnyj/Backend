@@ -1,16 +1,30 @@
-import { getOwnRecipes } from "../services/recipes.js";
-import { parsePaginationParams } from "../utils/parsePaginationParams.js";
+import { Recipe } from "../db/models/recipes.js"; 
+import { calculatePaginationData } from "../utils/calculatePaginationData.js";
 
+export const getOwn = async (req, res, next) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const perPage = Number(req.query.perPage ?? req.query.limit) || 12;
+    const skip = (page - 1) * perPage;
 
-export const getOwn = async (req, res) => {
+    const [items, total] = await Promise.all([
+      Recipe.find({ owner: req.user._id })
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(perPage)
+        .select("title description thumb time calories createdAt"),
+      Recipe.countDocuments({ owner: req.user._id }),
+    ]);
 
-  const userId = req.user._id;
+    const pagination = calculatePaginationData(total, page, perPage);
 
-  const { page, limit } = parsePaginationParams(req.query, {
-    page: 1,
-    limit: 12,
-  });
-
-  const result = await getOwnRecipes(userId, { page, limit });
-  res.json(result);
+    res.status(200).json({
+      status: 200,
+      message: "Successfully fetched your recipes",
+      data: items,
+      ...pagination, 
+    });
+  } catch (err) {
+    next(err);
+  }
 };
