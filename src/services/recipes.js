@@ -45,3 +45,12 @@ export const deleteFavoriteRecipeById = async (recipeId, userId) => {
   return updatedUser;
 };
 
+export const getFavoriteRecipes = async (userId) => {
+  const user = await User.findById(userId).populate('favoriteRecipes');
+
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  return user.favoriteRecipes;
+};
