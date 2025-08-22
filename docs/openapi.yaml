@@ -25,9 +25,9 @@ paths:
   #   get:
   #     $ref: ../swagger/paths/recipes/favorites/get.yaml
 
-  # /api/recipes/{id}:
-  #   get:
-  #     $ref: ../swagger/paths/recipes/{id}/get.yaml
+  /api/recipes/{id}:
+    get:
+      $ref: '../swagger/paths/recipes/{id}/get.yaml'
   #   post:
   #     $ref: ../swagger/paths/recipes/{id}/favorite/post.yaml
   #   delete:

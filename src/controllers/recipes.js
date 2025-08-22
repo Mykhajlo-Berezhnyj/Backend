@@ -1,11 +1,27 @@
-
 import createHttpError from 'http-errors';
 import {
-  addFavoriteRecipe,
+  getRecipeById,
   deleteFavoriteRecipeById,
+  addFavoriteRecipe,
 } from '../services/recipes.js';
 
 export const recipesController = async (req, res) => {};
+
+export const getRecipeByIdController = async (req, res, next) => {
+  const { id } = req.params;
+
+  const recipe = await getRecipeById(id);
+
+  if (!recipe) {
+    return next(createHttpError(404, 'Recipe not found'));
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully found recipe with id ${id}`,
+    data: recipe,
+  });
+};
 
 export const addToFavoriteController = async (req, res) => {
   const userId = req.user._id;
@@ -21,6 +37,7 @@ export const addToFavoriteController = async (req, res) => {
 };
 
 export const deleteFavoriteRecipeByIdController = async (req, res, next) => {
+  try {
     const { recipeId } = req.params;
     if (!recipeId) return next(createHttpError(400, 'Missing recipeId'));
 
@@ -28,5 +45,7 @@ export const deleteFavoriteRecipeByIdController = async (req, res, next) => {
     if (!user) return next(createHttpError(404, 'User not found'));
 
     res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
 };
-

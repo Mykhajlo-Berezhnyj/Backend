@@ -2,6 +2,12 @@ import createHttpError from 'http-errors';
 import { User } from '../db/models/user.js';
 import { Recipe } from '../db/models/recipes.js';
 
+export const getRecipeById = (recipeId) =>
+  Recipe.findById(recipeId).populate({
+    path: 'ingredients.id',
+    select: 'name',
+  });
+
 export const addFavoriteRecipe = async (recipeId, userId) => {
   const user = await User.findById(userId);
 
