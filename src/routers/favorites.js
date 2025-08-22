@@ -18,7 +18,7 @@ router.post(
 );
 
 router.delete(
-  '/deleteFavoriteRecipe/:recipeId',
+  '/:recipeId',
   isValidId('recipeId'),
   ctrlWrapper(deleteFavoriteRecipeByIdController),
 );
