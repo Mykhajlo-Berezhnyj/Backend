@@ -1,31 +1,31 @@
 import { Router } from 'express';
-// import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-// import { isValidId } from '../middlewares/isValidId.js';
-// import { validateBody } from "../middlewares/validateBody.js";
-// import { authenticate } from '../middlewares/authenticate.js';
-// import { upload } from "../middlewares/multer.js";
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { isValidId } from '../middlewares/isValidId.js';
+import { validateBody } from "../middlewares/validateBody.js";
+import { authenticate } from '../middlewares/authenticate.js';
+import { upload } from "../middlewares/multer.js";
 import favoriteRouter from './favorites.js';
-// import {
-//   addToFavoriteController,
-//   deleteFavoriteRecipeByIdController,
-// } from '../controllers/recipes.js';
+import {addFavoriteRecipeController, 
+addToFavoriteController,
+deleteFavoriteRecipeByIdController,
+} from '../controllers/recipes.js';
 
 const router = Router();
 
-// router.use(authenticate);
+router.use(authenticate);
 
 router.use('/favorite', favoriteRouter);
 
-// router.post(
-//   '/:recipeId',
-//   isValidId('recipeId'),
-//   ctrlWrapper(addToFavoriteController),
-// );
+router.post(
+  '/:recipeId',
+  isValidId('recipeId'),
+  ctrlWrapper(addToFavoriteController),
+);
 
-// router.delete(
-//   '/deleteFavoriteRecipe/:recipeId',
-//   isValidId('recipeId'),
-//   ctrlWrapper(deleteFavoriteRecipeByIdController),
-// );
+router.delete(
+  '/deleteFavoriteRecipe/:recipeId',
+  isValidId('recipeId'),
+  ctrlWrapper(deleteFavoriteRecipeByIdController),
+);
 
 export default router;
