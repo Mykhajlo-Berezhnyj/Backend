@@ -3,6 +3,7 @@ import {
   getRecipeById,
   deleteFavoriteRecipeById,
   addFavoriteRecipe,
+  getFavoriteRecipes,
 } from '../services/recipes.js';
 
 export const recipesController = async (req, res) => {};
@@ -48,4 +49,23 @@ export const deleteFavoriteRecipeByIdController = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+export const getFavoriteRecipesController = async (req, res) => {
+  const favoriteRecipes = await getFavoriteRecipes(req.user._id);
+
+  if (!favoriteRecipes || favoriteRecipes.data.length === 0) {
+    return res.status(404).json({
+      status: 404,
+      message: 'No favorites found',
+      data: [],
+    });
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully received favorites list',
+    data: favoriteRecipes.data,
+    pagination: favoriteRecipes.pagination,
+  });
 };
