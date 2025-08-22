@@ -1,20 +1,15 @@
 import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { isValidId } from '../middlewares/isValidId.js';
-import { validateBody } from "../middlewares/validateBody.js";
 import { authenticate } from '../middlewares/authenticate.js';
-import { upload } from "../middlewares/multer.js";
-import favoriteRouter from './favorites.js';
-import {addFavoriteRecipeController, 
-addToFavoriteController,
-deleteFavoriteRecipeByIdController,
+import {
+  addToFavoriteController,
+  deleteFavoriteRecipeByIdController,
 } from '../controllers/recipes.js';
 
 const router = Router();
 
 router.use(authenticate);
-
-router.use('/favorite', favoriteRouter);
 
 router.post(
   '/:recipeId',
@@ -23,7 +18,7 @@ router.post(
 );
 
 router.delete(
-  '/deleteFavoriteRecipe/:recipeId',
+  '/:recipeId',
   isValidId('recipeId'),
   ctrlWrapper(deleteFavoriteRecipeByIdController),
 );

@@ -1,7 +1,7 @@
 description: >
   Bad Request — the server could not process the request due to a client error. 
   Possible reasons include:
-    - "Empty contact data"
+    - "Empty data"
     - "Validation failed" — one or more fields are invalid or missing. 
     - "Malformed request" — the request format is incorrect.
 
@@ -23,7 +23,7 @@ content:
           data:
             message: Please provide data details before submitting
             errors:
-              - "No fields were provided"
+              - 'No fields were provided'
       validationFailedRecipes:
         summary: All possible validation errors recipes
         description: >
@@ -77,4 +77,4 @@ content:
           data:
             message: Malformed request body
             errors:
-              - "Expected double-quoted property name in JSON at position 22 (line 3 column 1)"
+              - 'Expected double-quoted property name in JSON at position 22 (line 3 column 1)'
