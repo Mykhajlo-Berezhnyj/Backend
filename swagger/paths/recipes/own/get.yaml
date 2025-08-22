@@ -1,0 +1,42 @@
+get:
+  tags:
+    - Recipes
+  summary: Get own recipes
+  description: Returns a paginated list of recipes created by the logged-in user.
+  security:
+    - bearerAuth: []
+  parameters:
+    - in: query
+      name: page
+      schema:
+        type: integer
+        default: 1
+      description: Page number
+    - in: query
+      name: limit
+      schema:
+        type: integer
+        default: 12
+      description: Number of items per page
+  responses:
+    "200":
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "../../components/schemas/recipe.yaml"
+              page:
+                type: integer
+              total:
+                type: integer
+              totalPages:
+                type: integer
+    "401":
+      description: Unauthorized - Invalid or missing token
+    "500":
+      description: Internal server error
