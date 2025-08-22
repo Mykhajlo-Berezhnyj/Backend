@@ -1,10 +1,4 @@
 import { Router } from 'express';
-
-const router = Router();
-
-router.use('/favorite', favoriteRouter);
-
-=======
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import { validateBody } from "../middlewares/validateBody.js";
