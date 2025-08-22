@@ -9,11 +9,7 @@ import { isValidId } from '../middlewares/isValidId.js';
 
 const router = Router();
 
-router.get(
-  '/:recipeId',
-  isValidId('recipeId'),
-  ctrlWrapper(getRecipeByIdController),
-);
+router.get('/:id', isValidId('id'), ctrlWrapper(getRecipeByIdController));
 
 router.use('/favorite', favoriteRouter);
 
