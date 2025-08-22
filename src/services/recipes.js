@@ -1,6 +1,53 @@
+import { calculatePaginationData } from '../utils/calculatePaginationData.js';
+import { Recipe } from '../db/models/recipes.js';
+
 import createHttpError from 'http-errors';
 import { User } from '../db/models/user.js';
-import { Recipe } from '../db/models/recipes.js';
+// import mongoose from 'mongoose';
+
+export const getAllRecipes = async ({
+  page,
+  perPage,
+  category,
+  ingredient,
+  search,
+}) => {
+  const limit = perPage;
+  const skip = (page - 1) * perPage;
+
+  // Фільтр для пошуку
+  const filter = {};
+
+  if (category) {
+    filter.category = category; // шукаємо по id категорії
+  }
+
+  if (ingredient) {
+    filter['ingredients.id'] = ingredient;
+  }
+
+  if (search) {
+    filter.title = { $regex: search, $options: 'i' }; // пошук по назві (без урахування регістру)
+  }
+
+  console.log(filter);
+
+  // Запит до БД
+  const recipesQuery = Recipe.find(filter)
+    .populate('category')
+    .populate({ path: 'ingredients.id', select: 'name' });
+
+  const recipesCount = await Recipe.countDocuments(filter);
+
+  const recipes = await recipesQuery.skip(skip).limit(limit).exec();
+
+  const paginationData = calculatePaginationData(recipesCount, perPage, page);
+
+  return {
+    data: recipes,
+    ...paginationData,
+  };
+};
 
 export const getRecipeById = (recipeId) =>
   Recipe.findById(recipeId).populate({

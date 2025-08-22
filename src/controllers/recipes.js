@@ -2,11 +2,32 @@ import createHttpError from 'http-errors';
 import {
   getRecipeById,
   deleteFavoriteRecipeById,
+  getAllRecipes,
   addFavoriteRecipe,
   getFavoriteRecipes,
-} from '../services/recipes.js';
 
-export const recipesController = async (req, res) => {};
+} from '../services/recipes.js';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseParamsForRecipes } from '../utils/parseFilterParams.js';
+
+export const getAllRecipesController = async (req, res) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { category, ingredient, search } = parseParamsForRecipes(req.query);
+
+  const recipes = await getAllRecipes({
+    page,
+    perPage,
+    category,
+    ingredient,
+    search,
+  });
+
+  res.json({
+    status: 200,
+    message: 'Recipes retrieved successfully',
+    data: recipes,
+  });
+};
 
 export const getRecipeByIdController = async (req, res, next) => {
   const { id } = req.params;

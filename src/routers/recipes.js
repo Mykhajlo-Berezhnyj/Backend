@@ -7,12 +7,15 @@ import { upload } from '../middlewares/multer.js';
 import favoriteRouter from './favorites.js';
 import {
   getRecipeByIdController,
+  getAllRecipesController,
   addToFavoriteController,
   deleteFavoriteRecipeByIdController,
   getFavoriteRecipesController,
 } from '../controllers/recipes.js';
 
 const router = Router();
+
+router.get('/', ctrlWrapper(getAllRecipesController));
 
 router.get('/:id', isValidId('id'), ctrlWrapper(getRecipeByIdController));
 
@@ -21,19 +24,19 @@ router.use(authenticate);
 router.use('/favorite', favoriteRouter);
 
 router.post(
-  '/:recipeId',
+  '/favorites/:id',
   isValidId('recipeId'),
   ctrlWrapper(addToFavoriteController),
 );
 
 router.delete(
-  '/deleteFavoriteRecipe/:recipeId',
+  '/favorites/:id',
   isValidId('recipeId'),
   ctrlWrapper(deleteFavoriteRecipeByIdController),
 );
+
 router.get(
-  '/favoriteRecipes/:id',
-  isValidId,
+  '/favorites',
   ctrlWrapper(getFavoriteRecipesController),
 );
 
