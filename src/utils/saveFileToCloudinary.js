@@ -17,7 +17,7 @@ export const saveFileToCloudinary = async (file) => {
       throw createHttpError(400, 'File path is missing');
     }
     const response = await cloudinary.v2.uploader.upload(file.path, {
-      folder: 'contacts_photos',
+      folder: 'recipes_photos',
       use_filename: true,
       unique_filename: false,
       overwrite: true,

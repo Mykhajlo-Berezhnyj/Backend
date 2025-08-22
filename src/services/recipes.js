@@ -1,5 +1,7 @@
 import createHttpError from "http-errors";
 import { User } from "../db/models/user.js";
+import { Recipe } from "../db/models/recipes.js";
+// import { Category } from "../db/models/categories.js";
 
 
 export const deleteFavoriteRecipeById = async (recipeId, userId) => {
@@ -23,3 +25,7 @@ export const deleteFavoriteRecipeById = async (recipeId, userId) => {
     
     return updatedUser;
 };
+
+export const addOwnRecipes = async (payload) => {
+    return await Recipe.create(payload);
+ };
