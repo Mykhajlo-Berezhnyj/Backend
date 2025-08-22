@@ -48,9 +48,18 @@ properties:
     type: string
     example: 'Battenberg Cake'
   category:
-    description: 'Category of the recipe'
-    type: string
-    example: 'Dessert'
+    description: 'Category of the recipe (populated object)'
+    type: object
+    required:
+      - _id
+      - name
+    properties:
+      _id:
+        type: string
+        example: '6462a6cd4c3d0ddd28897f8f'
+      name:
+        type: string
+        example: 'Dessert'
   description:
     description: 'Short description of the recipe'
     type: string
@@ -64,18 +73,32 @@ properties:
     type: string
     example: '60'
   ingredients:
-    description: 'List of ingredients with their measures'
+    description: 'List of ingredients with measures'
     type: array
     items:
       type: object
       required:
+        - _id
         - id
         - measure
       properties:
-        id:
-          description: 'Id of the ingredient'
+        _id:
+          description: 'Id of the ingredient record in the recipe'
           type: string
-          example: '640c2dd963a319ea671e367e'
+          example: '68a88b0a2746ddbe5d48bea3'
+        id:
+          description: 'Ingredient object (populated)'
+          type: object
+          required:
+            - _id
+            - name
+          properties:
+            _id:
+              type: string
+              example: '68a7492da667396e2ff2a512'
+            name:
+              type: string
+              example: 'Butter'
         measure:
           description: 'Amount or measure of the ingredient'
           type: string
