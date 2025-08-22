@@ -12,6 +12,8 @@ const router = Router();
 
 router.use(authenticate);
 
+router.get('/', ctrlWrapper(getFavoriteRecipesController));
+
 router.post(
   '/:recipeId',
   isValidId('recipeId'),
@@ -23,7 +25,5 @@ router.delete(
   isValidId('recipeId'),
   ctrlWrapper(deleteFavoriteRecipeByIdController),
 );
-
-router.get('/favorites', ctrlWrapper(getFavoriteRecipesController));
 
 export default router;

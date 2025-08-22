@@ -5,7 +5,6 @@ import {
   getAllRecipes,
   addFavoriteRecipe,
   getFavoriteRecipes,
-
 } from '../services/recipes.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseParamsForRecipes } from '../utils/parseFilterParams.js';
@@ -75,7 +74,7 @@ export const deleteFavoriteRecipeByIdController = async (req, res, next) => {
 export const getFavoriteRecipesController = async (req, res) => {
   const favoriteRecipes = await getFavoriteRecipes(req.user._id);
 
-  if (!favoriteRecipes || favoriteRecipes.data.length === 0) {
+  if (!favoriteRecipes || favoriteRecipes.length === 0) {
     return res.status(404).json({
       status: 404,
       message: 'No favorites found',
@@ -86,7 +85,7 @@ export const getFavoriteRecipesController = async (req, res) => {
   res.status(200).json({
     status: 200,
     message: 'Successfully received favorites list',
-    data: favoriteRecipes.data,
+    data: favoriteRecipes,
     pagination: favoriteRecipes.pagination,
   });
 };

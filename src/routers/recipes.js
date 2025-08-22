@@ -9,6 +9,8 @@ import {
 
 const router = Router();
 
+router.use('/favorites', favoriteRouter);
+
 router.get('/', ctrlWrapper(getAllRecipesController));
 
 router.get(
@@ -16,7 +18,5 @@ router.get(
   isValidId('recipeId'),
   ctrlWrapper(getRecipeByIdController),
 );
-
-router.use('/favorite', favoriteRouter);
 
 export default router;
