@@ -49,9 +49,9 @@ export const getAllRecipes = async ({
   };
 };
 
-export const getRecipeById = (recipeId) =>
-  Recipe.findById(recipeId).populate({
-    path: 'ingredients.id',
+export const getRecipeById = async (recipeId) =>
+  await Recipe.findById(recipeId).populate({
+    path: 'ingredients',
     select: 'name',
   });
 
