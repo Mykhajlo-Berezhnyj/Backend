@@ -1,21 +1,21 @@
-description: >
-  Internal Server Error:
-    - "Unhandled exception" — a generic server error.
-    - "Database failure" — internal service or DB error.
-content:
-  application/json:
-    schema:
-      $ref: ../schemas/errors/500.yaml
-    examples:
-      genericError:
-        summary: Unhandled exception
-        value:
-          status: 500
-          message: Something went wrong
-          error: Internal server error
-      dbFailure:
-        summary: Database error
-        value:
-          status: 500
-          message: Something went wrong
-          error: Failed to connect to the database
+# description: >
+#   Internal Server Error:
+#     - "Unhandled exception" — a generic server error.
+#     - "Database failure" — internal service or DB error.
+# content:
+#   application/json:
+#     schema:
+#       $ref: ../schemas/errors/500.yaml
+#     examples:
+#       genericError:
+#         summary: Unhandled exception
+#         value:
+#           status: 500
+#           message: Something went wrong
+#           error: Internal server error
+#       dbFailure:
+#         summary: Database error
+#         value:
+#           status: 500
+#           message: Something went wrong
+#           error: Failed to connect to the database
