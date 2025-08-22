@@ -1,0 +1,17 @@
+Ingredient:
+  type: object
+  properties:
+    _id:
+      type: string
+      pattern: "^[0-9a-fA-F]{24}$"
+      example: "68a74951a667396e2ff2a5fa"
+    name:
+      type: string
+      example: "Tabasco Sauce"
+    desc:
+      type: string
+      example: "A spicy hot sauce made from tabasco peppers, vinegar, and salt, commonly used as a condiment or ingredient in various dishes."
+    img:
+      type: string
+      format: url
+      example: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3837.png"
