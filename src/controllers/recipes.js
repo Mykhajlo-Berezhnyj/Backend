@@ -29,9 +29,9 @@ export const getAllRecipesController = async (req, res) => {
 };
 
 export const getRecipeByIdController = async (req, res, next) => {
-  const { id } = req.params;
+  const { recipeId } = req.params;
 
-  const recipe = await getRecipeById(id);
+  const recipe = await getRecipeById(recipeId);
 
   if (!recipe) {
     return next(createHttpError(404, 'Recipe not found'));
@@ -39,7 +39,7 @@ export const getRecipeByIdController = async (req, res, next) => {
 
   res.status(200).json({
     status: 200,
-    message: `Successfully found recipe with id ${id}`,
+    message: `Successfully found recipe with id ${recipeId}`,
     data: recipe,
   });
 };
