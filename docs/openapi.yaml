@@ -10,12 +10,12 @@ tags:
   - name: Tasteorama
     description: A RESTful API for managing a user's recipe list, including creation, adding to favorites, and deletion of recipes. The API also supports filtering by categories and ingredients.
 servers:
-  - url: http://localhost:3000
+  - url: http://127.0.0.1:3000
   - url: https://tasteorama-backend-dcjy.onrender.com
 paths:
-  # /api/recipes:
-  #   get:
-  #     $ref: ../swagger/paths/recipes/get.yaml
+  /api/recipes:
+    get:
+      $ref: ../swagger/paths/recipes/get.yaml
   #   post:
   #     $ref: ../swagger/paths/recipes/post.yaml
   # /api/recipes/own:
@@ -25,9 +25,9 @@ paths:
   #   get:
   #     $ref: ../swagger/paths/recipes/favorites/get.yaml
 
-  # /api/recipes/{id}:
-  #   get:
-  #     $ref: ../swagger/paths/recipes/{id}/get.yaml
+  /api/recipes/{id}:
+    get:
+      $ref: '../swagger/paths/recipes/{id}/get.yaml'
   #   post:
   #     $ref: ../swagger/paths/recipes/{id}/favorite/post.yaml
   #   delete:
@@ -57,17 +57,21 @@ paths:
     post:
       $ref: ../swagger/paths/auth/reset-pwd.yaml
 
-  /api/user:
+  /api/users:
     post:
-      $ref: ../swagger/paths/auth/reset-pwd.yaml
+      $ref: ../swagger/paths/users/user.yaml
 
-  # /api/ingredients:
-  #   get:
-  #     $ref: ../swagger/paths/ingredients/get.yaml
+  /api/ingredients:
+    get:
+      $ref: ../swagger/paths/ingredients/get.yaml
 
-  # /api/categories:
-  #   get:
-  #     $ref: ../swagger/paths/categories/get.yaml
+  /api/categories:
+    get:
+      $ref: ../swagger/paths/category/get.yaml
+
+  /api/recipes/favorite/{recipeId}:
+    post:
+      $ref: ../swagger/paths/recipes/favorite/{recipeId}/post.yaml
 
 components:
   securitySchemes:

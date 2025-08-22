@@ -2,19 +2,19 @@
   "openapi": "3.1.0",
   "info": {
     "version": "1.0.0",
-    "title": "Contacts App",
+    "title": "Tasteorama",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "description": "API for managing user contacts"
+    "description": "API for managing user recipes"
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "http://127.0.0.1:3000"
     },
     {
-      "url": "http://localhost:3000"
+      "url": "https://tasteorama-backend-dcjy.onrender.com"
     }
   ],
   "security": [
@@ -24,11 +24,202 @@
   ],
   "tags": [
     {
-      "name": "Contacts",
-      "description": "A RESTful API for managing a user's contact list, including creation, retrieval, updating, and deletion of contacts."
+      "name": "Tasteorama",
+      "description": "A RESTful API for managing a user's recipe list, including creation, adding to favorites, and deletion of recipes. The API also supports filtering by categories and ingredients."
     }
   ],
   "paths": {
+    "/api/recipes": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Search recipes",
+        "operationId": "searchRecipes",
+        "description": "Get a list of recipes with pagination and search filters: category, ingredient, or keyword in the title.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter recipes by category (MongoDB ObjectId)",
+            "example": "64c8d958249fae54bae90bb9"
+          },
+          {
+            "in": "query",
+            "name": "ingredient",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter recipes by ingredient (MongoDB ObjectId)",
+            "example": "6462a8f74c3d0ddd28897fcd"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search recipes by keyword in title",
+            "example": "cake"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipes retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Recipes retrieved successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "data",
+                        "page",
+                        "perPage",
+                        "totalItems",
+                        "totalPages",
+                        "hasNextPage",
+                        "hasPreviousPage"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Recipe"
+                          }
+                        },
+                        "page": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "perPage": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "totalItems": {
+                          "type": "number",
+                          "example": 35
+                        },
+                        "totalPages": {
+                          "type": "number",
+                          "example": 4
+                        },
+                        "hasNextPage": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "hasPreviousPage": {
+                          "type": "boolean",
+                          "example": false
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/api/recipes/{id}": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Get detail info recipe",
+        "description": "Retrieve detailed information about a specific recipe by its ID.",
+        "operationId": "getRecipeById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the recipe to retrieve",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found recipe with id {id}!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found recipe with id 6462a8f74c3d0ddd28897fce!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Recipe"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Provide a valid ID",
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "description": "Recipe not found",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
     "/api/auth/register": {
       "post": {
         "tags": [
@@ -373,41 +564,203 @@
         }
       }
     },
-    "/api/user": {
+    "/api/users": {
       "post": {
         "tags": [
-          "Auth"
+          "Users"
         ],
-        "summary": "Reset user password",
-        "operationId": "resetPassword",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "token",
-                  "password"
-                ],
-                "properties": {
-                  "token": {
-                    "type": "string",
-                    "example": "yeJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODg4ZDgwYzg2ZjZkNTExNDBlZDJlNTIiLCJlbWFpbCI6ImJtdmUyMUB1a3IubmV0IiwiaWF0IjoxNzUzODY1NzIwLCJleHAiOjE3NTM4NjYwMjB9.Xp60X675SgqtwhR9_QSQwNmNXdnathXTAXH0mlP5xpg5"
-                  },
-                  "password": {
-                    "type": "string",
-                    "format": "password",
-                    "example": "NewPassw0rd!"
+        "summary": "User information",
+        "description": "Retrieves current authenticated user's profile details.",
+        "operationId": "UserInformation",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "cookie",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "refreshToken",
+            "in": "cookie",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "fetching user details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Current user info"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "_id",
+                        "name",
+                        "avatar",
+                        "email",
+                        "favoriteRecipes",
+                        "followers",
+                        "following"
+                      ],
+                      "properties": {
+                        "_id": {
+                          "description": "User's id",
+                          "type": "string",
+                          "example": "688319f519bc98717111a6b5"
+                        },
+                        "name": {
+                          "description": "User's name",
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "avatar": {
+                          "description": "User's avatar URL",
+                          "type": "string",
+                          "format": "uri",
+                          "example": "https://example.com/avatar.jpg"
+                        },
+                        "email": {
+                          "description": "User's email",
+                          "type": "string",
+                          "example": "john@example.com"
+                        },
+                        "favoriteRecipes": {
+                          "description": "User's favorites recipes",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "example": []
+                        },
+                        "followers": {
+                          "description": "User's followers",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "example": []
+                        },
+                        "following": {
+                          "description": "User's following",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "example": []
+                        }
+                      }
+                    }
                   }
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
-        },
+        }
+      }
+    },
+    "/api/ingredients": {
+      "get": {
+        "tags": [
+          "Ingredients"
+        ],
+        "summary": "Retrieve a list of all ingredients",
+        "description": "Returns an array of ingredient objects including their name, description, and image URL.",
+        "operationId": "IngredientsInformation",
         "responses": {
           "200": {
-            "description": "Password reset successful",
+            "description": "Ingredients list successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ingredientsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request – invalid parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/categories": {
+      "get": {
+        "tags": [
+          "Сategories"
+        ],
+        "summary": "Retrieve a list of all сategory",
+        "operationId": "categoriesInformation",
+        "description": "Returns an array of сategory objects including their id and name.",
+        "responses": {
+          "200": {
+            "description": "Сategories list successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/categoryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request – invalid parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/recipes/favorite/{recipeId}": {
+      "post": {
+        "tags": [
+          "Favorite"
+        ],
+        "summary": "Add recipe to favorite",
+        "operationId": "addRecipeFavorite",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "recipeId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the recipe to add to favorites"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Recipe added to favorites",
             "content": {
               "application/json": {
                 "schema": {
@@ -420,15 +773,17 @@
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 200
+                      "example": 201
                     },
                     "message": {
                       "type": "string",
-                      "example": "Password has been successfully reset."
+                      "example": "Recipe added to favorites"
                     },
                     "data": {
-                      "type": "object",
-                      "example": {}
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Recipe"
+                      }
                     }
                   }
                 }
@@ -561,6 +916,134 @@
           "error": {
             "type": "string",
             "example": "Internal server error"
+          }
+        }
+      },
+      "Recipe": {
+        "type": "object",
+        "required": [
+          "_id",
+          "title",
+          "category",
+          "ingredients",
+          "instructions",
+          "description",
+          "thumb",
+          "time",
+          "area"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Recipe's id",
+            "type": "string",
+            "example": "6462a8f74c3d0ddd28897fcd"
+          },
+          "title": {
+            "description": "Recipe's title",
+            "type": "string",
+            "example": "Battenberg Cake"
+          },
+          "category": {
+            "description": "Category of the recipe (populated object)",
+            "type": "object",
+            "required": [
+              "_id",
+              "name"
+            ],
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "6462a6cd4c3d0ddd28897f8f"
+              },
+              "name": {
+                "type": "string",
+                "example": "Dessert"
+              }
+            }
+          },
+          "description": {
+            "description": "Short description of the recipe",
+            "type": "string",
+            "example": "A classic British cake made with almond sponge cake and covered with marzipan. It is traditionally pink and yellow checkered in appearance."
+          },
+          "thumb": {
+            "description": "URL of the recipe's thumbnail image",
+            "type": "string",
+            "example": "https://ftp.goit.study/img/so-yummy/preview/Battenberg%20Cake.jpg"
+          },
+          "time": {
+            "description": "Preparation time in minutes",
+            "type": "string",
+            "example": "60"
+          },
+          "ingredients": {
+            "description": "List of ingredients with measures",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "_id",
+                "id",
+                "measure"
+              ],
+              "properties": {
+                "_id": {
+                  "description": "Id of the ingredient record in the recipe",
+                  "type": "string",
+                  "example": "68a88b0a2746ddbe5d48bea3"
+                },
+                "id": {
+                  "description": "Ingredient object (populated)",
+                  "type": "object",
+                  "required": [
+                    "_id",
+                    "name"
+                  ],
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "68a7492da667396e2ff2a512"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Butter"
+                    }
+                  }
+                },
+                "measure": {
+                  "description": "Amount or measure of the ingredient",
+                  "type": "string",
+                  "example": "175g"
+                }
+              }
+            }
+          },
+          "instructions": {
+            "description": "Step-by-step cooking instructions",
+            "type": "string",
+            "example": "Heat oven to 180C/160C fan/gas 4 and line the base..."
+          },
+          "area": {
+            "description": "Region or origin of the recipe",
+            "type": "string",
+            "example": "British"
+          },
+          "owner": {
+            "description": "Id of the user who created the recipe",
+            "type": "string",
+            "example": "64c8d958249fae54bae90bb9"
+          },
+          "createdAt": {
+            "description": "Date when the recipe was created",
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-03-11T10:25:33Z"
+          },
+          "updatedAt": {
+            "description": "Date when the recipe was last updated",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-03-03T12:34:31Z"
           }
         }
       },
@@ -697,11 +1180,84 @@
             }
           }
         }
+      },
+      "ingredient": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640c2dd963a319ea671e37aa"
+          },
+          "name": {
+            "type": "string",
+            "example": "Squid"
+          },
+          "desc": {
+            "type": "string",
+            "example": "A type of cephalopod with a soft, cylindrical body and long tentacles..."
+          },
+          "img": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e37aa.png"
+          }
+        }
+      },
+      "ingredientsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "Successfully found ingredients!"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ingredient"
+            }
+          }
+        }
+      },
+      "category": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640c2dd963a319ea671e37aa"
+          },
+          "name": {
+            "type": "string",
+            "example": "Squid"
+          }
+        }
+      },
+      "categoryResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "Successfully found category!"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/category"
+            }
+          }
+        }
       }
     },
     "responses": {
       "400": {
-        "description": "Bad Request — the server could not process the request due to a client error.  Possible reasons include:\n  - \"Empty contact data\"\n  - \"Validation failed\" — one or more fields are invalid or missing. \n  - \"Malformed request\" — the request format is incorrect.\n\nNot all of these errors apply to every endpoint. The actual reason depends on the specific request. For more information see examples\n",
+        "description": "Bad Request — the server could not process the request due to a client error.  Possible reasons include:\n  - \"Empty data\"\n  - \"Validation failed\" — one or more fields are invalid or missing. \n  - \"Malformed request\" — the request format is incorrect.\n\nNot all of these errors apply to every endpoint. The actual reason depends on the specific request. For more information see examples\n",
         "content": {
           "application/json": {
             "schema": {
