@@ -8,14 +8,14 @@ parameters:
     name: category
     schema:
       type: string
-    description: Filter recipes by category
-    example: Dessert
+    description: Filter recipes by category (MongoDB ObjectId)
+    example: 64c8d958249fae54bae90bb9
   - in: query
     name: ingredient
     schema:
       type: string
-    description: Filter recipes by ingredient
-    example: chocolate
+    description: Filter recipes by ingredient (MongoDB ObjectId)
+    example: 6462a8f74c3d0ddd28897fcd
   - in: query
     name: search
     schema:
