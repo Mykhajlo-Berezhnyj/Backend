@@ -4,10 +4,12 @@ import { calculatePaginationData } from "../utils/calculatePaginationData.js";
 export const getMy = async (req, res, next) => {
   try {
     const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 12;
+    const limit = Number(req.query.limit ?? req.query.perPage) || 12;
 
-    const { items, total } = await getUserRecipes(req.user._id, { page, limit });
-    const pagination = calculatePaginationData(total, page, limit);
+    const { items, total, page: currentPage, perPage } =
+      await getUserRecipes(req.user._id, { page, limit });
+
+    const pagination = calculatePaginationData(total, currentPage, perPage);
 
     res.status(200).json({
       status: 200,
