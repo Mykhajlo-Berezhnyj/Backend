@@ -3,7 +3,7 @@ description: >
   Possible reasons include:
    - "Resource not found" — the requested item does not exist.
    - "User not found" — no user was found for the given email or token.
-   - "Contact not found" — no contact was found for the given contactId.
+   - "Recipe not found" — no Recipe was found for the given recipeId.
 
    Not all of these cases apply to every endpoint.
    For more information see examples
@@ -22,8 +22,8 @@ content:
         value:
           status: 404
           message: User not found
-      ContactNotFound:
-        summary: Contact not found
+      RecipeNotFound:
+        summary: Recipe not found
         value:
           status: 404
-          message: Contact not found
+          message: Recipe not found
