@@ -72,7 +72,11 @@ export const deleteFavoriteRecipeByIdController = async (req, res, next) => {
 };
 
 export const getFavoriteRecipesController = async (req, res) => {
-  const favoriteRecipes = await getFavoriteRecipes(req.user._id);
+  const { page, perPage } = parsePaginationParams(req.query);
+  const favoriteRecipes = await getFavoriteRecipes(req.user._id, {
+    page,
+    perPage,
+  });
 
   if (!favoriteRecipes || favoriteRecipes.length === 0) {
     return res.status(404).json({
@@ -86,6 +90,11 @@ export const getFavoriteRecipesController = async (req, res) => {
     status: 200,
     message: 'Successfully received favorites list',
     data: favoriteRecipes,
-    pagination: favoriteRecipes.pagination,
+    pagination: {
+      totalItems: favoriteRecipes.totalItems,
+      totalPages: favoriteRecipes.totalPages,
+      currentPage: favoriteRecipes.currentPage,
+      perPage: favoriteRecipes.perPage,
+    },
   });
 };

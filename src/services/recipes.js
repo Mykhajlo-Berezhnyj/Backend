@@ -92,12 +92,30 @@ export const deleteFavoriteRecipeById = async (recipeId, userId) => {
   return updatedUser;
 };
 
-export const getFavoriteRecipes = async (userId) => {
-  const user = await User.findById(userId).populate('favoriteRecipes');
+export const getFavoriteRecipes = async (userId, { page, perPage }) => {
+  const user = await User.findById(userId).populate({
+    path: 'favoriteRecipes',
+    options: {
+      skip: (page - 1) * perPage,
+      limit: perPage,
+    },
+  });
 
   if (!user) {
     throw createHttpError(404, 'User not found');
   }
 
-  return user.favoriteRecipes;
+  const totalCount = await User.aggregate([
+    { $match: { _id: user._id } },
+    { $project: { count: { $size: '$favoriteRecipes' } } },
+  ]);
+
+  const count = totalCount[0]?.count || 0;
+
+  const paginationData = calculatePaginationData(count, perPage, page);
+
+  return {
+    data: user.favoriteRecipes,
+    ...paginationData,
+  };
 };
