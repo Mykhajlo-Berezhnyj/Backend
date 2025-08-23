@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "http://127.0.0.1:3000"
     },
     {
       "url": "https://tasteorama-backend-dcjy.onrender.com"
@@ -29,6 +29,135 @@
     }
   ],
   "paths": {
+    "/api/recipes": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Search recipes",
+        "operationId": "searchRecipes",
+        "description": "Get a list of recipes with pagination and search filters: category, ingredient, or keyword in the title.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter recipes by category",
+            "example": "Dessert"
+          },
+          {
+            "in": "query",
+            "name": "ingredient",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter recipes by ingredient",
+            "example": "chocolate"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search recipes by keyword in title",
+            "example": "cake"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipes retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Recipes retrieved successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "data",
+                        "page",
+                        "perPage",
+                        "totalItems",
+                        "totalPages",
+                        "hasNextPage",
+                        "hasPreviousPage"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Recipe"
+                          }
+                        },
+                        "page": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "perPage": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "totalItems": {
+                          "type": "number",
+                          "example": 35
+                        },
+                        "totalPages": {
+                          "type": "number",
+                          "example": 4
+                        },
+                        "hasNextPage": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "hasPreviousPage": {
+                          "type": "boolean",
+                          "example": false
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/api/recipes/{id}": {
       "get": {
         "tags": [
@@ -689,8 +818,7 @@
         "type": "object",
         "required": [
           "status",
-          "message",
-          "data"
+          "message"
         ],
         "properties": {
           "status": {
@@ -710,7 +838,7 @@
             "properties": {
               "message": {
                 "type": "string",
-                "example": "Validation failed"
+                "example": "Malformed request body"
               },
               "errors": {
                 "type": "array",
@@ -736,18 +864,6 @@
           "message": {
             "type": "string",
             "example": "Unauthorized"
-          },
-          "data": {
-            "type": "object",
-            "required": [
-              "message"
-            ],
-            "properties": {
-              "message": {
-                "type": "string",
-                "example": "Session expired"
-              }
-            }
           }
         }
       },
@@ -790,52 +906,99 @@
           }
         }
       },
-      "Ingredient": {
-        "type": "object"
-      },
-      "Ingredients": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/Ingredient"
-        }
-      },
       "Recipe": {
         "type": "object",
+        "required": [
+          "_id",
+          "title",
+          "category",
+          "ingredients",
+          "instructions",
+          "description",
+          "thumb",
+          "time",
+          "area"
+        ],
         "properties": {
           "_id": {
+            "description": "Recipe's id",
             "type": "string",
-            "example": "64efb8c1a2b4c5d6f7e8g9h"
+            "example": "6462a8f74c3d0ddd28897fcd"
           },
           "title": {
+            "description": "Recipe's title",
             "type": "string",
-            "example": "Spaghetti Carbonara"
-          },
-          "owner": {
-            "type": "string",
-            "example": "64efb8c1a2b4c5d6f7e8g9h"
-          },
-          "instructions": {
-            "type": "string",
-            "example": "Step 1.... \n Step 2...."
-          },
-          "description": {
-            "type": "string",
-            "example": "The best recipe for you..."
-          },
-          "thumb": {
-            "type": "string",
-            "example": "https://example.com/image.jpg"
-          },
-          "time": {
-            "type": "integer",
-            "example": 30
-          },
-          "ingredients": {
-            "$ref": "#/components/schemas/Ingredients"
+            "example": "Battenberg Cake"
           },
           "category": {
+            "description": "Category of the recipe",
             "type": "string",
-            "example": "Italian"
+            "example": "Dessert"
+          },
+          "description": {
+            "description": "Short description of the recipe",
+            "type": "string",
+            "example": "A classic British cake made with almond sponge cake and covered with marzipan. It is traditionally pink and yellow checkered in appearance."
+          },
+          "thumb": {
+            "description": "URL of the recipe's thumbnail image",
+            "type": "string",
+            "example": "https://ftp.goit.study/img/so-yummy/preview/Battenberg%20Cake.jpg"
+          },
+          "time": {
+            "description": "Preparation time in minutes",
+            "type": "string",
+            "example": "60"
+          },
+          "ingredients": {
+            "description": "List of ingredients with their measures",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "measure"
+              ],
+              "properties": {
+                "id": {
+                  "description": "Id of the ingredient",
+                  "type": "string",
+                  "example": "640c2dd963a319ea671e367e"
+                },
+                "measure": {
+                  "description": "Amount or measure of the ingredient",
+                  "type": "string",
+                  "example": "175g"
+                }
+              }
+            }
+          },
+          "instructions": {
+            "description": "Step-by-step cooking instructions",
+            "type": "string",
+            "example": "Heat oven to 180C/160C fan/gas 4 and line the base..."
+          },
+          "area": {
+            "description": "Region or origin of the recipe",
+            "type": "string",
+            "example": "British"
+          },
+          "owner": {
+            "description": "Id of the user who created the recipe",
+            "type": "string",
+            "example": "64c8d958249fae54bae90bb9"
+          },
+          "createdAt": {
+            "description": "Date when the recipe was created",
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-03-11T10:25:33Z"
+          },
+          "updatedAt": {
+            "description": "Date when the recipe was last updated",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-03-03T12:34:31Z"
           }
         }
       },
@@ -1049,27 +1212,13 @@
     },
     "responses": {
       "400": {
-        "description": "Bad Request — the server could not process the request due to a client error.  Possible reasons include:\n  - \"Empty data\"\n  - \"Validation failed\" — one or more fields are invalid or missing. \n  - \"Malformed request\" — the request format is incorrect.\n\nNot all of these errors apply to every endpoint. The actual reason depends on the specific request. For more information see examples\n",
+        "description": "Bad Request — the server could not process the request due to a client error.  Possible reasons include:\n  - \"Empty data\"\n  - \"Validation failed\" — one or more fields are invalid or missing. \n  - \"Malformed request\" — the request format is incorrect.\n  - \"Invalid ID format\" — must be a valid ObjectId.\n\nNot all of these errors apply to every endpoint. The actual reason depends on the specific request. For more information see examples\n",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/400"
             },
             "examples": {
-              "emptyContact": {
-                "summary": "Empty data",
-                "description": "The submitted form data is empty or contains no fields. Please provide at least one valid field or file in the form before submitting the request.\n",
-                "value": {
-                  "status": 400,
-                  "message": "Bad request",
-                  "data": {
-                    "message": "Please provide data details before submitting",
-                    "errors": [
-                      "No fields were provided"
-                    ]
-                  }
-                }
-              },
               "validationFailedRecipes": {
                 "summary": "All possible validation errors recipes",
                 "description": "This example shows all possible validation errors for the recipes request. Actual errors depend on which fields are missing or invalid.\n",
@@ -1079,13 +1228,20 @@
                   "data": {
                     "message": "Validation failed",
                     "errors": [
-                      "recipes name is required"
+                      "title is required. - title must not exceed 64 characters.",
+                      "description is required. - description must not exceed 200 characters.",
+                      "time is required. - time must be a number. - time must be greater than or equal to 1. - time must not exceed 360.",
+                      "calories must be a number. - calories must be greater than or equal to 1. - calories must not exceed 10000.",
+                      "category is required. - category must be a valid MongoDB ObjectId. - category must exist in the categories collection (valid category from API).",
+                      "ingredients is required. - ingredients must be an array with 2-15 items. - each item must be an object with id, measure - id valid MongoDB ObjectId (valid ingredient from API), required - measure string, at least 1 character, required",
+                      "instructions is required. - instructions must not exceed 1200 characters.",
+                      "thumb must be an image file. - thumb must not exceed 2 MB."
                     ]
                   }
                 }
               },
-              "validationUserContact": {
-                "summary": "All possible validation errors user",
+              "validationAuthOperations": {
+                "summary": "All possible validation errors for auth",
                 "description": "This example shows all possible validation errors for the user. Actual errors depend on which fields are missing or invalid.\n",
                 "value": {
                   "status": 400,
@@ -1096,10 +1252,7 @@
                       "Name should be required",
                       "Name should be a string",
                       "Name should have at least 3 characters",
-                      "Name should have at most 18 characters",
-                      "Phone number cannot be empty",
-                      "Phone number should be a string",
-                      "Phone number must be valid for Ukraine",
+                      "Name should have at most 16 characters",
                       "Email should be required",
                       "Email must be a valid email address",
                       "Password should be required",
@@ -1127,6 +1280,14 @@
                     ]
                   }
                 }
+              },
+              "validationParamsId": {
+                "summary": "Validation error for id",
+                "description": "This example shows validation error for the id.\n",
+                "value": {
+                  "status": 400,
+                  "message": "Invalid id"
+                }
               }
             }
           }
@@ -1144,70 +1305,35 @@
                 "summary": "Missing Authorization header",
                 "value": {
                   "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "Please provide Authorization header"
-                  }
+                  "message": "Please provide Authorization header"
                 }
               },
               "malformedToken": {
                 "summary": "Malformed Authorization header",
                 "value": {
                   "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "Authorization header should be of type Bearer"
-                  }
+                  "message": "Authorization header should be of type Bearer"
                 }
               },
               "sessionNotFound": {
                 "summary": "Session not found",
                 "value": {
                   "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "Session not found"
-                  }
+                  "message": "Session not found"
                 }
               },
               "sessionExpired": {
                 "summary": "Session expired",
                 "value": {
                   "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "Session expired"
-                  }
-                }
-              },
-              "tokenExpired": {
-                "summary": "jwt expired",
-                "value": {
-                  "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "jwt expired"
-                  }
-                }
-              },
-              "tokenInvalid": {
-                "summary": "jwt invalid",
-                "value": {
-                  "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "invalid signature"
-                  }
+                  "message": "Session expired"
                 }
               },
               "userNotFound": {
                 "summary": "User not found",
                 "value": {
                   "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "User not found"
-                  }
+                  "message": "User not found"
                 }
               }
             }
@@ -1215,7 +1341,7 @@
         }
       },
       "404": {
-        "description": "Not Found — the requested resource could not be found. Possible reasons include:\n - \"Resource not found\" — the requested item does not exist.\n - \"User not found\" — no user was found for the given email or token.\n - \"Contact not found\" — no contact was found for the given contactId.\n\n Not all of these cases apply to every endpoint.\n For more information see examples\n",
+        "description": "Not Found — the requested resource could not be found. Possible reasons include:\n - \"Resource not found\" — the requested item does not exist.\n - \"User not found\" — no user was found for the given email or token.\n - \"Recipe not found\" — no Recipe was found for the given recipeId.\n\n Not all of these cases apply to every endpoint.\n For more information see examples\n",
         "content": {
           "application/json": {
             "schema": {
@@ -1236,11 +1362,11 @@
                   "message": "User not found"
                 }
               },
-              "ContactNotFound": {
-                "summary": "Contact not found",
+              "RecipeNotFound": {
+                "summary": "Recipe not found",
                 "value": {
                   "status": 404,
-                  "message": "Contact not found"
+                  "message": "Recipe not found"
                 }
               }
             }
