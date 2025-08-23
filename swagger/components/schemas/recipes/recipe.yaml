@@ -1,0 +1,80 @@
+Recipe:
+  type: object
+  required:
+    - _id
+    - title
+    - category
+    - owner
+    - area
+    - instructions
+    - description
+    - thumb
+    - time
+    - ingredients
+  properties:
+    _id:
+      type: string
+      pattern: "^[0-9a-fA-F]{24}$"
+      description: "Unique identifier of the recipe in the database"
+      example: "6462a8f74c3d0ddd28897fcd"
+    title:
+      type: string
+      description: "Title of the recipe"
+      example: "Battenberg Cake"
+    category:
+      type: string
+      pattern: "^[0-9a-fA-F]{24}$"
+      description: "Identifier of the recipe category"
+      example: "6462a6cd4c3d0ddd28897f8f"
+    owner:
+      type: string
+      pattern: "^[0-9a-fA-F]{24}$"
+      description: "Identifier of the user who created the recipe"
+      example: "64c8d958249fae54bae90bb9"
+    area:
+      type: string
+      description: "Regional cuisine or country of origin of the recipe"
+      example: "British"
+    instructions:
+      type: string
+      description: "Step-by-step instructions for preparing the recipe"
+      example: "Heat oven to 180C/160C fan/gas 4 and line the base ..."
+    description:
+      type: string
+      description: "Short description of the recipe"
+      example: "A classic British cake made with almond sponge cake ..."
+    thumb:
+      type: string
+      format: url
+      description: "URL of the recipe preview image"
+      example: "https://ftp.goit.study/img/so-yummy/preview/Battenberg%20Cake.jpg"
+    time:
+      type: string
+      description: "Cooking time in minutes"
+      example: "60"
+    ingredients:
+  type: array
+  description: "List of ingredients with measurements"
+  items:
+    type: object
+    required:
+      - id
+      - measure
+    properties:
+      id:
+        type: string
+        description: "Ingredient ID"
+        pattern: "^[0-9a-fA-F]{24}$"
+        example: "640c2dd963a319ea671e367e"
+      measure:
+        type: string
+        description: "Amount of the ingredient for this recipe"
+        example: "175g"
+    createdAt:
+      type: string
+      format: date-time
+      example: "2023-03-11T19:25:33.243Z"
+    updatedAt:
+      type: string
+      format: date-time
+      example: "2024-03-03T22:47:51.976Z"

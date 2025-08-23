@@ -11,7 +11,31 @@ description: >
 content:
   application/json:
     schema:
-      $ref: ../schemas/errors/400.yaml
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: Bad request
+        data:
+          type: object
+          required:
+            - message
+            - errors
+          properties:
+            message:
+              type: string
+              example: Malformed request body
+            errors:
+              type: array
+              items:
+                type: string
+
     examples:
       validationFailedRecipes:
         summary: All possible validation errors recipes

@@ -1,5 +1,5 @@
-description: Successfully logged in an user
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/user/LoginResponse.yaml
+# description: Successfully logged in an user
+# content:
+#   application/json:
+#     schema:
+#       $ref: ../../schemas/user/LoginResponse.yaml
