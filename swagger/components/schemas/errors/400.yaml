@@ -2,7 +2,6 @@ type: object
 required:
   - status
   - message
-  - data
 properties:
   status:
     type: integer
@@ -18,7 +17,7 @@ properties:
     properties:
       message:
         type: string
-        example: Validation failed
+        example: Malformed request body
       errors:
         type: array
         items:
