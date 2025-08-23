@@ -7,7 +7,7 @@
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "description": "API for managing user recipes"
+    "description": "A RESTful API for managing a user's recipe list, including creation, adding to favorites, and deletion of recipes. The API also supports filtering by categories and ingredients."
   },
   "servers": [
     {
@@ -24,8 +24,32 @@
   ],
   "tags": [
     {
-      "name": "Tasteorama",
-      "description": "A RESTful API for managing a user's recipe list, including creation, adding to favorites, and deletion of recipes. The API also supports filtering by categories and ingredients."
+      "name": "Recipes",
+      "description": "Recipes operations (getAll, getById, post)"
+    },
+    {
+      "name": "FavoriteRecipes",
+      "description": "FavoriteRecipes operations (getAll, postByID, deleteByID)"
+    },
+    {
+      "name": "MyRecipes",
+      "description": "MyRecipes operations (getAll)"
+    },
+    {
+      "name": "Auth",
+      "description": "Authentication operations (register, login, refresh)."
+    },
+    {
+      "name": "Users",
+      "description": "Users operations (get)"
+    },
+    {
+      "name": "Сategories",
+      "description": "Сategories operations (getAll)"
+    },
+    {
+      "name": "Ingredients",
+      "description": "Ingredients operations (getAll)"
     }
   ],
   "paths": {
@@ -484,7 +508,7 @@
       }
     },
     "/api/users": {
-      "post": {
+      "get": {
         "tags": [
           "Users"
         ],
@@ -657,7 +681,7 @@
     "/api/recipes/favorite/{recipeId}": {
       "post": {
         "tags": [
-          "Favorite"
+          "FavoriteRecipes"
         ],
         "summary": "Add recipe to favorite",
         "operationId": "addRecipeFavorite",
