@@ -15,11 +15,11 @@ properties:
   _id:
     description: "Recipe's id"
     type: string
-    example: 6462a8f74c3d0ddd28898029
+    example: "6462a8f74c3d0ddd28898029"
   area:
     description: "Which country's dish"
     type: string
-    example: "Ukrainian"
+    example: "6462a6f04c3d0ddd28897f9b"
   title:
     description: "The name of the dish"
     type: string
@@ -31,25 +31,40 @@ properties:
   time:
     description: "Cooking time in minutes"
     type: number
-    example: "10"
+    example: 10
   category:
     description: "Category dish"
     type: string
-    example: "Pasta"
+    example: "6462a6cd4c3d0ddd28897f94"
+  # ingredients:
+  #   description: "Ingredients dish"
+  #   type: array
+  #   items:
+  #     type: object
+  #     required:
+  #       - id
+  #       - measure
+  #     properties:
+  #       id:
+  #         type: string
+  #         example: "64d9f0d2e9f1b8a3d6e12345"
+  #       measure:
+  #         type: string
+  #         example: "200 g"
   ingredients:
-    description: "Ingredients dish"
-    type: array
-    example: "Tomatoes"
+    description: "Ingredients dish (JSON string array of objects)"
+    type: string
+    example: '[{"id":"64d9f0d2e9f1b8a3d6e12345","measure":"200 g"}]'
   instructions:
     description: "Instructions on how to prepare a dish"
     type: string
     example: "Heat the oil in a large saucepan"
   userId:
-    description: "Contact's owner id"
+    description: "Recipe's owner id"
     type: string
     example: 99e4decdd286b30065d54af1
   thumb:
-    description: "Dish's photo"
+    description: "Dish's photo (URL to uploaded image)"
     type: string
     example: https://ftp.goit.study/img/so-yummy/preview/Lasagne.jpg
   createdAt:

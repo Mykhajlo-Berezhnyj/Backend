@@ -31,6 +31,7 @@ export const addOwnRecipeController = async (req, res) => {
     const result = await saveFileToUploadDir(req.file);
     thumb = result;
   }
+        
   const newRecipes = await addOwnRecipes({
     ...req.body,
     thumb,

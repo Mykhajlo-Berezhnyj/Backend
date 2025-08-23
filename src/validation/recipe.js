@@ -25,13 +25,34 @@ export const createAddOwnRecipeSchema = Joi.object({
     //   "Soup"
     // )
     .required(),
-  ingredients: Joi.array()
-    .items(
-      Joi.object({
-        id: Joi.string().required(),
-        measure: Joi.string().min(2).max(16).required(),
-      })
-    ).min(1)
+  //   ingredients: Joi.array()
+  //     .items(
+  //       Joi.object({
+  //         id: Joi.string().required(),
+  //         measure: Joi.string().min(2).max(16).required(),
+  //       })
+  //     ).min(1)
+  //     .required(),
+  ingredients: Joi.alternatives()
+    .try(
+      Joi.array().items(
+        Joi.object({
+          id: Joi.string().min(1).required(),
+          measure: Joi.string().min(2).max(16).required(),
+        })
+      ),
+      Joi.string().custom((value, helpers) => {
+        try {
+          const parsed = JSON.parse(value);
+          if (!Array.isArray(parsed)) {
+            return helpers.error("any.invalid");
+          }
+          return parsed;
+        } catch (err) {
+          return helpers.error("any.invalid");
+        }
+      }, "Parse ingredients JSON")
+    )
     .required(),
   instructions: Joi.string().max(1200).required(),
   thumb: Joi.string().uri().optional(),

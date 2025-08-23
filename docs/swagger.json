@@ -29,6 +29,125 @@
     }
   ],
   "paths": {
+    "/api/recipes": {
+      "post": {
+        "tags": [
+          "Add Recipe"
+        ],
+        "summary": "Create new recipe",
+        "operationId": "createOwnRecipe",
+        "description": "Create a new owners recipe",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "area",
+                  "title",
+                  "description",
+                  "time",
+                  "category",
+                  "ingredients",
+                  "instructions"
+                ],
+                "properties": {
+                  "area": {
+                    "description": "Which country's dish",
+                    "type": "string",
+                    "example": "6462a6f04c3d0ddd28897f9b"
+                  },
+                  "title": {
+                    "description": "The name of the dish",
+                    "type": "string",
+                    "example": "Lasagne"
+                  },
+                  "description": {
+                    "description": "Description dish",
+                    "type": "string",
+                    "example": "Layers of pasta, meat sauce, and cheese"
+                  },
+                  "time": {
+                    "description": "Cooking time in minutes",
+                    "type": "number",
+                    "example": 10
+                  },
+                  "calories": {
+                    "description": "Calories",
+                    "type": "number",
+                    "example": 230
+                  },
+                  "category": {
+                    "description": "Category dish",
+                    "type": "string",
+                    "example": "6462a6cd4c3d0ddd28897f94"
+                  },
+                  "ingredients": {
+                    "description": "Ingredients dish (JSON string array of objects)",
+                    "type": "string",
+                    "example": "[{\"id\":\"64d9f0d2e9f1b8a3d6e12345\",\"measure\":\"200 g\"}]"
+                  },
+                  "instructions": {
+                    "description": "Instructions on how to prepare a dish",
+                    "type": "string",
+                    "example": "Heat the oil in a large saucepan"
+                  },
+                  "thumb": {
+                    "description": "Dish's photo (max 2MB, only image)",
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Creates a recipe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created new recire!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/recipe"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
     "/api/auth/register": {
       "post": {
         "tags": [
@@ -561,6 +680,84 @@
           "error": {
             "type": "string",
             "example": "Internal server error"
+          }
+        }
+      },
+      "recipe": {
+        "type": "object",
+        "required": [
+          "_id",
+          "area",
+          "title",
+          "description",
+          "time",
+          "category",
+          "ingredients",
+          "instructions",
+          "userId",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Recipe's id",
+            "type": "string",
+            "example": "6462a8f74c3d0ddd28898029"
+          },
+          "area": {
+            "description": "Which country's dish",
+            "type": "string",
+            "example": "6462a6f04c3d0ddd28897f9b"
+          },
+          "title": {
+            "description": "The name of the dish",
+            "type": "string",
+            "example": "Lasagne"
+          },
+          "description": {
+            "description": "Description dish",
+            "type": "string",
+            "example": "Layers of pasta, meat sauce, and cheese"
+          },
+          "time": {
+            "description": "Cooking time in minutes",
+            "type": "number",
+            "example": 10
+          },
+          "category": {
+            "description": "Category dish",
+            "type": "string",
+            "example": "6462a6cd4c3d0ddd28897f94"
+          },
+          "ingredients": {
+            "description": "Ingredients dish (JSON string array of objects)",
+            "type": "string",
+            "example": "[{\"id\":\"64d9f0d2e9f1b8a3d6e12345\",\"measure\":\"200 g\"}]"
+          },
+          "instructions": {
+            "description": "Instructions on how to prepare a dish",
+            "type": "string",
+            "example": "Heat the oil in a large saucepan"
+          },
+          "userId": {
+            "description": "Recipe's owner id",
+            "type": "string",
+            "example": "99e4decdd286b30065d54af1"
+          },
+          "thumb": {
+            "description": "Dish's photo (URL to uploaded image)",
+            "type": "string",
+            "example": "https://ftp.goit.study/img/so-yummy/preview/Lasagne.jpg"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-07-26T15:45:37.660+00:00"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-07-26T15:45:37.660+00:00"
           }
         }
       },
