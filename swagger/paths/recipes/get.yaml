@@ -1,0 +1,25 @@
+responses:
+  "400":
+    description: Bad Request
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/errors/400.yaml
+  "401":
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/errors/401.yaml
+  "404":
+    description: Not Found
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/errors/404.yaml
+  "500":
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/errors/500.yaml

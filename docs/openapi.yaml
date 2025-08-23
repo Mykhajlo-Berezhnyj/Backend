@@ -74,5 +74,18 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+      
+      schemas:
+    Error400:
+      $ref: ../swagger/components/schemas/errors/400.yaml
+    Error401:
+      $ref: ../swagger/components/schemas/errors/401.yaml
+    Error404:
+      $ref: ../swagger/components/schemas/errors/404.yaml
+    Error500:
+      $ref: ../swagger/components/schemas/errors/500.yaml
+    BadRequestResponse:
+      $ref: ../swagger/components/schemas/errors/BadRequestResponse.yaml
+      
 security:
   - bearerAuth: []
