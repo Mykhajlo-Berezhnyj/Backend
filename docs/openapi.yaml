@@ -13,11 +13,11 @@ servers:
   - url: http://localhost:3000
   - url: https://tasteorama-backend-dcjy.onrender.com
 paths:
-  # /api/recipes:
-  #   get:
-  #     $ref: ../swagger/paths/recipes/get.yaml
-  #   post:
-  #     $ref: ../swagger/paths/recipes/post.yaml
+  /api/recipes:
+    #   get:
+    #     $ref: ../swagger/paths/recipes/get.yaml
+    post:
+      $ref: ../swagger/paths/recipes/post.yaml
   # /api/recipes/own:
   #   get:
   #     $ref: ../swagger/paths/recipes/own/get.yaml

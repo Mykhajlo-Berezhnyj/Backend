@@ -1,0 +1,62 @@
+type: object
+required:
+  - _id
+  - area
+  - title
+  - description
+  - time
+  - category
+  - ingredients
+  - instructions
+  - userId
+  - createdAt
+  - updatedAt
+properties:
+  _id:
+    description: "Recipe's id"
+    type: string
+    example: 6462a8f74c3d0ddd28898029
+  area:
+    description: "Which country's dish"
+    type: string
+    example: "Ukrainian"
+  title:
+    description: "The name of the dish"
+    type: string
+    example: Lasagne
+  description:
+    description: "Description dish"
+    type: string
+    example: "Layers of pasta, meat sauce, and cheese"
+  time:
+    description: "Cooking time in minutes"
+    type: number
+    example: "10"
+  category:
+    description: "Category dish"
+    type: string
+    example: "Pasta"
+  ingredients:
+    description: "Ingredients dish"
+    type: array
+    example: "Tomatoes"
+  instructions:
+    description: "Instructions on how to prepare a dish"
+    type: string
+    example: "Heat the oil in a large saucepan"
+  userId:
+    description: "Contact's owner id"
+    type: string
+    example: 99e4decdd286b30065d54af1
+  thumb:
+    description: "Dish's photo"
+    type: string
+    example: https://ftp.goit.study/img/so-yummy/preview/Lasagne.jpg
+  createdAt:
+    type: string
+    format: date-time
+    example: 2025-07-26T15:45:37.660+00:00
+  updatedAt:
+    type: string
+    format: date-time
+    example: 2025-07-26T15:45:37.660+00:00

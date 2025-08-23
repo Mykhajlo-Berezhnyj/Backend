@@ -9,5 +9,5 @@ export const saveFileToUploadDir = async (file) => {
     path.join(UPLOAD_DIR, file.filename),
   );
 
-  return `${config.domain}/uploads/${file.name}`;
+  return `${config.domain}/uploads/${file.filename}`;
 };

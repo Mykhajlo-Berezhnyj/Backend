@@ -15,7 +15,7 @@ const router = Router();
 router.use(authenticate);
 
 router.post(
-  "/addOwnRecipe",
+  "/",
   upload.single("thumb"),
   validateBody(createAddOwnRecipeSchema),
   ctrlWrapper(addOwnRecipeController)

@@ -1,0 +1,83 @@
+tags:
+  - Add Recipe
+summary: Create new recipe
+operationId: createOwnRecipe
+description: "Create a new owners recipe"
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - area
+          - title
+          - description
+          - time
+          - category
+          - ingredients
+          - instructions
+        properties:
+          area:
+            description: "Which country's dish"
+            type: string
+            example: "Ukrainian"
+          title:
+            description: "The name of the dish"
+            type: string
+            example: Lasagne
+          description:
+            description: "Description dish"
+            type: string
+            example: "Layers of pasta, meat sauce, and cheese"
+          time:
+            description: "Cooking time in minutes"
+            type: number
+            example: "10"
+          calories:
+            description: "Calories"
+            type: number
+            example: "230"
+          category:
+            description: "Category dish"
+            type: string
+            example: "Pasta"
+          ingredients:
+            description: "Ingredients dish"
+            type: array
+            example: "Tomatoes"
+          instructions:
+            description: "Instructions on how to prepare a dish"
+            type: string
+            example: "Heat the oil in a large saucepan"
+          thumb:
+            description: "Dish's photo"
+            type: string
+            format: binary
+responses:
+  "201":
+    description: Creates a recipe
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created new recire!
+            data:
+              $ref: "../../components/schemas/recipe/recipe.yaml"
+  "400":
+    $ref: "../../components/responses/400.yaml"
+  "401":
+    $ref: "../../components/responses/401.yaml"
+  "500":
+    $ref: "../../components/responses/500.yaml"
