@@ -1,29 +1,40 @@
-# description: >
-#   Not Found — the requested resource could not be found.
-#   Possible reasons include:
-#    - "Resource not found" — the requested item does not exist.
-#    - "User not found" — no user was found for the given email or token.
-#    - "Contact not found" — no contact was found for the given contactId.
+description: >
+  Not Found — the requested resource could not be found.
+  Possible reasons include:
+   - "Resource not found" — the requested item does not exist.
+   - "User not found" — no user was found for the given email or token.
+   - "Recipe not found" — no Recipe was found for the given recipeId.
 
-#    Not all of these cases apply to every endpoint.
-#    For more information see examples
-# content:
-#   application/json:
-#     schema:
-#       $ref: ../schemas/errors/404.yaml
-#     examples:
-#       resourceNotFound:
-#         summary: Generic not found
-#         value:
-#           status: 404
-#           message: Resource not found
-#       userNotFound:
-#         summary: User not found
-#         value:
-#           status: 404
-#           message: User not found
-#       ContactNotFound:
-#         summary: Contact not found
-#         value:
-#           status: 404
-#           message: Contact not found
+   Not all of these cases apply to every endpoint.
+   For more information see examples
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: Not found
+
+    examples:
+      resourceNotFound:
+        summary: Generic not found
+        value:
+          status: 404
+          message: Resource not found
+      userNotFound:
+        summary: User not found
+        value:
+          status: 404
+          message: User not found
+      RecipeNotFound:
+        summary: Recipe not found
+        value:
+          status: 404
+          message: Recipe not found

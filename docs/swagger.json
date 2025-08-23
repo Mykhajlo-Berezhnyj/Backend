@@ -7,7 +7,7 @@
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "description": "API for managing user recipes"
+    "description": "A RESTful API for managing a user's recipe list, including creation, adding to favorites, and deletion of recipes. The API also supports filtering by categories and ingredients."
   },
   "servers": [
     {
@@ -24,8 +24,32 @@
   ],
   "tags": [
     {
-      "name": "Tasteorama",
-      "description": "A RESTful API for managing a user's recipe list, including creation, adding to favorites, and deletion of recipes. The API also supports filtering by categories and ingredients."
+      "name": "Recipes",
+      "description": "Recipes operations (getAll, getById, post)"
+    },
+    {
+      "name": "FavoriteRecipes",
+      "description": "FavoriteRecipes operations (getAll, postByID, deleteByID)"
+    },
+    {
+      "name": "MyRecipes",
+      "description": "MyRecipes operations (getAll)"
+    },
+    {
+      "name": "Auth",
+      "description": "Authentication operations (register, login, refresh)."
+    },
+    {
+      "name": "Users",
+      "description": "Users operations (get)"
+    },
+    {
+      "name": "Сategories",
+      "description": "Сategories operations (getAll)"
+    },
+    {
+      "name": "Ingredients",
+      "description": "Ingredients operations (getAll)"
     }
   ],
   "paths": {
@@ -221,91 +245,10 @@
       }
     },
     "/api/auth/register": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Register a new user",
-        "operationId": "registerUser",
-        "security": [],
-        "requestBody": {
-          "description": "User registration payload",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              },
-              "example": {
-                "name": "John Doe",
-                "email": "john@example.com",
-                "password": "P@ssw0rd!"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully registered a user!",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "409": {
-            "$ref": "#/components/responses/409"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      }
+      "post": null
     },
     "/api/auth/login": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Log in a user",
-        "operationId": "loginUser",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserLogin"
-              },
-              "example": {
-                "email": "john@example.com",
-                "password": "securePassword123"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Login"
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      }
+      "post": null
     },
     "/api/auth/logout": {
       "post": {
@@ -565,7 +508,7 @@
       }
     },
     "/api/users": {
-      "post": {
+      "get": {
         "tags": [
           "Users"
         ],
@@ -738,7 +681,7 @@
     "/api/recipes/favorite/{recipeId}": {
       "post": {
         "tags": [
-          "Favorite"
+          "FavoriteRecipes"
         ],
         "summary": "Add recipe to favorite",
         "operationId": "addRecipeFavorite",
@@ -814,111 +757,6 @@
       }
     },
     "schemas": {
-      "400": {
-        "type": "object",
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
-        "properties": {
-          "status": {
-            "type": "integer",
-            "example": 400
-          },
-          "message": {
-            "type": "string",
-            "example": "Bad request"
-          },
-          "data": {
-            "type": "object",
-            "required": [
-              "message",
-              "errors"
-            ],
-            "properties": {
-              "message": {
-                "type": "string",
-                "example": "Validation failed"
-              },
-              "errors": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "401": {
-        "type": "object",
-        "required": [
-          "status",
-          "message"
-        ],
-        "properties": {
-          "status": {
-            "type": "integer",
-            "example": 401
-          },
-          "message": {
-            "type": "string",
-            "example": "Unauthorized"
-          },
-          "data": {
-            "type": "object",
-            "required": [
-              "message"
-            ],
-            "properties": {
-              "message": {
-                "type": "string",
-                "example": "Session expired"
-              }
-            }
-          }
-        }
-      },
-      "404": {
-        "type": "object",
-        "required": [
-          "status",
-          "message"
-        ],
-        "properties": {
-          "status": {
-            "type": "integer",
-            "example": 404
-          },
-          "message": {
-            "type": "string",
-            "example": "Not found"
-          }
-        }
-      },
-      "500": {
-        "type": "object",
-        "required": [
-          "status",
-          "message",
-          "error"
-        ],
-        "properties": {
-          "status": {
-            "type": "integer",
-            "example": 500
-          },
-          "message": {
-            "type": "string",
-            "example": "Something went wrong"
-          },
-          "error": {
-            "type": "string",
-            "example": "Internal server error"
-          }
-        }
-      },
       "Recipe": {
         "type": "object",
         "required": [
@@ -1047,140 +885,6 @@
           }
         }
       },
-      "User": {
-        "type": "object",
-        "required": [
-          "name",
-          "email",
-          "password"
-        ],
-        "properties": {
-          "name": {
-            "description": "User's name must not exceed 128 characters.",
-            "type": "string",
-            "example": "John Doe"
-          },
-          "email": {
-            "description": "User's email must be a valid email address and must not exceed 128 characters.",
-            "type": "string",
-            "format": "email",
-            "example": "john@example.com"
-          },
-          "password": {
-            "description": "User's password must contain at least: - one uppercase letter - one lowercase letter - one digit - one special character - minimum length of 8 characters - maximum length of 128 characters\n",
-            "type": "string",
-            "format": "password",
-            "example": "P@ssw0rd!"
-          }
-        }
-      },
-      "UserResponse": {
-        "type": "object",
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
-        "properties": {
-          "status": {
-            "type": "integer",
-            "description": "status code",
-            "example": 201
-          },
-          "message": {
-            "type": "string",
-            "description": "Response message",
-            "example": "Successfully registered a user!"
-          },
-          "data": {
-            "type": "object",
-            "required": [
-              "_id",
-              "name",
-              "email",
-              "createdAt",
-              "updatedAt"
-            ],
-            "properties": {
-              "name": {
-                "description": "User's name",
-                "type": "string",
-                "example": "John Doe"
-              },
-              "email": {
-                "description": "User's email",
-                "type": "string",
-                "example": "john@example.com"
-              },
-              "_id": {
-                "description": "User's id",
-                "type": "string",
-                "example": "688319f519bc98717111a6b5"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "example": "2025-07-30T18:35:01.046Z"
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "example": "2025-08-04T16:06:04.521Z"
-              }
-            }
-          }
-        }
-      },
-      "UserLogin": {
-        "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
-        "properties": {
-          "email": {
-            "description": "User's email",
-            "type": "string",
-            "format": "email",
-            "example": "john@example.com"
-          },
-          "password": {
-            "description": "User's password",
-            "format": "password",
-            "example": "P@ssw0rd!"
-          }
-        }
-      },
-      "LoginResponse": {
-        "type": "object",
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
-        "properties": {
-          "status": {
-            "type": "integer",
-            "example": 200
-          },
-          "message": {
-            "type": "string",
-            "example": "Successfully logged in an user!"
-          },
-          "data": {
-            "type": "object",
-            "required": [
-              "accessToken"
-            ],
-            "properties": {
-              "accessToken": {
-                "type": "string",
-                "example": "myQ57pVSqU92uN0LZK3rTJRgeqIorXYcbTIlqAyT"
-              }
-            }
-          }
-        }
-      },
       "ingredient": {
         "type": "object",
         "properties": {
@@ -1257,27 +961,46 @@
     },
     "responses": {
       "400": {
-        "description": "Bad Request — the server could not process the request due to a client error.  Possible reasons include:\n  - \"Empty data\"\n  - \"Validation failed\" — one or more fields are invalid or missing. \n  - \"Malformed request\" — the request format is incorrect.\n\nNot all of these errors apply to every endpoint. The actual reason depends on the specific request. For more information see examples\n",
+        "description": "Bad Request — the server could not process the request due to a client error.  Possible reasons include:\n  - \"Empty data\"\n  - \"Validation failed\" — one or more fields are invalid or missing. \n  - \"Malformed request\" — the request format is incorrect.\n  - \"Invalid ID format\" — must be a valid ObjectId.\n\nNot all of these errors apply to every endpoint. The actual reason depends on the specific request. For more information see examples\n",
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/400"
-            },
-            "examples": {
-              "emptyContact": {
-                "summary": "Empty data",
-                "description": "The submitted form data is empty or contains no fields. Please provide at least one valid field or file in the form before submitting the request.\n",
-                "value": {
-                  "status": 400,
-                  "message": "Bad request",
-                  "data": {
-                    "message": "Please provide data details before submitting",
-                    "errors": [
-                      "No fields were provided"
-                    ]
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Bad request"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message",
+                    "errors"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Malformed request body"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
                   }
                 }
-              },
+              }
+            },
+            "examples": {
               "validationFailedRecipes": {
                 "summary": "All possible validation errors recipes",
                 "description": "This example shows all possible validation errors for the recipes request. Actual errors depend on which fields are missing or invalid.\n",
@@ -1287,13 +1010,20 @@
                   "data": {
                     "message": "Validation failed",
                     "errors": [
-                      "recipes name is required"
+                      "title is required. - title must not exceed 64 characters.",
+                      "description is required. - description must not exceed 200 characters.",
+                      "time is required. - time must be a number. - time must be greater than or equal to 1. - time must not exceed 360.",
+                      "calories must be a number. - calories must be greater than or equal to 1. - calories must not exceed 10000.",
+                      "category is required. - category must be a valid MongoDB ObjectId. - category must exist in the categories collection (valid category from API).",
+                      "ingredients is required. - ingredients must be an array with 2-15 items. - each item must be an object with id, measure - id valid MongoDB ObjectId (valid ingredient from API), required - measure string, at least 1 character, required",
+                      "instructions is required. - instructions must not exceed 1200 characters.",
+                      "thumb must be an image file. - thumb must not exceed 2 MB."
                     ]
                   }
                 }
               },
-              "validationUserContact": {
-                "summary": "All possible validation errors user",
+              "validationAuthOperations": {
+                "summary": "All possible validation errors for auth",
                 "description": "This example shows all possible validation errors for the user. Actual errors depend on which fields are missing or invalid.\n",
                 "value": {
                   "status": 400,
@@ -1304,10 +1034,7 @@
                       "Name should be required",
                       "Name should be a string",
                       "Name should have at least 3 characters",
-                      "Name should have at most 18 characters",
-                      "Phone number cannot be empty",
-                      "Phone number should be a string",
-                      "Phone number must be valid for Ukraine",
+                      "Name should have at most 16 characters",
                       "Email should be required",
                       "Email must be a valid email address",
                       "Password should be required",
@@ -1335,87 +1062,74 @@
                     ]
                   }
                 }
+              },
+              "validationParamsId": {
+                "summary": "Validation error for id",
+                "description": "This example shows validation error for the id.\n",
+                "value": {
+                  "status": 400,
+                  "message": "Invalid id"
+                }
               }
             }
           }
         }
       },
       "401": {
-        "description": "Unauthorized — request lacks valid authentication\n The specific cause of the 401 error may vary depending on the endpoint. \n Possible reasons include:\n  - Missing or malformed Authorization header\n  - Expired or invalid access token\n  - Session not found \n  - Session expired \n  - Token expired\n  - Token invalid\n  - User not found\n\nFor more information see examples\n",
+        "description": "Unauthorized — request lacks valid authentication\n The specific cause of the 401 error may vary depending on the endpoint.\n Possible reasons include:\n  - Missing or malformed Authorization header\n  - Expired or invalid access token\n  - Session not found\n  - Session expired\n  - Token expired\n  - Token invalid\n  - User not found\nFor more information see examples\n",
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/401"
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                }
+              }
             },
             "examples": {
               "missingHeader": {
                 "summary": "Missing Authorization header",
                 "value": {
                   "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "Please provide Authorization header"
-                  }
+                  "message": "Please provide Authorization header"
                 }
               },
               "malformedToken": {
                 "summary": "Malformed Authorization header",
                 "value": {
                   "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "Authorization header should be of type Bearer"
-                  }
+                  "message": "Authorization header should be of type Bearer"
                 }
               },
               "sessionNotFound": {
                 "summary": "Session not found",
                 "value": {
                   "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "Session not found"
-                  }
+                  "message": "Session not found"
                 }
               },
               "sessionExpired": {
                 "summary": "Session expired",
                 "value": {
                   "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "Session expired"
-                  }
-                }
-              },
-              "tokenExpired": {
-                "summary": "jwt expired",
-                "value": {
-                  "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "jwt expired"
-                  }
-                }
-              },
-              "tokenInvalid": {
-                "summary": "jwt invalid",
-                "value": {
-                  "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "invalid signature"
-                  }
+                  "message": "Session expired"
                 }
               },
               "userNotFound": {
                 "summary": "User not found",
                 "value": {
                   "status": 401,
-                  "message": "Unauthorized",
-                  "data": {
-                    "message": "User not found"
-                  }
+                  "message": "User not found"
                 }
               }
             }
@@ -1423,11 +1137,25 @@
         }
       },
       "404": {
-        "description": "Not Found — the requested resource could not be found. Possible reasons include:\n - \"Resource not found\" — the requested item does not exist.\n - \"User not found\" — no user was found for the given email or token.\n - \"Contact not found\" — no contact was found for the given contactId.\n\n Not all of these cases apply to every endpoint.\n For more information see examples\n",
+        "description": "Not Found — the requested resource could not be found. Possible reasons include:\n - \"Resource not found\" — the requested item does not exist.\n - \"User not found\" — no user was found for the given email or token.\n - \"Recipe not found\" — no Recipe was found for the given recipeId.\n\n Not all of these cases apply to every endpoint.\n For more information see examples\n",
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/404"
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found"
+                }
+              }
             },
             "examples": {
               "resourceNotFound": {
@@ -1444,60 +1172,11 @@
                   "message": "User not found"
                 }
               },
-              "ContactNotFound": {
-                "summary": "Contact not found",
+              "RecipeNotFound": {
+                "summary": "Recipe not found",
                 "value": {
                   "status": 404,
-                  "message": "Contact not found"
-                }
-              }
-            }
-          }
-        }
-      },
-      "409": {
-        "description": "Conflict error — request conflicts with existing resource",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 409
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Conflict error"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Email is already in use"
-                    }
-                  }
-                }
-              }
-            },
-            "examples": {
-              "emailInUse": {
-                "summary": "Email already exists",
-                "value": {
-                  "status": 409,
-                  "message": "Conflict error",
-                  "data": {
-                    "message": "Email is already in use"
-                  }
+                  "message": "Recipe not found"
                 }
               }
             }
@@ -1509,7 +1188,26 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/500"
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "error"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Something went wrong"
+                },
+                "error": {
+                  "type": "string",
+                  "example": "Internal server error"
+                }
+              }
             },
             "examples": {
               "genericError": {
@@ -1528,16 +1226,6 @@
                   "error": "Failed to connect to the database"
                 }
               }
-            }
-          }
-        }
-      },
-      "Login": {
-        "description": "Successfully logged in an user",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/LoginResponse"
             }
           }
         }

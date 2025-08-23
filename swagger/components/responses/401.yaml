@@ -1,73 +1,57 @@
-# description: >
-#   Unauthorized — request lacks valid authentication
-#    The specific cause of the 401 error may vary depending on the endpoint.
-#    Possible reasons include:
-#     - Missing or malformed Authorization header
-#     - Expired or invalid access token
-#     - Session not found
-#     - Session expired
-#     - Token expired
-#     - Token invalid
-#     - User not found
+description: >
+  Unauthorized — request lacks valid authentication
+   The specific cause of the 401 error may vary depending on the endpoint.
+   Possible reasons include:
+    - Missing or malformed Authorization header
+    - Expired or invalid access token
+    - Session not found
+    - Session expired
+    - Token expired
+    - Token invalid
+    - User not found
+  For more information see examples
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          example: 401
+        message:
+          type: string
+          example: Unauthorized
 
-#   For more information see examples
-# content:
-#   application/json:
-#     schema:
-#       $ref: ../schemas/errors/401.yaml
-#     examples:
-#       missingHeader:
-#         summary: Missing Authorization header
-#         value:
-#           status: 401
-#           message: Unauthorized
-#           data:
-#             message: Please provide Authorization header
+    examples:
+      missingHeader:
+        summary: Missing Authorization header
+        value:
+          status: 401
+          message: Please provide Authorization header
 
-#       malformedToken:
-#         summary: Malformed Authorization header
-#         value:
-#           status: 401
-#           message: Unauthorized
-#           data:
-#             message: Authorization header should be of type Bearer
+      malformedToken:
+        summary: Malformed Authorization header
+        value:
+          status: 401
+          message: Authorization header should be of type Bearer
 
-#       sessionNotFound:
-#         summary: Session not found
-#         value:
-#           status: 401
-#           message: Unauthorized
-#           data:
-#             message: Session not found
+      sessionNotFound:
+        summary: Session not found
+        value:
+          status: 401
+          message: Session not found
 
-#       sessionExpired:
-#         summary: Session expired
-#         value:
-#           status: 401
-#           message: Unauthorized
-#           data:
-#             message: Session expired
+      sessionExpired:
+        summary: Session expired
+        value:
+          status: 401
+          message: Session expired
 
-#       tokenExpired:
-#         summary: jwt expired
-#         value:
-#           status: 401
-#           message: Unauthorized
-#           data:
-#             message: jwt expired
-
-#       tokenInvalid:
-#         summary: jwt invalid
-#         value:
-#           status: 401
-#           message: Unauthorized
-#           data:
-#             message: invalid signature
-
-#       userNotFound:
-#         summary: User not found
-#         value:
-#           status: 401
-#           message: Unauthorized
-#           data:
-#             message: User not found
+      userNotFound:
+        summary: User not found
+        value:
+          status: 401
+          message: User not found
