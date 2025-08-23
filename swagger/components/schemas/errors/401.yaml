@@ -9,11 +9,3 @@ properties:
   message:
     type: string
     example: Unauthorized
-  data:
-    type: object
-    required:
-      - message
-    properties:
-      message:
-        type: string
-        example: Session expired

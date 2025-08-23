@@ -20,54 +20,28 @@ content:
         summary: Missing Authorization header
         value:
           status: 401
-          message: Unauthorized
-          data:
-            message: Please provide Authorization header
+          message: Please provide Authorization header
 
       malformedToken:
         summary: Malformed Authorization header
         value:
           status: 401
-          message: Unauthorized
-          data:
-            message: Authorization header should be of type Bearer
+          message: Authorization header should be of type Bearer
 
       sessionNotFound:
         summary: Session not found
         value:
           status: 401
-          message: Unauthorized
-          data:
-            message: Session not found
+          message: Session not found
 
       sessionExpired:
         summary: Session expired
         value:
           status: 401
-          message: Unauthorized
-          data:
-            message: Session expired
-
-      tokenExpired:
-        summary: jwt expired
-        value:
-          status: 401
-          message: Unauthorized
-          data:
-            message: jwt expired
-
-      tokenInvalid:
-        summary: jwt invalid
-        value:
-          status: 401
-          message: Unauthorized
-          data:
-            message: invalid signature
+          message: Session expired
 
       userNotFound:
         summary: User not found
         value:
           status: 401
-          message: Unauthorized
-          data:
-            message: User not found
+          message: User not found
