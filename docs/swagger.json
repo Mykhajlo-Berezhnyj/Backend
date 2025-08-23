@@ -22,36 +22,40 @@
       "bearerAuth": []
     }
   ],
-  "tags": [
-    {
-      "name": "Recipes",
-      "description": "Recipes operations (getAll, getById, post)"
-    },
-    {
-      "name": "FavoriteRecipes",
-      "description": "FavoriteRecipes operations (getAll, postByID, deleteByID)"
-    },
-    {
-      "name": "MyRecipes",
-      "description": "MyRecipes operations (getAll)"
-    },
-    {
-      "name": "Auth",
-      "description": "Authentication operations (register, login, refresh)."
-    },
-    {
-      "name": "Users",
-      "description": "Users operations (get)"
-    },
-    {
-      "name": "Сategories",
-      "description": "Сategories operations (getAll)"
-    },
-    {
-      "name": "Ingredients",
-      "description": "Ingredients operations (getAll)"
-    }
-  ],
+ "tags": [
+  {
+    "name": "Contacts",
+    "description": "A RESTful API for managing a user's recipe list, including creation, adding to favorites, and deletion of recipes. The API also supports filtering by categories and ingredients."
+  },
+  {
+    "name": "Recipes",
+    "description": "Recipes operations (getAll, getById, post)"
+  },
+  {
+    "name": "FavoriteRecipes",
+    "description": "FavoriteRecipes operations (getAll, postByID, deleteByID)"
+  },
+  {
+    "name": "MyRecipes",
+    "description": "MyRecipes operations (getAll)"
+  },
+  {
+    "name": "Auth",
+    "description": "Authentication operations (register, login, refresh)."
+  },
+  {
+    "name": "Users",
+    "description": "Users operations (get)"
+  },
+  {
+    "name": "Categories",
+    "description": "Categories operations (getAll)"
+  },
+  {
+    "name": "Ingredients",
+    "description": "Ingredients operations (getAll)"
+  }
+],
   "paths": {
     "/api/recipes": {
       "get": {
