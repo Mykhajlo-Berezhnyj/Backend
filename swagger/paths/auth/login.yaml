@@ -7,7 +7,7 @@ requestBody:
   content:
     application/json:
       schema:
-        $ref: ../../components/schemas/user/UserLogin.yaml
+        $ref: ../../components/schemas/users/Login.yaml
       example:
         email: "john@example.com"
         password: "securePassword123"

@@ -1,31 +1,30 @@
-# tags:
-#   - Auth
-# summary: Register a new user
-# operationId: registerUser
-# security: []
-# requestBody:
-#   description: User registration payload
-#   required: true
-#   content:
-#     application/json:
-#       schema:
-#         $ref: ../../components/schemas/user/User.yaml
-#       example:
-#         name: 'John Doe'
-#         email: 'john@example.com'
-#         password: 'P@ssw0rd!'
-# responses:
-#   '201':
-#     description: Successfully registered a user!
-#     content:
-#       application/json:
-#         schema:
-#           $ref: ../../components/schemas/user/UserResponse.yaml
-#   '400':
-#     $ref: ../../components/responses/400.yaml
-#   '401':
-#     $ref: ../../components/responses/401.yaml
-#   '409':
-#     $ref: ../../components/responses/users/409.yaml
-#   '500':
-#     $ref: ../../components/responses/500.yaml
+tags:
+  - Auth
+summary: Register a new user
+operationId: registerUser
+requestBody:
+  required: true
+  description: User registration payload
+  content:
+    application/json:
+      schema:
+        $ref: ../../components/schemas/users/user.yaml
+      example:
+        name: "John Doe"
+        email: "john@example.com"
+        password: "P@sSw0rd!"
+responses:
+  "201":
+    description: Successfully registered a user
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/users/userResponse.yaml
+  "400":
+    $ref: ../../components/responses/400.yaml
+  "401":
+    $ref: ../../components/responses/401.yaml
+  "409":
+    $ref: ../../components/responses/404.yaml
+  "500":
+    $ref: ../../components/responses/500.yaml

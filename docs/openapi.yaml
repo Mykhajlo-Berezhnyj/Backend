@@ -90,5 +90,16 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+
+      responses:
+    login:
+      $ref: ../swagger/components/responses/users/Login.yaml
+    "400":
+      $ref: ../swagger/components/responses/400.yaml
+    "401":
+      $ref: ../swagger/components/responses/401.yaml
+    "500":
+      $ref: ../swagger/components/responses/500.yaml
+      
 security:
   - bearerAuth: []
