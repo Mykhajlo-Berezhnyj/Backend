@@ -13,7 +13,7 @@ requestBody:
         password: "securePassword123"
 responses:
   "200":
-    $ref: ../../components/responses/users/Login.yaml
+    $ref: ../../components/schemas/users/Login.yaml
   "400":
     $ref: ../../components/responses/400.yaml
   "401":

@@ -1086,6 +1086,53 @@
           }
         }
       },
+      "404": {
+        "description": "Not Found — the requested resource could not be found. Possible reasons include:\n - \"Resource not found\" — the requested item does not exist.\n - \"User not found\" — no user was found for the given email or token.\n - \"Recipe not found\" — no Recipe was found for the given recipeId.\n\n Not all of these cases apply to every endpoint.\n For more information see examples\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found"
+                }
+              }
+            },
+            "examples": {
+              "resourceNotFound": {
+                "summary": "Generic not found",
+                "value": {
+                  "status": 404,
+                  "message": "Resource not found"
+                }
+              },
+              "userNotFound": {
+                "summary": "User not found",
+                "value": {
+                  "status": 404,
+                  "message": "User not found"
+                }
+              },
+              "RecipeNotFound": {
+                "summary": "Recipe not found",
+                "value": {
+                  "status": 404,
+                  "message": "Recipe not found"
+                }
+              }
+            }
+          }
+        }
+      },
       "500": {
         "description": "Internal Server Error:\n  - \"Unhandled exception\" — a generic server error.\n  - \"Database failure\" — internal service or DB error.\n",
         "content": {
@@ -1764,7 +1811,72 @@
           }
         }
       },
-      "Login": null
+      "Login": {
+        "description": "Successful login",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Login successful"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "token",
+                    "refreshToken",
+                    "user"
+                  ],
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "user": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name",
+                        "email"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "64f1b2c3d4e5f67890123456"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "example": "john@example.com"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

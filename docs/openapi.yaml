@@ -98,6 +98,8 @@ components:
       $ref: ../swagger/components/responses/400.yaml
     "401":
       $ref: ../swagger/components/responses/401.yaml
+    "404":
+      $ref: ../swagger/components/responses/404.yaml
     "500":
       $ref: ../swagger/components/responses/500.yaml
       
