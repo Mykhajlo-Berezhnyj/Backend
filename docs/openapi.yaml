@@ -26,10 +26,10 @@ servers:
   - url: https://tasteorama-backend-dcjy.onrender.com
 paths:
   /api/recipes:
+    post:
+      $ref: ../swagger/paths/recipes/post.yaml
     get:
       $ref: ../swagger/paths/recipes/get.yaml
-  #   post:
-  #     $ref: ../swagger/paths/recipes/post.yaml
   # /api/recipes/own:
   #   get:
   #     $ref: ../swagger/paths/recipes/own/get.yaml

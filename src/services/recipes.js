@@ -1,8 +1,8 @@
-import { calculatePaginationData } from '../utils/calculatePaginationData.js';
-import { Recipe } from '../db/models/recipes.js';
-
 import createHttpError from 'http-errors';
 import { User } from '../db/models/user.js';
+import { Recipe } from '../db/models/recipes.js';
+// import { Category } from "../db/models/categories.js";
+import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 // import mongoose from 'mongoose';
 
 export const getAllRecipes = async ({
@@ -47,6 +47,10 @@ export const getAllRecipes = async ({
     data: recipes,
     ...paginationData,
   };
+};
+
+export const addOwnRecipes = async (payload) => {
+  return await Recipe.create(payload);
 };
 
 export const getRecipeById = async (recipeId) =>

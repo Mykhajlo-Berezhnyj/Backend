@@ -7,8 +7,8 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();
-    cb(null, `${file.originalname}_${uniqueSuffix}`);
+    cb(null, `${uniqueSuffix}_${file.originalname}`);
   },
 });
 
-export const upload = multer({ storage: storage });
+export const upload = multer({ storage: storage, limits: { fileSize: 2 * 1024 * 1024 } });
