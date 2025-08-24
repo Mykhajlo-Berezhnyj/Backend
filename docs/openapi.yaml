@@ -33,9 +33,9 @@ paths:
   # /api/recipes/own:
   #   get:
   #     $ref: ../swagger/paths/recipes/own/get.yaml
-  # /api/recipes/favorites:
-  #   get:
-  #     $ref: ../swagger/paths/recipes/favorites/get.yaml
+  /api/recipes/favorites:
+    get:
+      $ref: ../swagger/paths/recipes/favorite/get.yaml
 
   /api/recipes/{id}:
     get:
