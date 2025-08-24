@@ -1,5 +1,4 @@
-import mongoose, { model, Schema } from "mongoose";
-import { Recipe } from "./recipes.js";
+import { model, Schema } from 'mongoose';
 
 export const userSchema = new Schema(
   {
@@ -20,38 +19,33 @@ export const userSchema = new Schema(
       type: String,
       required: true,
     },
-    favorites: [
+    favoriteRecipes: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Recipe",
+        ref: 'Recipe',
       },
     ],
     followers: [
       {
         type: Schema.Types.ObjectId,
-        ref: "user",
+        ref: 'User',
       },
     ],
     following: [
       {
         type: Schema.Types.ObjectId,
-        ref: "user",
+        ref: 'User',
       },
     ],
-    favoriteRecipes: [
-      {
-        type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'
-      }
-    ],
   },
-  { timestamps: true, versionKey: false }
+  { timestamps: true, versionKey: false },
 );
 
-userSchema.set("toJSON", {
+userSchema.set('toJSON', {
   transform(doc, obj) {
     delete obj.password;
     return obj;
   },
 });
 
-export const User = model("user", userSchema);
+export const User = model('User', userSchema);

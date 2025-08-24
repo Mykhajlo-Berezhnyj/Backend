@@ -1,29 +1,42 @@
 description: >
   Bad Request — the server could not process the request due to a client error. 
   Possible reasons include:
-    - "Empty contact data"
+    - "Empty data"
     - "Validation failed" — one or more fields are invalid or missing. 
     - "Malformed request" — the request format is incorrect.
+    - "Invalid ID format" — must be a valid ObjectId.
 
   Not all of these errors apply to every endpoint. The actual reason depends on the specific request.
   For more information see examples
 content:
   application/json:
     schema:
-      $ref: ../schemas/errors/400.yaml
-    examples:
-      emptyContact:
-        summary: Empty data
-        description: >
-          The submitted form data is empty or contains no fields.
-          Please provide at least one valid field or file in the form before submitting the request.
-        value:
-          status: 400
-          message: Bad request
-          data:
-            message: Please provide data details before submitting
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: Bad request
+        data:
+          type: object
+          required:
+            - message
+            - errors
+          properties:
+            message:
+              type: string
+              example: Malformed request body
             errors:
-              - "No fields were provided"
+              type: array
+              items:
+                type: string
+
+    examples:
       validationFailedRecipes:
         summary: All possible validation errors recipes
         description: >
@@ -35,14 +48,31 @@ content:
           data:
             message: Validation failed
             errors:
-              - title is required
-              - description must not exceed 200 characters
-              - time must be between 1 and 360
-              - category is required
-              - ingredients must contain at least 2 items
-              - instructions must not exceed 1200 characters
-      validationUserContact:
-        summary: All possible validation errors user
+              - title is required.
+                - title must not exceed 64 characters.
+              - description is required.
+                - description must not exceed 200 characters.
+              - time is required.
+                - time must be a number.
+                - time must be greater than or equal to 1.
+                - time must not exceed 360.
+              - calories must be a number.
+                - calories must be greater than or equal to 1.
+                - calories must not exceed 10000.
+              - category is required.
+                - category must be a valid MongoDB ObjectId.
+                - category must exist in the categories collection (valid category from API).
+              - ingredients is required.
+                - ingredients must be an array with 2-15 items.
+                - each item must be an object with id, measure
+                - id valid MongoDB ObjectId (valid ingredient from API), required
+                - measure string, at least 1 character, required
+              - instructions is required.
+                - instructions must not exceed 1200 characters.
+              - thumb must be an image file.
+                - thumb must not exceed 2 MB.
+      validationAuthOperations:
+        summary: All possible validation errors for auth
         description: >
           This example shows all possible validation errors for the user.
           Actual errors depend on which fields are missing or invalid.
@@ -55,10 +85,7 @@ content:
               - Name should be required
               - Name should be a string
               - Name should have at least 3 characters
-              - Name should have at most 18 characters
-              - Phone number cannot be empty
-              - Phone number should be a string
-              - Phone number must be valid for Ukraine
+              - Name should have at most 16 characters
               - Email should be required
               - Email must be a valid email address
               - Password should be required
@@ -82,4 +109,11 @@ content:
           data:
             message: Malformed request body
             errors:
-              - "Expected double-quoted property name in JSON at position 22 (line 3 column 1)"
+              - 'Expected double-quoted property name in JSON at position 22 (line 3 column 1)'
+      validationParamsId:
+        summary: Validation error for id
+        description: >
+          This example shows validation error for the id.
+        value:
+          status: 400
+          message: Invalid id
