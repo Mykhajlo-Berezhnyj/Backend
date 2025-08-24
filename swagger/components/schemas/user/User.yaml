@@ -1,0 +1,11 @@
+type: object
+properties:
+  _id:
+    type: string
+    example: "64f7d7d97c7f3a2f9b7d1234"
+  name:
+    type: string
+    example: "John Doe"
+  email:
+    type: string
+    example: "john@example.com"

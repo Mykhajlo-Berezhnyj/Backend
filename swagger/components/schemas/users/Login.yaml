@@ -1,0 +1,11 @@
+description: User logged in successfully
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/user/UserResponse.yaml
+    example:
+      user:
+        id: "64fa0d3a2e34b2b9d4a33e11"
+        name: "John Doe"
+        email: "john@example.com"
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
