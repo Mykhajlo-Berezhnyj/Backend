@@ -1,0 +1,38 @@
+get:
+  tags: [Recipes]
+  summary: Get own recipes
+  description: Returns a paginated list of recipes created by the logged-in user.
+  security:
+    - bearerAuth: []
+  parameters:
+    - in: query
+      name: page
+      description: Page number
+      schema: { type: integer, default: 1, minimum: 1 }
+    - in: query
+      name: limit
+      description: Number of items per page
+      schema: { type: integer, default: 12, minimum: 1, maximum: 100 }
+  responses:
+    "200":
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status: { type: integer, example: 200 }
+              message: { type: string, example: OK }
+              data:
+                type: array
+                items:
+                  $ref: "../../components/schemas/recipe.yaml"
+              page: { type: integer, example: 1 }
+              perPage: { type: integer, example: 12 }
+              total: { type: integer, example: 42 }
+              totalPages: { type: integer, example: 4 }
+            required: [status, data, page, perPage, total, totalPages]
+    "401":
+      $ref: "../../components/schemas/errors/401.yaml"
+    "500":
+      $ref: "../../components/schemas/errors/500.yaml"

@@ -55,129 +55,96 @@
   "paths": {
     "/api/recipes": {
       "get": {
-        "tags": [
-          "Recipes"
-        ],
-        "summary": "Search recipes",
-        "operationId": "searchRecipes",
-        "description": "Get a list of recipes with pagination and search filters: category, ingredient, or keyword in the title.",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "category",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Filter recipes by category (MongoDB ObjectId)",
-            "example": "64c8d958249fae54bae90bb9"
-          },
-          {
-            "in": "query",
-            "name": "ingredient",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Filter recipes by ingredient (MongoDB ObjectId)",
-            "example": "6462a8f74c3d0ddd28897fcd"
-          },
-          {
-            "in": "query",
-            "name": "search",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Search recipes by keyword in title",
-            "example": "cake"
-          },
-          {
-            "in": "query",
-            "name": "page",
-            "schema": {
-              "type": "integer"
-            },
-            "example": 1
-          },
-          {
-            "in": "query",
-            "name": "perPage",
-            "schema": {
-              "type": "integer",
-              "example": 10
+        "get": {
+          "tags": [
+            "Recipes"
+          ],
+          "summary": "Get own recipes",
+          "description": "Returns a paginated list of recipes created by the logged-in user.",
+          "security": [
+            {
+              "bearerAuth": []
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Recipes retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Recipes retrieved successfully"
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "data",
-                        "page",
-                        "perPage",
-                        "totalItems",
-                        "totalPages",
-                        "hasNextPage",
-                        "hasPreviousPage"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Recipe"
-                          }
-                        },
-                        "page": {
-                          "type": "number",
-                          "example": 1
-                        },
-                        "perPage": {
-                          "type": "number",
-                          "example": 10
-                        },
-                        "totalItems": {
-                          "type": "number",
-                          "example": 35
-                        },
-                        "totalPages": {
-                          "type": "number",
-                          "example": 4
-                        },
-                        "hasNextPage": {
-                          "type": "boolean",
-                          "example": true
-                        },
-                        "hasPreviousPage": {
-                          "type": "boolean",
-                          "example": false
+          ],
+          "parameters": [
+            {
+              "in": "query",
+              "name": "page",
+              "description": "Page number",
+              "schema": {
+                "type": "integer",
+                "default": 1,
+                "minimum": 1
+              }
+            },
+            {
+              "in": "query",
+              "name": "limit",
+              "description": "Number of items per page",
+              "schema": {
+                "type": "integer",
+                "default": 12,
+                "minimum": 1,
+                "maximum": 100
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "integer",
+                        "example": 200
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Successfully fetched your recipes"
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "../../../components/schemas/recipe.yaml"
                         }
+                      },
+                      "page": {
+                        "type": "integer",
+                        "example": 1
+                      },
+                      "total": {
+                        "type": "integer",
+                        "example": 42
+                      },
+                      "totalPages": {
+                        "type": "integer",
+                        "example": 4
                       }
-                    }
+                    },
+                    "required": [
+                      "status",
+                      "message",
+                      "data",
+                      "page",
+                      "total",
+                      "totalPages"
+                    ]
                   }
                 }
               }
+            },
+            "400": {
+              "$ref": "../../../components/responses/400.yaml"
+            },
+            "401": {
+              "$ref": "../../../components/responses/401.yaml"
+            },
+            "500": {
+              "$ref": "../../../components/responses/500.yaml"
             }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -357,10 +324,90 @@
       }
     },
     "/api/auth/register": {
-      "post": null
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register a new user",
+        "operationId": "registerUser",
+        "requestBody": {
+          "required": true,
+          "description": "User registration payload",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user"
+              },
+              "example": {
+                "name": "John Doe",
+                "email": "john@example.com",
+                "password": "P@sSw0rd!"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully registered a user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/userResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "409": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
     },
     "/api/auth/login": {
-      "post": null
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Log in a user",
+        "operationId": "loginUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              },
+              "example": {
+                "email": "john@example.com",
+                "password": "securePassword123"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Login"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
     },
     "/api/auth/logout": {
       "post": {
@@ -863,10 +910,282 @@
   },
   "components": {
     "securitySchemes": {
+      "400": {
+        "description": "Bad Request — the server could not process the request due to a client error.  Possible reasons include:\n  - \"Empty data\"\n  - \"Validation failed\" — one or more fields are invalid or missing. \n  - \"Malformed request\" — the request format is incorrect.\n  - \"Invalid ID format\" — must be a valid ObjectId.\n\nNot all of these errors apply to every endpoint. The actual reason depends on the specific request. For more information see examples\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Bad request"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message",
+                    "errors"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Malformed request body"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "validationFailedRecipes": {
+                "summary": "All possible validation errors recipes",
+                "description": "This example shows all possible validation errors for the recipes request. Actual errors depend on which fields are missing or invalid.\n",
+                "value": {
+                  "status": 400,
+                  "message": "Bad request",
+                  "data": {
+                    "message": "Validation failed",
+                    "errors": [
+                      "title is required. - title must not exceed 64 characters.",
+                      "description is required. - description must not exceed 200 characters.",
+                      "time is required. - time must be a number. - time must be greater than or equal to 1. - time must not exceed 360.",
+                      "calories must be a number. - calories must be greater than or equal to 1. - calories must not exceed 10000.",
+                      "category is required. - category must be a valid MongoDB ObjectId. - category must exist in the categories collection (valid category from API).",
+                      "ingredients is required. - ingredients must be an array with 2-15 items. - each item must be an object with id, measure - id valid MongoDB ObjectId (valid ingredient from API), required - measure string, at least 1 character, required",
+                      "instructions is required. - instructions must not exceed 1200 characters.",
+                      "thumb must be an image file. - thumb must not exceed 2 MB."
+                    ]
+                  }
+                }
+              },
+              "validationAuthOperations": {
+                "summary": "All possible validation errors for auth",
+                "description": "This example shows all possible validation errors for the user. Actual errors depend on which fields are missing or invalid.\n",
+                "value": {
+                  "status": 400,
+                  "message": "Bad request",
+                  "data": {
+                    "message": "Validation failed",
+                    "errors": [
+                      "Name should be required",
+                      "Name should be a string",
+                      "Name should have at least 3 characters",
+                      "Name should have at most 16 characters",
+                      "Email should be required",
+                      "Email must be a valid email address",
+                      "Password should be required",
+                      "Password must contain at least one uppercase letter",
+                      "Password must contain at least one lowercase letter",
+                      "Password must contain at least one special character",
+                      "Password must contain at least one number",
+                      "Password must not contain spaces",
+                      "Password should have at least 8 characters",
+                      "Token is required"
+                    ]
+                  }
+                }
+              },
+              "malformedRequest": {
+                "summary": "Malformed from data",
+                "description": "The submitted form data is malformed or corrupted. This can happen if the multipart/form-data is improperly encoded, or if files or fields are damaged during submission. Please check the form structure and file integrity before retrying.\n",
+                "value": {
+                  "status": 400,
+                  "message": "Bad request",
+                  "data": {
+                    "message": "Malformed request body",
+                    "errors": [
+                      "Expected double-quoted property name in JSON at position 22 (line 3 column 1)"
+                    ]
+                  }
+                }
+              },
+              "validationParamsId": {
+                "summary": "Validation error for id",
+                "description": "This example shows validation error for the id.\n",
+                "value": {
+                  "status": 400,
+                  "message": "Invalid id"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized — request lacks valid authentication\n The specific cause of the 401 error may vary depending on the endpoint.\n Possible reasons include:\n  - Missing or malformed Authorization header\n  - Expired or invalid access token\n  - Session not found\n  - Session expired\n  - Token expired\n  - Token invalid\n  - User not found\nFor more information see examples\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                }
+              }
+            },
+            "examples": {
+              "missingHeader": {
+                "summary": "Missing Authorization header",
+                "value": {
+                  "status": 401,
+                  "message": "Please provide Authorization header"
+                }
+              },
+              "malformedToken": {
+                "summary": "Malformed Authorization header",
+                "value": {
+                  "status": 401,
+                  "message": "Authorization header should be of type Bearer"
+                }
+              },
+              "sessionNotFound": {
+                "summary": "Session not found",
+                "value": {
+                  "status": 401,
+                  "message": "Session not found"
+                }
+              },
+              "sessionExpired": {
+                "summary": "Session expired",
+                "value": {
+                  "status": 401,
+                  "message": "Session expired"
+                }
+              },
+              "userNotFound": {
+                "summary": "User not found",
+                "value": {
+                  "status": 401,
+                  "message": "User not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not Found — the requested resource could not be found. Possible reasons include:\n - \"Resource not found\" — the requested item does not exist.\n - \"User not found\" — no user was found for the given email or token.\n - \"Recipe not found\" — no Recipe was found for the given recipeId.\n\n Not all of these cases apply to every endpoint.\n For more information see examples\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not found"
+                }
+              }
+            },
+            "examples": {
+              "resourceNotFound": {
+                "summary": "Generic not found",
+                "value": {
+                  "status": 404,
+                  "message": "Resource not found"
+                }
+              },
+              "userNotFound": {
+                "summary": "User not found",
+                "value": {
+                  "status": 404,
+                  "message": "User not found"
+                }
+              },
+              "RecipeNotFound": {
+                "summary": "Recipe not found",
+                "value": {
+                  "status": 404,
+                  "message": "Recipe not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error:\n  - \"Unhandled exception\" — a generic server error.\n  - \"Database failure\" — internal service or DB error.\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "error"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Something went wrong"
+                },
+                "error": {
+                  "type": "string",
+                  "example": "Internal server error"
+                }
+              }
+            },
+            "examples": {
+              "genericError": {
+                "summary": "Unhandled exception",
+                "value": {
+                  "status": 500,
+                  "message": "Something went wrong",
+                  "error": "Internal server error"
+                }
+              },
+              "dbFailure": {
+                "summary": "Database error",
+                "value": {
+                  "status": 500,
+                  "message": "Something went wrong",
+                  "error": "Failed to connect to the database"
+                }
+              }
+            }
+          }
+        }
+      },
       "bearerAuth": {
         "type": "http",
-        "scheme": "bearer"
-      }
+        "scheme": "bearer",
+        "responses": null
+      },
+      "login": null
     },
     "schemas": {
       "Recipe": {
@@ -994,6 +1313,156 @@
             "type": "string",
             "format": "date-time",
             "example": "2024-03-03T12:34:31Z"
+          }
+        }
+      },
+      "user": {
+        "type": "object",
+        "title": "User",
+        "description": "Information about a user account, including personal details and their favorite recipes",
+        "required": [
+          "_id",
+          "name",
+          "email",
+          "favouriteRecipes",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unique identifier of the user",
+            "pattern": "^[0-9a-fA-F]{24}$",
+            "example": "68a6c1b1afb3f5931862947b"
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the user",
+            "example": "Darrell Ryan"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email address, used for login and notifications",
+            "example": "audra.block42@gmail.com"
+          },
+          "favouriteRecipes": {
+            "type": "array",
+            "description": "List of recipe IDs that the user has added to their favorites",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{24}$",
+              "example": "6462a8f74c3d0ddd2889800c"
+            },
+            "default": []
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the user account was created",
+            "example": "2024-01-15T10:30:00Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the user account was last updated",
+            "readOnly": true,
+            "example": "2024-01-15T10:30:00.000Z"
+          }
+        }
+      },
+      "userResponse": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "email",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "64e1f2c7a3b5c1d2e3f4a5b6"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john@example.com"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-08-24T12:34:56.000Z"
+          }
+        }
+      },
+      "Login": {
+        "description": "Successful login",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Login successful"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "token",
+                    "refreshToken",
+                    "user"
+                  ],
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "user": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name",
+                        "email"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "64f1b2c3d4e5f67890123456"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "example": "john@example.com"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -1336,6 +1805,72 @@
                   "status": 500,
                   "message": "Something went wrong",
                   "error": "Failed to connect to the database"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Login": {
+        "description": "Successful login",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Login successful"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "token",
+                    "refreshToken",
+                    "user"
+                  ],
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "user": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name",
+                        "email"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "64f1b2c3d4e5f67890123456"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "example": "john@example.com"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
