@@ -858,6 +858,46 @@
             "$ref": "#/components/responses/500"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "FavoriteRecipes"
+        ],
+        "summary": "delete recipe from favorite",
+        "operationId": "deleteRecipeFavorite",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "recipeId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the recipe to delete from favorites"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Recipe delete from favorites"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
       }
     }
   },
@@ -1182,6 +1222,14 @@
                   "status": 400,
                   "message": "Invalid id"
                 }
+              },
+              "missingRecipeId": {
+                "summary": "Missing recipe ID for favorite deletion",
+                "description": "The recipe ID parameter is missing from the request URL. To delete a recipe from favorites, you must provide a valid recipe ID  in the URL path (e.g., DELETE /api/recipes/favorite/{recipeId}).\n",
+                "value": {
+                  "status": 400,
+                  "message": "Missing recipeId"
+                }
               }
             }
           }
@@ -1249,7 +1297,7 @@
         }
       },
       "404": {
-        "description": "Not Found — the requested resource could not be found. Possible reasons include:\n - \"Resource not found\" — the requested item does not exist.\n - \"User not found\" — no user was found for the given email or token.\n - \"Recipe not found\" — no Recipe was found for the given recipeId.\n\n Not all of these cases apply to every endpoint.\n For more information see examples\n",
+        "description": "Not Found — the requested resource could not be found. Possible reasons include:\n - \"Resource not found\" — the requested item does not exist.\n - \"User not found\" — no user was found for the given email or token.\n - \"Recipe not found\" — no Recipe was found for the given recipeId.\n - \"Recipe not found in user favorites\" — the specified recipe was not found in the user's favorite recipes list.\n\n Not all of these cases apply to every endpoint.\n For more information see examples\n",
         "content": {
           "application/json": {
             "schema": {
@@ -1289,6 +1337,13 @@
                 "value": {
                   "status": 404,
                   "message": "Recipe not found"
+                }
+              },
+              "FavoriteRecipeNotFound": {
+                "summary": "Recipe not found in user favorites",
+                "value": {
+                  "status": 404,
+                  "message": "Recipe not found in user favorites"
                 }
               }
             }

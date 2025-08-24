@@ -4,6 +4,7 @@ description: >
    - "Resource not found" — the requested item does not exist.
    - "User not found" — no user was found for the given email or token.
    - "Recipe not found" — no Recipe was found for the given recipeId.
+   - "Recipe not found in user favorites" — the specified recipe was not found in the user's favorite recipes list.
 
    Not all of these cases apply to every endpoint.
    For more information see examples
@@ -38,3 +39,8 @@ content:
         value:
           status: 404
           message: Recipe not found
+      FavoriteRecipeNotFound:
+        summary: Recipe not found in user favorites
+        value:
+          status: 404
+          message: Recipe not found in user favorites

@@ -117,3 +117,12 @@ content:
         value:
           status: 400
           message: Invalid id
+      missingRecipeId:
+        summary: Missing recipe ID for favorite deletion
+        description: >
+          The recipe ID parameter is missing from the request URL.
+          To delete a recipe from favorites, you must provide a valid recipe ID 
+          in the URL path (e.g., DELETE /api/recipes/favorite/{recipeId}).
+        value:
+          status: 400
+          message: Missing recipeId
