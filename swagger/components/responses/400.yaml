@@ -35,7 +35,12 @@ content:
           data:
             message: Validation failed
             errors:
-              - recipes name is required
+              - title is required
+              - description must not exceed 200 characters
+              - time must be between 1 and 360
+              - category is required
+              - ingredients must contain at least 2 items
+              - instructions must not exceed 1200 characters
       validationUserContact:
         summary: All possible validation errors user
         description: >

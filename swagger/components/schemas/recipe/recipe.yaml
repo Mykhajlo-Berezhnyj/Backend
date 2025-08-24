@@ -1,7 +1,6 @@
 type: object
 required:
   - _id
-  - area
   - title
   - description
   - time
@@ -32,6 +31,10 @@ properties:
     description: "Cooking time in minutes"
     type: number
     example: 10
+  calories:
+    description: "Calories"
+    type: number
+    example: 230
   category:
     description: "Category dish"
     type: string

@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 export const createAddOwnRecipeSchema = Joi.object({
-  area: Joi.string().required(),
+  area: Joi.string(),
   title: Joi.string().max(64).required(),
   description: Joi.string().max(200).required(),
   time: Joi.number().min(1).max(360).required(),
@@ -35,25 +35,37 @@ export const createAddOwnRecipeSchema = Joi.object({
   //     .required(),
   ingredients: Joi.alternatives()
     .try(
-      Joi.array().items(
-        Joi.object({
-          id: Joi.string().min(1).required(),
-          measure: Joi.string().min(2).max(16).required(),
-        })
-      ),
+      Joi.array()
+        .items(
+          Joi.object({
+            id: Joi.string().min(1).required(),
+            measure: Joi.string().min(2).max(16).required(),
+          })
+        )
+        .min(2)
+        .messages({
+          "array.min": '"ingredients" must contain at least 2 items',
+        }),
       Joi.string().custom((value, helpers) => {
         try {
           const parsed = JSON.parse(value);
           if (!Array.isArray(parsed)) {
-            return helpers.error("any.invalid");
+            return helpers.error("ingredients.invalid");
+          }
+          if (parsed.length < 2) {
+            return helpers.error("ingredients.tooFew");
           }
           return parsed;
         } catch (err) {
-          return helpers.error("any.invalid");
+          return helpers.error("ingredients.invalid");
         }
       }, "Parse ingredients JSON")
     )
-    .required(),
+    .required()
+    .messages({
+      "ingredients.invalid": '"ingredients" must be a valid JSON array',
+      "ingredients.tooFew": '"ingredients" must contain at least 2 items',
+    }),
   instructions: Joi.string().max(1200).required(),
   thumb: Joi.string().uri().optional(),
 });

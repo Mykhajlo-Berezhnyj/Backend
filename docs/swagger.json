@@ -48,7 +48,6 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "area",
                   "title",
                   "description",
                   "time",
@@ -687,7 +686,6 @@
         "type": "object",
         "required": [
           "_id",
-          "area",
           "title",
           "description",
           "time",
@@ -723,6 +721,11 @@
             "description": "Cooking time in minutes",
             "type": "number",
             "example": 10
+          },
+          "calories": {
+            "description": "Calories",
+            "type": "number",
+            "example": 230
           },
           "category": {
             "description": "Category dish",
@@ -928,7 +931,12 @@
                   "data": {
                     "message": "Validation failed",
                     "errors": [
-                      "recipes name is required"
+                      "title is required",
+                      "description must not exceed 200 characters",
+                      "time must be between 1 and 360",
+                      "category is required",
+                      "ingredients must contain at least 2 items",
+                      "instructions must not exceed 1200 characters"
                     ]
                   }
                 }
