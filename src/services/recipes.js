@@ -123,3 +123,20 @@ export const getFavoriteRecipes = async (userId, { page, perPage }) => {
     ...paginationData,
   };
 };
+export const getUserRecipes = async (userId, { page = 1, perPage = 12 }) => {
+  const limit = Number(perPage) || 12;
+  const currentPage = Number(page) || 1;
+  const skip = (currentPage - 1) * limit;
+
+  const [items, total] = await Promise.all([
+    Recipe.find({ owner: userId })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .select("title description thumb time calories createdAt")
+      .lean(),
+    Recipe.countDocuments({ owner: userId }),
+  ]);
+
+  return { items, total, page: currentPage, perPage: limit };
+};
