@@ -90,11 +90,5 @@ export const getFavoriteRecipesController = async (req, res) => {
     status: 200,
     message: 'Successfully received favorites list',
     data: favoriteRecipes,
-    pagination: {
-      totalItems: favoriteRecipes.totalItems,
-      totalPages: favoriteRecipes.totalPages,
-      currentPage: favoriteRecipes.currentPage,
-      perPage: favoriteRecipes.perPage,
-    },
   });
 };
