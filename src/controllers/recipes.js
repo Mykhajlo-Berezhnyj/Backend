@@ -134,12 +134,19 @@ export const getMy = async (req, res, next) => {
 
     const pagination = calculatePaginationData(total, page, perPage);
 
-    res.status(200).json({
-      status: 200,
-      message: "Successfully fetched your recipes",
-      data: items,
-      ...pagination,
-    });
+   res.status(200).json({
+    status: 200,
+    message: "Successfully fetched your recipes",
+    data: {
+      data: items,         
+      page: pagination.page,
+      perPage: pagination.perPage,
+      totalItems: pagination.totalItems,
+      totalPages: pagination.totalPages,
+      hasPreviousPage: pagination.hasPreviousPage,
+      hasNextPage: pagination.hasNextPage,
+  },
+});
   } catch (err) {
     next(err);
   }
