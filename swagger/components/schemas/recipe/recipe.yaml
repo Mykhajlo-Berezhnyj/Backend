@@ -1,80 +1,127 @@
+# type: object
+# properties:
+#   _id:
+#     type: string
+#     example: '64efb8c1a2b4c5d6f7e8g9h'
+#   title:
+#     type: string
+#     example: 'Spaghetti Carbonara'
+#   owner:
+#     type: string
+#     example: '64efb8c1a2b4c5d6f7e8g9h'
+#   instructions:
+#     type: string
+#     example: "Step 1.... \n Step 2...."
+#   description:
+#     type: string
+#     example: The best recipe for you...
+#   thumb:
+#     type: string
+#     example: 'https://example.com/image.jpg'
+#   time:
+#     type: integer
+#     example: 30
+#   ingredients:
+#     $ref: ../ingredient/Ingredients.yaml
+#   category:
+#     type: string
+#     example: 'Italian'
+
 type: object
 required:
   - _id
   - title
-  - description
-  - time
   - category
   - ingredients
   - instructions
-  - userId
-  - createdAt
-  - updatedAt
+  - description
+  - thumb
+  - time
+  - area
 properties:
   _id:
     description: "Recipe's id"
     type: string
-    example: "6462a8f74c3d0ddd28898029"
-  area:
-    description: "Which country's dish"
-    type: string
-    example: "6462a6f04c3d0ddd28897f9b"
+    example: '6462a8f74c3d0ddd28897fcd'
   title:
-    description: "The name of the dish"
+    description: "Recipe's title"
     type: string
-    example: Lasagne
-  description:
-    description: "Description dish"
-    type: string
-    example: "Layers of pasta, meat sauce, and cheese"
-  time:
-    description: "Cooking time in minutes"
-    type: number
-    example: 10
-  calories:
-    description: "Calories"
-    type: number
-    example: 230
+    example: 'Battenberg Cake'
   category:
-    description: "Category dish"
+    description: 'Category of the recipe (populated object)'
+    type: object
+    required:
+      - _id
+      - name
+    properties:
+      _id:
+        type: string
+        example: '6462a6cd4c3d0ddd28897f8f'
+      name:
+        type: string
+        example: 'Dessert'
+  description:
+    description: 'Short description of the recipe'
     type: string
-    example: "6462a6cd4c3d0ddd28897f94"
-  # ingredients:
-  #   description: "Ingredients dish"
-  #   type: array
-  #   items:
-  #     type: object
-  #     required:
-  #       - id
-  #       - measure
-  #     properties:
-  #       id:
-  #         type: string
-  #         example: "64d9f0d2e9f1b8a3d6e12345"
-  #       measure:
-  #         type: string
-  #         example: "200 g"
-  ingredients:
-    description: "Ingredients dish (JSON string array of objects)"
-    type: string
-    example: '[{"id":"64d9f0d2e9f1b8a3d6e12345","measure":"200 g"}]'
-  instructions:
-    description: "Instructions on how to prepare a dish"
-    type: string
-    example: "Heat the oil in a large saucepan"
-  userId:
-    description: "Recipe's owner id"
-    type: string
-    example: 99e4decdd286b30065d54af1
+    example: 'A classic British cake made with almond sponge cake and covered with marzipan. It is traditionally pink and yellow checkered in appearance.'
   thumb:
-    description: "Dish's photo (URL to uploaded image)"
+    description: "URL of the recipe's thumbnail image"
     type: string
-    example: https://ftp.goit.study/img/so-yummy/preview/Lasagne.jpg
+    example: 'https://ftp.goit.study/img/so-yummy/preview/Battenberg%20Cake.jpg'
+  time:
+    description: 'Preparation time in minutes'
+    type: string
+    example: '60'
+  ingredients:
+    description: 'List of ingredients with measures'
+    type: array
+    items:
+      type: object
+      required:
+        - _id
+        - id
+        - measure
+      properties:
+        _id:
+          description: 'Id of the ingredient record in the recipe'
+          type: string
+          example: '68a88b0a2746ddbe5d48bea3'
+        id:
+          description: 'Ingredient object (populated)'
+          type: object
+          required:
+            - _id
+            - name
+          properties:
+            _id:
+              type: string
+              example: '68a7492da667396e2ff2a512'
+            name:
+              type: string
+              example: 'Butter'
+        measure:
+          description: 'Amount or measure of the ingredient'
+          type: string
+          example: '175g'
+  instructions:
+    description: 'Step-by-step cooking instructions'
+    type: string
+    example: 'Heat oven to 180C/160C fan/gas 4 and line the base...'
+  area:
+    description: 'Region or origin of the recipe'
+    type: string
+    example: 'British'
+  owner:
+    description: 'Id of the user who created the recipe'
+    type: string
+    example: '64c8d958249fae54bae90bb9'
   createdAt:
+    description: 'Date when the recipe was created'
     type: string
     format: date-time
-    example: 2025-07-26T15:45:37.660+00:00
+    example: '2023-03-11T10:25:33Z'
   updatedAt:
+    description: 'Date when the recipe was last updated'
     type: string
     format: date-time
-    example: 2025-07-26T15:45:37.660+00:00
+    example: '2024-03-03T12:34:31Z'

@@ -10,10 +10,13 @@ import {
   addOwnRecipeController,
   getRecipeByIdController,
   getAllRecipesController,
+  getUserRecipesController,
 } from '../controllers/recipes.js';
 import favoriteRouter from './favorites.js';
 
 const router = Router();
+
+router.get('/my', authenticate, ctrlWrapper(getUserRecipesController));
 
 router.get(
   '/:recipeId',

@@ -1,4 +1,6 @@
 import createHttpError from 'http-errors';
+import { getUserRecipes } from '../services/recipes.js';
+import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import {
@@ -118,5 +120,20 @@ export const getFavoriteRecipesController = async (req, res) => {
     status: 200,
     message: 'Successfully received favorites list',
     data: favoriteRecipes,
+  });
+};
+
+export const getUserRecipesController = async (req, res) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+
+  const recipes = await getUserRecipes(req.user._id, {
+    page,
+    perPage,
+  });
+
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully fetched your recipes',
+    data: recipes,
   });
 };

@@ -15,11 +15,10 @@ export const getAllRecipes = async ({
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
-  // Фільтр для пошуку
   const filter = {};
 
   if (category) {
-    filter.category = category; // шукаємо по id категорії
+    filter.category = category;
   }
 
   if (ingredient) {
@@ -27,12 +26,9 @@ export const getAllRecipes = async ({
   }
 
   if (search) {
-    filter.title = { $regex: search, $options: 'i' }; // пошук по назві (без урахування регістру)
+    filter.title = { $regex: search, $options: 'i' };
   }
 
-  console.log(filter);
-
-  // Запит до БД
   const recipesQuery = Recipe.find(filter)
     .populate('category')
     .populate({ path: 'ingredients.id', select: 'name' });
@@ -122,4 +118,22 @@ export const getFavoriteRecipes = async (userId, { page, perPage }) => {
     data: user.favoriteRecipes,
     ...paginationData,
   };
+};
+export const getUserRecipes = async (userId, { page, perPage }) => {
+  const skip = (page - 1) * perPage;
+
+  const [items, total] = await Promise.all([
+    Recipe.find({ owner: userId })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(perPage)
+      .populate('category')
+      .populate({ path: 'ingredients.id', select: 'name' })
+      .lean(),
+    Recipe.countDocuments({ owner: userId }),
+  ]);
+
+  const paginationData = calculatePaginationData(total, perPage, page);
+
+  return { data: items, ...paginationData };
 };
