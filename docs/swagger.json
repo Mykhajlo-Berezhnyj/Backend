@@ -1023,7 +1023,150 @@
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "schemas": null
+      },
+      "Error400": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 400
+          },
+          "message": {
+            "type": "string",
+            "example": "Bad request"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "message",
+              "errors"
+            ],
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Validation failed"
+              },
+              "errors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Error401": {
+        "type": "object",
+        "required": [
+          "status",
+          "message"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 401
+          },
+          "message": {
+            "type": "string",
+            "example": "Unauthorized"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "message"
+            ],
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Session expired"
+              }
+            }
+          }
+        }
+      },
+      "Error404": {
+        "type": "object",
+        "required": [
+          "status",
+          "message"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 404
+          },
+          "message": {
+            "type": "string",
+            "example": "Not found"
+          }
+        }
+      },
+      "Error500": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "error"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 500
+          },
+          "message": {
+            "type": "string",
+            "example": "Something went wrong"
+          },
+          "error": {
+            "type": "string",
+            "example": "Internal server error"
+          }
+        }
+      },
+      "BadRequestResponse": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 400
+          },
+          "message": {
+            "type": "string",
+            "example": "Bad request"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "message",
+              "errors"
+            ],
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Bad request"
+              },
+              "errors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "schemas": {
