@@ -42,8 +42,7 @@ paths:
       $ref: '../swagger/paths/recipes/{id}/get.yaml'
   #   post:
   #     $ref: ../swagger/paths/recipes/{id}/favorite/post.yaml
-  #   delete:
-  #     $ref: ../swagger/paths/recipes/{id}/favorite/delete.yaml
+  #   
 
   /api/auth/register:
     post:
@@ -84,6 +83,8 @@ paths:
   /api/recipes/favorite/{recipeId}:
     post:
       $ref: ../swagger/paths/recipes/favorite/{recipeId}/post.yaml
+    delete:
+      $ref: ../swagger/paths/recipes/favorite/{recipeId}/delete.yaml
 
 components:
   securitySchemes:
