@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { getMy } from "../controllers/recipes.js";
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import { validateBody } from '../middlewares/validateBody.js';
@@ -14,6 +15,8 @@ import {
 import favoriteRouter from './favorites.js';
 
 const router = Router();
+
+router.get("/my", authenticate, ctrlWrapper(getMy));
 
 router.get(
   '/:recipeId',
