@@ -1,0 +1,24 @@
+tags:
+  - FavoriteRecipes
+summary: delete recipe from favorite
+operationId: deleteRecipeFavorite
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: recipeId
+    required: true
+    schema:
+      type: string
+    description: The ID of the recipe to delete from favorites
+responses:
+  '204':
+    description: Recipe delete from favorites
+  '400':
+    $ref: '../../../../components/responses/400.yaml'
+  '401':
+    $ref: '../../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../../components/responses/404.yaml#'
+  '500':
+    $ref: '../../../../components/responses/500.yaml'

@@ -5,7 +5,22 @@ description: >
 content:
   application/json:
     schema:
-      $ref: ../schemas/errors/500.yaml
+      type: object
+      required:
+        - status
+        - message
+        - error
+      properties:
+        status:
+          type: integer
+          example: 500
+        message:
+          type: string
+          example: Something went wrong
+        error:
+          type: string
+          example: Internal server error
+
     examples:
       genericError:
         summary: Unhandled exception
