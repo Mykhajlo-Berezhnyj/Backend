@@ -1,6 +1,5 @@
 import createHttpError from 'http-errors';
 import { getUserRecipes } from '../services/recipes.js';
-import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import {
@@ -76,9 +75,9 @@ export const deleteFavoriteRecipeByIdController = async (req, res, next) => {
   }
 };
 
-const { ENABLE_CLOUDINARY } = process.env;
 export const addOwnRecipeController = async (req, res) => {
   let thumb = null;
+  const { ENABLE_CLOUDINARY } = process.env;
 
   if (ENABLE_CLOUDINARY === 'true') {
     const result = await saveFileToCloudinary(req.file);

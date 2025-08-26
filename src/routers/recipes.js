@@ -6,7 +6,6 @@ import { authenticate } from '../middlewares/authenticate.js';
 import { createAddOwnRecipeSchema } from '../validation/recipe.js';
 import { upload } from '../middlewares/multer.js';
 import {
-  deleteFavoriteRecipeByIdController,
   addOwnRecipeController,
   getRecipeByIdController,
   getAllRecipesController,
@@ -15,14 +14,6 @@ import {
 import favoriteRouter from './favorites.js';
 
 const router = Router();
-
-router.get('/my', authenticate, ctrlWrapper(getUserRecipesController));
-
-router.get(
-  '/:recipeId',
-  isValidId('recipeId'),
-  ctrlWrapper(getRecipeByIdController),
-);
 
 router.use('/favorites', favoriteRouter);
 
@@ -36,11 +27,12 @@ router.post(
   ctrlWrapper(addOwnRecipeController),
 );
 
-router.delete(
-  '/deleteFavoriteRecipe/:recipeId',
-  authenticate,
+router.get(
+  '/:recipeId',
   isValidId('recipeId'),
-  ctrlWrapper(deleteFavoriteRecipeByIdController),
+  ctrlWrapper(getRecipeByIdController),
 );
+
+router.get('/my', authenticate, ctrlWrapper(getUserRecipesController));
 
 export default router;
