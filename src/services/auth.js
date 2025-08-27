@@ -3,7 +3,7 @@ import { User } from '../db/models/user.js';
 import bcrypt from 'bcrypt';
 import { Session } from '../db/models/session.js';
 import {
-  FIFTEEN_MINUTES,
+  TOKEN_LIFE_TIME,
   TEMPLATES_DIR,
   THIRTY_DAY,
 } from '../constants/index.js';
@@ -44,7 +44,7 @@ const createSession = () => {
   return {
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    accessTokenValidUntil: new Date(Date.now() + TOKEN_LIFE_TIME),
     refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAY),
   };
 };
