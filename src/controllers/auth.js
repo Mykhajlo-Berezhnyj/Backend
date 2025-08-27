@@ -10,11 +10,17 @@ import { setupSession } from '../utils/setupSession.js';
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
+  const session = await loginUser({
+    email: user.email,
+    password: req.body.password,
+  });
+
+  setupSession(res, session);
 
   res.status(201).json({
     status: 201,
     message: 'Successfully registered a user!',
-    data: user,
+    data: { user, token: session.accessToken },
   });
 };
 
