@@ -52,11 +52,7 @@ const createSession = () => {
 export const loginUser = async (payload) => {
   const user = await User.findOne({ email: payload.email });
 
-  console.log('USER', user);
-
   if (!user) throw createHttpError(401, 'User not found');
-
-  console.log(user.password, payload.password);
 
   const isEqual = await bcrypt.compare(payload.password, user.password);
 
