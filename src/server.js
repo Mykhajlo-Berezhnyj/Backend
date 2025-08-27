@@ -1,13 +1,13 @@
-import express from "express";
-import pino from "pino-http";
-import cors from "cors";
-import { config } from "./config.js";
-import router from "../src/routers/index.js";
-import { errorHandler } from "./middlewares/errorHandler.js";
-import { notFoundHandler } from "./middlewares/notFoundHandler.js";
-import cookieParser from "cookie-parser";
-import { UPLOAD_DIR } from "./constants/index.js";
-import { swaggerDocs } from "./middlewares/swaggerDocs.js";
+import express from 'express';
+import pino from 'pino-http';
+import cors from 'cors';
+import { config } from './config.js';
+import router from '../src/routers/index.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import cookieParser from 'cookie-parser';
+import { UPLOAD_DIR } from './constants/index.js';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 export const setupServer = () => {
   const app = express();
@@ -17,9 +17,9 @@ export const setupServer = () => {
   app.use(
     pino({
       transport: {
-        target: "pino-pretty",
+        target: 'pino-pretty',
       },
-    })
+    }),
   );
 
   app.use(express.urlencoded({ extended: true }));
@@ -28,7 +28,7 @@ export const setupServer = () => {
 
   app.use(express.json());
 
-  app.use("/api", router);
+  app.use('/api', router);
 
   // app.get("/api", (req, res) => {
   //   res
@@ -36,9 +36,9 @@ export const setupServer = () => {
   //     .json({ status: 200, message: "Hello. Welcome to Tasteorama!" });
   // });
 
-  app.use("/uploads", express.static(UPLOAD_DIR));
+  app.use('/uploads', express.static(UPLOAD_DIR));
 
-  app.use("/docs", swaggerDocs());
+  app.use('/docs', swaggerDocs());
 
   app.use(notFoundHandler);
 
