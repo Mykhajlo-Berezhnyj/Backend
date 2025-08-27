@@ -27,12 +27,12 @@ router.post(
   ctrlWrapper(addOwnRecipeController),
 );
 
+router.get('/my', authenticate, ctrlWrapper(getUserRecipesController));
+
 router.get(
   '/:recipeId',
   isValidId('recipeId'),
   ctrlWrapper(getRecipeByIdController),
 );
-
-router.get('/my', authenticate, ctrlWrapper(getUserRecipesController));
 
 export default router;
