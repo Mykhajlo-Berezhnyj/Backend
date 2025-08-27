@@ -1,0 +1,17 @@
+type: object
+title: Internal Server Error
+description: Internal server error response
+required:
+  - status
+  - message
+  - error
+properties:
+  status:
+    type: integer
+    example: 500
+  message:
+    type: string
+    example: 'Something went wrong'
+  error:
+    type: string
+    example: 'Internal server error'

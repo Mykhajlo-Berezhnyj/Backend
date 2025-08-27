@@ -1,0 +1,78 @@
+type: object
+title: User Response
+description: Response schema after successful registration/login
+required:
+  - status
+  - message
+  - data
+properties:
+  status:
+    type: integer
+    example: 201
+  message:
+    type: string
+    example: 'Successfully registered a user!'
+  data:
+    type: object
+    required:
+      - user
+      - accessToken
+    properties:
+      user:
+        type: object
+        required:
+          - _id
+          - name
+          - email
+          - favoriteRecipes
+        properties:
+          _id:
+            type: string
+            description: "User's unique identifier"
+            example: '688319f519bc98717111a6b5'
+          name:
+            type: string
+            description: "User's full name"
+            example: 'John Doe'
+          email:
+            type: string
+            format: email
+            description: "User's email address"
+            example: 'john@example.com'
+          avatar:
+            type: string
+            format: uri
+            description: "User's avatar URL"
+            example: 'https://example.com/avatar.jpg'
+          favoriteRecipes:
+            type: array
+            description: "List of user's favorite recipe IDs"
+            items:
+              type: string
+            example: []
+          followers:
+            type: array
+            description: "List of user's followers"
+            items:
+              type: string
+            example: []
+          following:
+            type: array
+            description: 'List of users being followed'
+            items:
+              type: string
+            example: []
+          createdAt:
+            type: string
+            format: date-time
+            description: 'Account creation timestamp'
+            example: '2024-01-15T10:30:00Z'
+          updatedAt:
+            type: string
+            format: date-time
+            description: 'Last update timestamp'
+            example: '2024-01-15T10:30:00Z'
+      accessToken:
+        type: string
+        description: 'JWT access token'
+        example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'

@@ -1,19 +1,13 @@
 type: object
 required:
-  - _id
   - title
   - category
-  - ingredients
   - instructions
   - description
   - thumb
   - time
-  - area
+  - ingredients
 properties:
-  _id:
-    description: "Recipe's id"
-    type: string
-    example: '6462a8f74c3d0ddd28897fcd'
   title:
     type: string
     description: 'Title of the recipe'
@@ -71,17 +65,3 @@ properties:
           type: string
           description: 'Amount of the ingredient for this recipe'
           example: '175g'
-  owner:
-    description: 'Id of the user who created the recipe'
-    type: string
-    example: '64c8d958249fae54bae90bb9'
-  createdAt:
-    description: 'Date when the recipe was created'
-    type: string
-    format: date-time
-    example: '2023-03-11T10:25:33Z'
-  updatedAt:
-    description: 'Date when the recipe was last updated'
-    type: string
-    format: date-time
-    example: '2024-03-03T12:34:31Z'

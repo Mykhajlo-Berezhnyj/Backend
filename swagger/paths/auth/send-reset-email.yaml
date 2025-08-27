@@ -2,6 +2,7 @@ tags:
   - Auth
 summary: Request reset password email
 operationId: requestResetEmail
+security: []
 requestBody:
   description: User request reset email
   required: true

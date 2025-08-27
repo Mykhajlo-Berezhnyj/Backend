@@ -1,0 +1,42 @@
+type: object
+title: Own Recipes Response
+description: Response containing user's own recipes with pagination
+required:
+  - status
+  - message
+  - data
+  - page
+  - perPage
+  - totalItems
+  - totalPages
+  - hasPreviousPage
+  - hasNextPage
+properties:
+  status:
+    type: integer
+    example: 200
+  message:
+    type: string
+    example: 'Successfully fetched your recipes'
+  data:
+    type: array
+    items:
+      $ref: './Recipe.yaml'
+  page:
+    type: integer
+    example: 1
+  perPage:
+    type: integer
+    example: 12
+  totalItems:
+    type: integer
+    example: 5
+  totalPages:
+    type: integer
+    example: 1
+  hasPreviousPage:
+    type: boolean
+    example: false
+  hasNextPage:
+    type: boolean
+    example: false

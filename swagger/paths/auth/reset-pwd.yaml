@@ -2,6 +2,7 @@ tags:
   - Auth
 summary: Reset user password
 operationId: resetPassword
+security: []
 requestBody:
   required: true
   content:

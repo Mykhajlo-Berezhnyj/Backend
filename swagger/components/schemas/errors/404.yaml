@@ -1,0 +1,13 @@
+type: object
+title: Not Found Error
+description: Resource not found error response
+required:
+  - status
+  - message
+properties:
+  status:
+    type: integer
+    example: 404
+  message:
+    type: string
+    example: 'Not found'

@@ -1,0 +1,16 @@
+type: object
+title: Create Recipe Response
+description: Response after successfully creating a recipe
+required:
+  - status
+  - message
+  - data
+properties:
+  status:
+    type: integer
+    example: 201
+  message:
+    type: string
+    example: 'Successfully created new recipe!'
+  data:
+    $ref: './recipe.yaml'

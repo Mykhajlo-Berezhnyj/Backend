@@ -1,0 +1,19 @@
+type: object
+title: Unauthorized Error
+description: Unauthorized error response
+required:
+  - status
+  - message
+properties:
+  status:
+    type: integer
+    example: 401
+  message:
+    type: string
+    example: 'Unauthorized'
+  data:
+    type: object
+    properties:
+      message:
+        type: string
+        example: 'Session expired'

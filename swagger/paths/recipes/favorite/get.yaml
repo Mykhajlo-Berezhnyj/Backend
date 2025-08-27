@@ -1,5 +1,5 @@
 tags:
-  - FavoriteRecipes
+  - Recipes
 summary: Get favorite recipes
 operationId: getFavoriteRecipes
 description: 'Retrieve a list of the authenticated user’s favorite recipes with pagination.'
@@ -50,7 +50,7 @@ responses:
                 data:
                   type: array
                   items:
-                    $ref: ../../../components/schemas/recipe/Recipe.yaml
+                    $ref: ../../../components/schemas/recipes/Recipe.yaml
                 page:
                   type: number
                   example: 1

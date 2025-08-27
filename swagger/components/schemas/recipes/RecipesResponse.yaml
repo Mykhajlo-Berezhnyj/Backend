@@ -1,0 +1,47 @@
+type: object
+title: Recipes List Response
+description: Response containing a list of recipes with pagination
+required:
+  - status
+  - message
+  - data
+properties:
+  status:
+    type: integer
+    example: 200
+  message:
+    type: string
+    example: 'Recipes retrieved successfully'
+  data:
+    type: object
+    required:
+      - data
+      - page
+      - perPage
+      - totalItems
+      - totalPages
+      - hasNextPage
+      - hasPreviousPage
+    properties:
+      data:
+        type: array
+        items:
+          $ref: './Recipe.yaml'
+      page:
+        type: number
+        example: 1
+      perPage:
+        type: number
+        example: 10
+      totalItems:
+        type: number
+        example: 35
+      totalPages:
+        type: number
+        example: 4
+      hasNextPage:
+        type: boolean
+        example: true
+      hasPreviousPage:
+        type: boolean
+        example: false
