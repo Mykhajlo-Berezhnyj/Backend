@@ -3,6 +3,7 @@ tags:
 summary: Search recipes
 operationId: searchRecipes
 description: 'Get a list of recipes with pagination and search filters: category, ingredient, or keyword in the title.'
+security: []
 parameters:
   - in: query
     name: category
@@ -64,7 +65,7 @@ responses:
                 data:
                   type: array
                   items:
-                    $ref: ../../components/schemas/recipe/Recipe.yaml
+                    $ref: ../../components/schemas/recipes/Recipe.yaml
                 page:
                   type: number
                   example: 1

@@ -1,0 +1,17 @@
+type: object
+title: User Login
+description: Schema for user login
+required:
+  - email
+  - password
+properties:
+  email:
+    type: string
+    format: email
+    description: User's email address
+    example: 'john@example.com'
+  password:
+    type: string
+    format: password
+    description: User's password
+    example: 'SecureP@ssw0rd!'

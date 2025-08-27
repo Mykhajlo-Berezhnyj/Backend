@@ -1,6 +1,6 @@
 tags:
-  - FavoriteRecipes
-summary: delete recipe from favorite
+  - Recipes
+summary: Delete recipe from favorite
 operationId: deleteRecipeFavorite
 security:
   - bearerAuth: []

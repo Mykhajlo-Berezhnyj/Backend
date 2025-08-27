@@ -15,7 +15,7 @@ parameters:
     schema:
       type: string
 responses:
-  "200":
+  '200':
     description: fetching user details
     content:
       application/json:
@@ -75,7 +75,7 @@ responses:
                     type: string
                   example: []
 
-  "401":
-    $ref: ../../components/responses/401.yaml
-  "500":
-    $ref: ../../components/responses/500.yaml
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml

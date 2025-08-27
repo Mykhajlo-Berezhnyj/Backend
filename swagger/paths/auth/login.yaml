@@ -1,22 +1,71 @@
-# tags:
-#   - Auth
-# summary: Log in a user
-# operationId: loginUser
-# requestBody:
-#   required: true
-#   content:
-#     application/json:
-#       schema:
-#         $ref: ../../components/schemas/user/UserLogin.yaml
-#       example:
-#         email: "john@example.com"
-#         password: "securePassword123"
-# responses:
-#   "200":
-#     $ref: ../../components/responses/users/Login.yaml
-#   "400":
-#     $ref: ../../components/responses/400.yaml
-#   "401":
-#     $ref: ../../components/responses/401.yaml
-#   "500":
-#     $ref: ../../components/responses/500.yaml
+tags:
+  - Auth
+summary: Log in a user
+operationId: loginUser
+security: []
+requestBody:
+  description: User login credentials
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: ../../components/schemas/user/UserLogin.yaml
+      example:
+        email: 'john@example.com'
+        password: 'SecureP@ssw0rd!'
+responses:
+  '200':
+    description: Successfully logged in
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully logged in an user!'
+            data:
+              type: object
+              required:
+                - accessToken
+              properties:
+                accessToken:
+                  type: string
+                  description: 'JWT access token'
+                  example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+    headers:
+      Set-Cookie:
+        description: Session cookies for authentication
+        schema:
+          type: string
+          example: 'sessionId=abc123; refreshToken=def456; HttpOnly; Secure; SameSite=Strict'
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '401':
+    description: Invalid credentials
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'Unauthorized'
+        examples:
+          invalidCredentials:
+            summary: Invalid email or password
+            value:
+              status: 401
+              message: 'Invalid credentials'
+  '500':
+    $ref: ../../components/responses/500.yaml

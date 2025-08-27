@@ -2,7 +2,7 @@ type: object
 properties:
   _id:
     type: string
-    example: "640c2dd963a319ea671e37aa"
+    example: '640c2dd963a319ea671e37aa'
   name:
     type: string
-    example: "Squid"
+    example: 'Squid'

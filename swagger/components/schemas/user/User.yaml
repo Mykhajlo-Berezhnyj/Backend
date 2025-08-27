@@ -1,0 +1,26 @@
+type: object
+title: User
+description: Information about a user account, including personal details and their favorite recipes
+required:
+  - name
+  - email
+  - password
+properties:
+  name:
+    type: string
+    description: 'Full name of the user'
+    minLength: 3
+    maxLength: 16
+    example: 'Darrell Ryan'
+  email:
+    type: string
+    format: email
+    description: "User's email address, used for login and notifications"
+    example: 'audra.block42@gmail.com'
+  password:
+    type: string
+    format: password
+    description: User's password (must contain uppercase, lowercase, number, and special character)
+    minLength: 8
+    pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]"
+    example: 'SecureP@ssw0rd!'

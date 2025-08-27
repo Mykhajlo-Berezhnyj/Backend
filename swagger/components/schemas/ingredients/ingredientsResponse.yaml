@@ -5,8 +5,8 @@ properties:
     example: 200
   message:
     type: string
-    example: "Successfully found ingredients!"
+    example: 'Successfully found ingredients!'
   data:
     type: array
     items:
-      $ref: "./ingredient.yaml"
+      $ref: Ingredient.yaml

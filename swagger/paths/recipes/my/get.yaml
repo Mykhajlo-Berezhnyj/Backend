@@ -1,0 +1,110 @@
+tags:
+  - Recipes
+summary: Get own recipes
+operationId: getOwnRecipes
+description: Returns a paginated list of recipes created by the logged-in user.
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: page
+    description: Page number for pagination
+    schema:
+      type: integer
+      default: 1
+      minimum: 1
+      example: 1
+  - in: query
+    name: perPage
+    description: Number of items per page
+    schema:
+      type: integer
+      default: 12
+      minimum: 1
+      maximum: 100
+      example: 12
+responses:
+  '200':
+    description: Own recipes retrieved successfully
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/recipes/OwnRecipesResponse.yaml'
+
+  '400':
+    description: Bad Request
+    content:
+      application/json:
+        schema:
+          $ref: ../../../components/schemas/errors/400.yaml
+        examples:
+          withRecipes:
+            summary: User has recipes
+            value:
+              status: 200
+              message: 'Successfully fetched your recipes'
+              data:
+                [
+                  {
+                    '_id': '6462a8f74c3d0ddd28897fcd',
+                    'title': 'My Special Pasta',
+                    'category':
+                      { '_id': '6462a6cd4c3d0ddd28897f8f', 'name': 'Italian' },
+                    'description': 'A delicious pasta recipe',
+                    'thumb': 'https://example.com/pasta.jpg',
+                    'time': '30',
+                    'area': 'Italian',
+                    'owner': '64c8d958249fae54bae90bb9',
+                    'ingredients':
+                      [
+                        {
+                          '_id': '68a88b0a2746ddbe5d48bea3',
+                          'id':
+                            {
+                              '_id': '68a7492da667396e2ff2a512',
+                              'name': 'Spaghetti',
+                            },
+                          'measure': '400g',
+                        },
+                      ],
+                    'instructions': 'Boil water, add pasta...',
+                    'createdAt': '2023-03-11T10:25:33Z',
+                    'updatedAt': '2024-03-03T12:34:31Z',
+                  },
+                ]
+              page: 1
+              perPage: 12
+              totalItems: 1
+              totalPages: 1
+              hasPreviousPage: false
+              hasNextPage: false
+          emptyRecipes:
+            summary: User has no recipes
+            value:
+              status: 200
+              message: 'Successfully fetched your recipes'
+              data: []
+              page: 1
+              perPage: 12
+              totalItems: 0
+              totalPages: 0
+              hasPreviousPage: false
+              hasNextPage: false
+  '401':
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: ../../../components/schemas/errors/401.yaml
+  '404':
+    description: Not Found
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/errors/404.yaml'
+  '500':
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/errors/500.yaml'

@@ -2,6 +2,7 @@ tags:
   - Recipes
 summary: Get detail info recipe
 description: 'Retrieve detailed information about a specific recipe by its ID.'
+security: []
 operationId: getRecipeById
 parameters:
   - name: id
@@ -29,7 +30,7 @@ responses:
               type: string
               example: 'Successfully found recipe with id 6462a8f74c3d0ddd28897fce!'
             data:
-              $ref: ../../../components/schemas/recipe/Recipe.yaml
+              $ref: ../../../components/schemas/recipes/Recipe.yaml
   '400':
     description: Provide a valid ID
     $ref: ../../../components/responses/400.yaml

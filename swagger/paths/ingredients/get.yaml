@@ -2,15 +2,16 @@ tags:
   - Ingredients
 summary: Retrieve a list of all ingredients
 description: Returns an array of ingredient objects including their name, description, and image URL.
+security: []
 operationId: IngredientsInformation
 responses:
-  "200":
+  '200':
     description: Ingredients list successfully retrieved
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/ingredients/ingredientsResponse.yaml"
-  "400":
+          $ref: '../../components/schemas/ingredients/ingredientsResponse.yaml'
+  '400':
     description: Bad request – invalid parameters
-  "500":
+  '500':
     description: Internal server error
