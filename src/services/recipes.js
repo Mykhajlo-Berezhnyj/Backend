@@ -9,7 +9,7 @@ export const getAllRecipes = async ({
   page,
   perPage,
   category,
-  ingredient,
+  ingredients,
   search,
 }) => {
   const limit = perPage;
@@ -21,9 +21,15 @@ export const getAllRecipes = async ({
     filter.category = category;
   }
 
-  if (ingredient && ingredient.length) {
-  filter['ingredients.id'] = { $all: Array.isArray(ingredient) ? ingredient : [ingredient] };
+ if (ingredients) {
+  const ingredientArray = Array.isArray(ingredients)
+    ? ingredients
+    : ingredients.split(',');
+  if (ingredientArray.length) {
+    filter['ingredients.id'] = { $all: ingredientArray };
+  }
 }
+
 
   if (search) {
     filter.title = { $regex: search, $options: 'i' };
