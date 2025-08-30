@@ -21,9 +21,9 @@ export const getAllRecipes = async ({
     filter.category = category;
   }
 
-  if (ingredient) {
-    filter['ingredients.id'] = ingredient;
-  }
+  if (ingredient && ingredient.length) {
+  filter['ingredients.id'] = { $all: Array.isArray(ingredient) ? ingredient : [ingredient] };
+}
 
   if (search) {
     filter.title = { $regex: search, $options: 'i' };
