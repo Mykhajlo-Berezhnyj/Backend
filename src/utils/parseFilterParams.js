@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
 // import { User } from '../db/models/user';
-// import { getArea } from '../services/area';
-// import { getCategories } from '../services/categories';
-// import { getIngredients } from '../services/ingredients';
+import { getArea } from '../services/area';
+import { getCategories } from '../services/categories';
+import { getIngredients } from '../services/ingredients';
 
 const parseFilter = (input, validList, options = { multiple: false }) => {
   if (!input) return undefined;
@@ -72,10 +72,28 @@ export const parseParamsForRecipes = (query) => {
     const trimmed = value.trim();
     return trimmed === '' ? undefined : trimmed;
   };
+  const parseIngredients = (value) => {
+    if (!value) return undefined;
+
+    if (typeof value === 'string' && value.includes(',')) {
+      const ingredientsArray = value.split(',').map((id) => id.trim());
+
+      const validIds = ingredientsArray.filter((id) =>
+        mongoose.Types.ObjectId.isValid(id),
+      );
+      if (validIds.length === 0) return undefined;
+      return validIds.join(',');
+    }
+
+    if (typeof value === 'string') {
+      return mongoose.Types.ObjectId.isValid(value) ? value : undefined;
+    }
+    return undefined;
+  };
 
   return {
     category: parseObjectId(query.category),
-    ingredient: parseObjectId(query.ingredient),
+    ingredient: parseIngredients(query.ingredient),
     search: parseString(query.search),
   };
 };
