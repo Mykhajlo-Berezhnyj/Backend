@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 // import { User } from '../db/models/user';
-import { getArea } from '../server.js';
+import { getArea } from '../services/area.js';
 import { getCategories } from '../services/categories.js';
 import { getIngredients } from '../services/ingredients.js';
 
