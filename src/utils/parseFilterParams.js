@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
 // import { User } from '../db/models/user';
-import { getArea } from '../services/area';
-import { getCategories } from '../services/categories';
-import { getIngredients } from '../services/ingredients';
+import { getArea } from '../server.js';
+import { getCategories } from '../services/categories.js';
+import { getIngredients } from '../services/ingredients.js';
 
 const parseFilter = (input, validList, options = { multiple: false }) => {
   if (!input) return undefined;
