@@ -21,9 +21,14 @@ export const getAllRecipes = async ({
     filter.category = category;
   }
 
-  if (ingredient && ingredient.length) {
-  filter['ingredients.id'] = { $all: Array.isArray(ingredient) ? ingredient : [ingredient] };
-}
+    if (ingredient) {
+      if (typeof ingredient === 'string' && ingredient.includes(',')) {
+        const ingredientsArray = ingredient.split(',').map(id => id.trim());
+        filter['ingredients.id'] = { $all: ingredientsArray };
+      } else {
+        filter['ingredients.id'] = ingredient;
+      }
+    }
 
   if (search) {
     filter.title = { $regex: search, $options: 'i' };
