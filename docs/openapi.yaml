@@ -13,8 +13,8 @@ tags:
     description: Recipes operations (getAll, getById, post)
   - name: Users
     description: Users operations (get)
-  - name: Сategories
-    description: Сategories operations (getAll)
+  - name: Categories
+    description: Categories operations (getAll)
   - name: Ingredients
     description: Ingredients operations (getAll)
 servers:
@@ -23,72 +23,52 @@ servers:
   - url: https://tasteorama-backend-dcjy.onrender.com/api
     description: Production server
 paths:
-  # Auth endpoints
   /auth/register:
     post:
       $ref: ../swagger/paths/auth/register.yaml
-
   /auth/login:
     post:
       $ref: ../swagger/paths/auth/login.yaml
-
   /auth/logout:
     post:
       $ref: ../swagger/paths/auth/logout.yaml
-
   /auth/refresh:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml
-
   /auth/send-reset-email:
     post:
       $ref: ../swagger/paths/auth/send-reset-email.yaml
-
   /auth/reset-pwd:
     post:
       $ref: ../swagger/paths/auth/reset-pwd.yaml
-
-  # User endpoints
   /users/current:
     get:
       $ref: ../swagger/paths/users/current/get.yaml
-
-  # Recipe endpoints
   /recipes:
     get:
       $ref: ../swagger/paths/recipes/get.yaml
     post:
       $ref: ../swagger/paths/recipes/post.yaml
-
   /recipes/{id}:
     get:
-      $ref: '../swagger/paths/recipes/{id}/get.yaml'
-    # post:
-    #   $ref: ../swagger/paths/recipes/{id}/favorite/post.yaml
-
+      $ref: ../swagger/paths/recipes/{id}/get.yaml
   /recipes/my:
     get:
       $ref: ../swagger/paths/recipes/my/get.yaml
-
   /recipes/favorites:
     get:
       $ref: ../swagger/paths/recipes/favorite/get.yaml
-
   /recipes/favorites/{recipeId}:
     post:
       $ref: ../swagger/paths/recipes/favorite/{recipeId}/post.yaml
     delete:
       $ref: ../swagger/paths/recipes/favorite/{recipeId}/delete.yaml
-
-  # Ingredients and categories
   /ingredients:
     get:
       $ref: ../swagger/paths/ingredients/get.yaml
-
   /categories:
     get:
       $ref: ../swagger/paths/category/get.yaml
-
 components:
   securitySchemes:
     bearerAuth:
@@ -96,49 +76,42 @@ components:
       scheme: bearer
       bearerFormat: JWT
       description: 'Enter JWT token in format: Bearer <token>'
-
-      schemas:
-        # Error schemas
-        Error400:
-          $ref: ../swagger/components/schemas/errors/400.yaml
-        Error401:
-          $ref: ../swagger/components/schemas/errors/401.yaml
-        Error404:
-          $ref: ../swagger/components/schemas/errors/404.yaml
-        Error500:
-          $ref: ../swagger/components/schemas/errors/500.yaml
-        BadRequestResponse:
-          $ref: ../swagger/components/schemas/errors/BadRequestResponse.yaml
-
-        # Recipe schemas
-        Recipe:
-          $ref: ../swagger/components/schemas/recipe/Recipe.yaml
-
-        # User schemas
-        User:
-          $ref: ../swagger/components/schemas/users/user.yaml
-
-        # Ingredient schemas
-        Ingredient:
-          $ref: ../swagger/components/schemas/ingredients/ingredient.yaml
-        IngredientsResponse:
-          $ref: ../swagger/components/schemas/ingredients/ingredientsResponse.yaml
-
-        # Category schemas
-        Category:
-          $ref: ../swagger/components/schemas/category/category.yaml
-        CategoryResponse:
-          $ref: ../swagger/components/schemas/category/categoryResponse.yaml
-
-      responses:
-        400:
-          $ref: ../swagger/components/responses/400.yaml
-        401:
-          $ref: ../swagger/components/responses/401.yaml
-        404:
-          $ref: ../swagger/components/responses/404.yaml
-        500:
-          $ref: ../swagger/components/responses/500.yaml
-
+  schemas:
+    # Error schemas
+    Error400:
+      $ref: ../swagger/components/schemas/errors/400.yaml
+    Error401:
+      $ref: ../swagger/components/schemas/errors/401.yaml
+    Error404:
+      $ref: ../swagger/components/schemas/errors/404.yaml
+    Error500:
+      $ref: ../swagger/components/schemas/errors/500.yaml
+    BadRequestResponse:
+      $ref: ../swagger/components/schemas/errors/BadRequestResponse.yaml
+    # Recipe schemas
+    Recipe:
+      $ref: ../swagger/components/schemas/recipes/recipe.yaml
+    # User schemas
+    User:
+      $ref: ../swagger/components/schemas/user/User.yaml
+    # Ingredient schemas
+    Ingredient:
+      $ref: ../swagger/components/schemas/ingredients/ingredient.yaml
+    IngredientsResponse:
+      $ref: ../swagger/components/schemas/ingredients/ingredientsResponse.yaml
+    # Category schemas
+    Category:
+      $ref: ../swagger/components/schemas/category/category.yaml
+    CategoryResponse:
+      $ref: ../swagger/components/schemas/category/categoryResponse.yaml
+  responses:
+    400:
+      $ref: ../swagger/components/responses/400.yaml
+    401:
+      $ref: ../swagger/components/responses/401.yaml
+    404:
+      $ref: ../swagger/components/responses/404.yaml
+    500:
+      $ref: ../swagger/components/responses/500.yaml
 security:
   - bearerAuth: []

@@ -5,12 +5,6 @@ required:
   - status
   - message
   - data
-  - page
-  - perPage
-  - totalItems
-  - totalPages
-  - hasPreviousPage
-  - hasNextPage
 properties:
   status:
     type: integer
@@ -19,24 +13,35 @@ properties:
     type: string
     example: 'Successfully fetched your recipes'
   data:
-    type: array
-    items:
-      $ref: './Recipe.yaml'
-  page:
-    type: integer
-    example: 1
-  perPage:
-    type: integer
-    example: 12
-  totalItems:
-    type: integer
-    example: 5
-  totalPages:
-    type: integer
-    example: 1
-  hasPreviousPage:
-    type: boolean
-    example: false
-  hasNextPage:
-    type: boolean
-    example: false
+    type: object
+    required:
+      - data
+      - page
+      - perPage
+      - totalItems
+      - totalPages
+      - hasNextPage
+      - hasPreviousPage
+    properties:
+      data:
+        type: array
+        items:
+          $ref: recipe.yaml
+      page:
+        type: integer
+        example: 1
+      perPage:
+        type: integer
+        example: 12
+      totalItems:
+        type: integer
+        example: 35
+      totalPages:
+        type: integer
+        example: 3
+      hasNextPage:
+        type: boolean
+        example: true
+      hasPreviousPage:
+        type: boolean
+        example: false

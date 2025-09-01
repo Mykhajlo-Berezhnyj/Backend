@@ -38,8 +38,8 @@
       "description": "Users operations (get)"
     },
     {
-      "name": "Сategories",
-      "description": "Сategories operations (getAll)"
+      "name": "Categories",
+      "description": "Categories operations (getAll)"
     },
     {
       "name": "Ingredients",
@@ -676,7 +676,7 @@
                         "data": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/Recipe"
+                            "$ref": "#/components/schemas/recipe"
                           }
                         },
                         "page": {
@@ -813,7 +813,7 @@
                       "example": "Successfully created new recire!"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/Recipe"
+                      "$ref": "#/components/schemas/Recipe-2"
                     }
                   }
                 }
@@ -874,7 +874,7 @@
                       "example": "Successfully found recipe with id 6462a8f74c3d0ddd28897fce!"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/Recipe"
+                      "$ref": "#/components/schemas/Recipe-2"
                     }
                   }
                 }
@@ -950,63 +950,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/400"
-                },
-                "examples": {
-                  "withRecipes": {
-                    "summary": "User has recipes",
-                    "value": {
-                      "status": 200,
-                      "message": "Successfully fetched your recipes",
-                      "data": [
-                        {
-                          "_id": "6462a8f74c3d0ddd28897fcd",
-                          "title": "My Special Pasta",
-                          "category": {
-                            "_id": "6462a6cd4c3d0ddd28897f8f",
-                            "name": "Italian"
-                          },
-                          "description": "A delicious pasta recipe",
-                          "thumb": "https://example.com/pasta.jpg",
-                          "time": "30",
-                          "area": "Italian",
-                          "owner": "64c8d958249fae54bae90bb9",
-                          "ingredients": [
-                            {
-                              "_id": "68a88b0a2746ddbe5d48bea3",
-                              "id": {
-                                "_id": "68a7492da667396e2ff2a512",
-                                "name": "Spaghetti"
-                              },
-                              "measure": "400g"
-                            }
-                          ],
-                          "instructions": "Boil water, add pasta...",
-                          "createdAt": "2023-03-11T10:25:33Z",
-                          "updatedAt": "2024-03-03T12:34:31Z"
-                        }
-                      ],
-                      "page": 1,
-                      "perPage": 12,
-                      "totalItems": 1,
-                      "totalPages": 1,
-                      "hasPreviousPage": false,
-                      "hasNextPage": false
-                    }
-                  },
-                  "emptyRecipes": {
-                    "summary": "User has no recipes",
-                    "value": {
-                      "status": 200,
-                      "message": "Successfully fetched your recipes",
-                      "data": [],
-                      "page": 1,
-                      "perPage": 12,
-                      "totalItems": 0,
-                      "totalPages": 0,
-                      "hasPreviousPage": false,
-                      "hasNextPage": false
-                    }
-                  }
                 }
               }
             }
@@ -1113,7 +1056,7 @@
                         "data": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/Recipe"
+                            "$ref": "#/components/schemas/Recipe-2"
                           }
                         },
                         "page": {
@@ -1203,7 +1146,7 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/Recipe"
+                        "$ref": "#/components/schemas/Recipe-2"
                       }
                     }
                   }
@@ -1331,56 +1274,7 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT",
-        "description": "Enter JWT token in format: Bearer <token>",
-        "schemas": {
-          "Error400": {
-            "$ref": "../swagger/components/schemas/errors/400.yaml"
-          },
-          "Error401": {
-            "$ref": "../swagger/components/schemas/errors/401.yaml"
-          },
-          "Error404": {
-            "$ref": "../swagger/components/schemas/errors/404.yaml"
-          },
-          "Error500": {
-            "$ref": "../swagger/components/schemas/errors/500.yaml"
-          },
-          "BadRequestResponse": {
-            "$ref": "../swagger/components/schemas/errors/BadRequestResponse.yaml"
-          },
-          "Recipe": {
-            "$ref": "../swagger/components/schemas/recipe/Recipe.yaml"
-          },
-          "User": {
-            "$ref": "../swagger/components/schemas/users/user.yaml"
-          },
-          "Ingredient": {
-            "$ref": "../swagger/components/schemas/ingredients/ingredient.yaml"
-          },
-          "IngredientsResponse": {
-            "$ref": "../swagger/components/schemas/ingredients/ingredientsResponse.yaml"
-          },
-          "Category": {
-            "$ref": "../swagger/components/schemas/category/category.yaml"
-          },
-          "CategoryResponse": {
-            "$ref": "../swagger/components/schemas/category/categoryResponse.yaml"
-          }
-        },
-        "responses": {
-          "400": {
-            "$ref": "../swagger/components/responses/400.yaml"
-          },
-          "401": {
-            "$ref": "../swagger/components/responses/401.yaml"
-          },
-          "404": {
-            "$ref": "../swagger/components/responses/404.yaml"
-          },
-          "500": {
-            "$ref": "../swagger/components/responses/500.yaml"
-          }
-        }
+        "description": "Enter JWT token in format: Bearer <token>"
       }
     },
     "schemas": {
@@ -1498,6 +1392,63 @@
           }
         }
       },
+      "Error400": {
+        "$ref": "#/components/schemas/400"
+      },
+      "Error401": {
+        "$ref": "#/components/schemas/401"
+      },
+      "Error404": {
+        "$ref": "#/components/schemas/404"
+      },
+      "Error500": {
+        "$ref": "#/components/schemas/500"
+      },
+      "BadRequestResponse": {
+        "type": "object",
+        "title": "Bad Request Response",
+        "description": "Generic bad request response",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 400
+          },
+          "message": {
+            "type": "string",
+            "example": "Bad request"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "message",
+              "errors"
+            ],
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Bad request"
+              },
+              "errors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "Invalid request format"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "Recipe": {
+        "$ref": "#/components/schemas/recipe"
+      },
       "User": {
         "type": "object",
         "title": "User",
@@ -1530,6 +1481,18 @@
             "example": "SecureP@ssw0rd!"
           }
         }
+      },
+      "Ingredient": {
+        "$ref": "#/components/schemas/ingredient"
+      },
+      "IngredientsResponse": {
+        "$ref": "#/components/schemas/ingredientsResponse"
+      },
+      "Category": {
+        "$ref": "#/components/schemas/category"
+      },
+      "CategoryResponse": {
+        "$ref": "#/components/schemas/categoryResponse"
       },
       "UserResponse": {
         "type": "object",
@@ -1657,7 +1620,7 @@
           }
         }
       },
-      "Recipe": {
+      "recipe": {
         "type": "object",
         "required": [
           "_id",
@@ -1672,8 +1635,8 @@
         ],
         "properties": {
           "_id": {
-            "description": "Recipe's id",
             "type": "string",
+            "description": "Recipe's id",
             "example": "6462a8f74c3d0ddd28897fcd"
           },
           "title": {
@@ -1705,22 +1668,22 @@
             "example": "A classic British cake made with almond sponge cake ..."
           },
           "thumb": {
-            "description": "Dish's photo (max 2MB, only image files)",
             "type": "string",
-            "format": "binary"
+            "format": "binary",
+            "description": "Dish's photo (max 2MB, only image files)"
           },
           "time": {
-            "description": "Cooking time in minutes",
-            "type": "number",
+            "type": "integer",
             "minimum": 1,
             "maximum": 360,
+            "description": "Cooking time in minutes",
             "example": 60
           },
           "calories": {
-            "description": "Calories per serving",
-            "type": "number",
+            "type": "integer",
             "minimum": 1,
             "maximum": 10000,
+            "description": "Calories per serving",
             "example": 230
           },
           "ingredients": {
@@ -1735,8 +1698,8 @@
               "properties": {
                 "id": {
                   "type": "string",
-                  "description": "Ingredient ID",
                   "pattern": "^[0-9a-fA-F]{24}$",
+                  "description": "Ingredient ID",
                   "example": "640c2dd963a319ea671e367e"
                 },
                 "measure": {
@@ -1748,20 +1711,129 @@
             }
           },
           "owner": {
-            "description": "Id of the user who created the recipe",
             "type": "string",
+            "description": "Id of the user who created the recipe",
             "example": "64c8d958249fae54bae90bb9"
           },
           "createdAt": {
-            "description": "Date when the recipe was created",
             "type": "string",
             "format": "date-time",
+            "description": "Date when the recipe was created",
             "example": "2023-03-11T10:25:33Z"
           },
           "updatedAt": {
-            "description": "Date when the recipe was last updated",
             "type": "string",
             "format": "date-time",
+            "description": "Date when the recipe was last updated",
+            "example": "2024-03-03T12:34:31Z"
+          }
+        }
+      },
+      "Recipe-2": {
+        "type": "object",
+        "required": [
+          "_id",
+          "title",
+          "category",
+          "ingredients",
+          "instructions",
+          "description",
+          "thumb",
+          "time",
+          "area"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Recipe's id",
+            "example": "6462a8f74c3d0ddd28897fcd"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the recipe",
+            "example": "Battenberg Cake"
+          },
+          "category": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{24}$",
+            "description": "Identifier of the recipe category",
+            "example": "6462a6cd4c3d0ddd28897f8f"
+          },
+          "area": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{24}$",
+            "description": "Identifier of the regional cuisine or country of origin of the recipe",
+            "example": "6462a6f04c3d0ddd28897f9b"
+          },
+          "instructions": {
+            "type": "string",
+            "maxLength": 1200,
+            "description": "Step-by-step instructions for preparing the recipe",
+            "example": "Heat oven to 180C/160C fan/gas 4 and line the base ..."
+          },
+          "description": {
+            "type": "string",
+            "description": "Short description of the recipe",
+            "example": "A classic British cake made with almond sponge cake ..."
+          },
+          "thumb": {
+            "type": "string",
+            "format": "binary",
+            "description": "Dish's photo (max 2MB, only image files)"
+          },
+          "time": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 360,
+            "description": "Cooking time in minutes",
+            "example": 60
+          },
+          "calories": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000,
+            "description": "Calories per serving",
+            "example": 230
+          },
+          "ingredients": {
+            "type": "array",
+            "description": "List of ingredients with measurements",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "measure"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{24}$",
+                  "description": "Ingredient ID",
+                  "example": "640c2dd963a319ea671e367e"
+                },
+                "measure": {
+                  "type": "string",
+                  "description": "Amount of the ingredient for this recipe",
+                  "example": "175g"
+                }
+              }
+            }
+          },
+          "owner": {
+            "type": "string",
+            "description": "Id of the user who created the recipe",
+            "example": "64c8d958249fae54bae90bb9"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date when the recipe was created",
+            "example": "2023-03-11T10:25:33Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date when the recipe was last updated",
             "example": "2024-03-03T12:34:31Z"
           }
         }
@@ -1773,13 +1845,7 @@
         "required": [
           "status",
           "message",
-          "data",
-          "page",
-          "perPage",
-          "totalItems",
-          "totalPages",
-          "hasPreviousPage",
-          "hasNextPage"
+          "data"
         ],
         "properties": {
           "status": {
@@ -1791,38 +1857,52 @@
             "example": "Successfully fetched your recipes"
           },
           "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Recipe"
+            "type": "object",
+            "required": [
+              "data",
+              "page",
+              "perPage",
+              "totalItems",
+              "totalPages",
+              "hasNextPage",
+              "hasPreviousPage"
+            ],
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/recipe"
+                }
+              },
+              "page": {
+                "type": "integer",
+                "example": 1
+              },
+              "perPage": {
+                "type": "integer",
+                "example": 12
+              },
+              "totalItems": {
+                "type": "integer",
+                "example": 35
+              },
+              "totalPages": {
+                "type": "integer",
+                "example": 3
+              },
+              "hasNextPage": {
+                "type": "boolean",
+                "example": true
+              },
+              "hasPreviousPage": {
+                "type": "boolean",
+                "example": false
+              }
             }
-          },
-          "page": {
-            "type": "integer",
-            "example": 1
-          },
-          "perPage": {
-            "type": "integer",
-            "example": 12
-          },
-          "totalItems": {
-            "type": "integer",
-            "example": 5
-          },
-          "totalPages": {
-            "type": "integer",
-            "example": 1
-          },
-          "hasPreviousPage": {
-            "type": "boolean",
-            "example": false
-          },
-          "hasNextPage": {
-            "type": "boolean",
-            "example": false
           }
         }
       },
-      "Ingredient": {
+      "Ingredient-2": {
         "type": "object",
         "properties": {
           "_id": {
@@ -1858,12 +1938,12 @@
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Ingredient"
+              "$ref": "#/components/schemas/Ingredient-2"
             }
           }
         }
       },
-      "Category": {
+      "Category-2": {
         "type": "object",
         "properties": {
           "_id": {
@@ -1890,8 +1970,43 @@
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Category"
+              "$ref": "#/components/schemas/Category-2"
             }
+          }
+        }
+      },
+      "ingredient": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640c2dd963a319ea671e37aa"
+          },
+          "name": {
+            "type": "string",
+            "example": "Squid"
+          },
+          "desc": {
+            "type": "string",
+            "example": "A type of cephalopod with a soft, cylindrical body and long tentacles..."
+          },
+          "img": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e37aa.png"
+          }
+        }
+      },
+      "category": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640c2dd963a319ea671e37aa"
+          },
+          "name": {
+            "type": "string",
+            "example": "Squid"
           }
         }
       }

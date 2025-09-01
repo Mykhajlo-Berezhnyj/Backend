@@ -21,14 +21,14 @@ export const getAllRecipes = async ({
     filter.category = category;
   }
 
-    if (ingredient) {
-      if (typeof ingredient === 'string' && ingredient.includes(',')) {
-        const ingredientsArray = ingredient.split(',').map(id => id.trim());
-        filter['ingredients.id'] = { $all: ingredientsArray };
-      } else {
-        filter['ingredients.id'] = ingredient;
-      }
+  if (ingredient) {
+    if (typeof ingredient === 'string' && ingredient.includes(',')) {
+      const ingredientsArray = ingredient.split(',').map((id) => id.trim());
+      filter['ingredients.id'] = { $all: ingredientsArray };
+    } else {
+      filter['ingredients.id'] = ingredient;
     }
+  }
 
   if (search) {
     filter.title = { $regex: search, $options: 'i' };
@@ -62,17 +62,23 @@ export const getRecipeById = async (recipeId) =>
 
 export const addFavoriteRecipe = async (recipeId, userId) => {
   const user = await User.findById(userId);
+  if (!user) throw new Error('User not found');
 
   const alreadyFavorite = user.favoriteRecipes.some(
-    (recipe) => recipe.toString() === recipeId.toString(),
+    (r) => r.toString() === recipeId.toString(),
   );
+  console.log('Already favorite?', alreadyFavorite);
+  if (alreadyFavorite) return null;
 
-  if (!alreadyFavorite) {
-    user.favoriteRecipes.push(recipeId);
-    await user.save();
-  }
+  // Перевіряємо, чи існує рецепт
+  const recipe = await Recipe.findById(recipeId);
+  if (!recipe) throw new Error('Recipe not found');
 
-  return user.favoriteRecipes;
+  user.favoriteRecipes.push(recipeId);
+  await user.save();
+
+  console.log('Recipe added to favorites:', recipeId);
+  return recipe.toObject(); // повний об’єкт рецепта
 };
 
 export const deleteFavoriteRecipeById = async (recipeId, userId) => {
