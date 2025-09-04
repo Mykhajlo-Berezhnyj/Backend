@@ -55,10 +55,15 @@ export const addOwnRecipes = async (payload) => {
 };
 
 export const getRecipeById = async (recipeId) =>
-  await Recipe.findById(recipeId).populate({
-    path: 'ingredients',
-    select: 'name',
-  });
+  await Recipe.findById(recipeId)
+    .populate({
+      path: 'ingredients.id',
+      select: 'name',
+    })
+    .populate({
+      path: 'category',
+      select: 'name',
+    });
 
 export const addFavoriteRecipe = async (recipeId, userId) => {
   const user = await User.findById(userId);
