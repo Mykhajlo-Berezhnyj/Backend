@@ -17,7 +17,7 @@ export const getAllRecipesController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const { category, search } = parseParamsForRecipes(req.query);
   const ingredient = req.query.ingredient || req.query.ingredients;
-  
+
   const recipes = await getAllRecipes({
     page,
     perPage,
@@ -107,14 +107,6 @@ export const getFavoriteRecipesController = async (req, res) => {
     page,
     perPage,
   });
-
-  if (!favoriteRecipes || favoriteRecipes.length === 0) {
-    return res.status(404).json({
-      status: 404,
-      message: 'No favorites found',
-      data: [],
-    });
-  }
 
   res.status(200).json({
     status: 200,
