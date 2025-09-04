@@ -17,7 +17,7 @@ export const getAllRecipesController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const { category, search } = parseParamsForRecipes(req.query);
   const ingredient = req.query.ingredient || req.query.ingredients;
-  
+
   const recipes = await getAllRecipes({
     page,
     perPage,
@@ -50,16 +50,37 @@ export const getRecipeByIdController = async (req, res, next) => {
 };
 
 export const addToFavoriteController = async (req, res) => {
-  const userId = req.user._id;
-  const { recipeId } = req.params;
+  try {
+    const userId = req.user._id;
+    const { recipeId } = req.params;
 
-  const user = await addFavoriteRecipe(recipeId, userId);
+    console.log('Controller received:', { userId, recipeId });
 
-  res.status(201).json({
-    status: 201,
-    message: 'Recipe added to favorites',
-    data: user.favorites,
-  });
+    const addedRecipe = await addFavoriteRecipe(recipeId, userId);
+
+    if (!addedRecipe) {
+      return res.status(200).json({
+        status: 200,
+        message: 'Recipe is already in favorites',
+        data: null,
+      });
+    }
+
+    console.log('Full added recipe:', addedRecipe);
+
+    res.status(201).json({
+      status: 201,
+      message: 'Recipe added to favorites',
+      data: addedRecipe,
+    });
+  } catch (error) {
+    console.error('Error in addToFavoriteController:', error);
+    res.status(500).json({
+      status: 500,
+      message: 'Internal server error',
+      error: error.message,
+    });
+  }
 };
 
 export const deleteFavoriteRecipeByIdController = async (req, res, next) => {

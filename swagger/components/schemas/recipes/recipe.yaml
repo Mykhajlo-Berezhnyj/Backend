@@ -11,8 +11,8 @@ required:
   - area
 properties:
   _id:
-    description: "Recipe's id"
     type: string
+    description: "Recipe's id"
     example: '6462a8f74c3d0ddd28897fcd'
   title:
     type: string
@@ -38,20 +38,20 @@ properties:
     description: 'Short description of the recipe'
     example: 'A classic British cake made with almond sponge cake ...'
   thumb:
-    description: "Dish's photo (max 2MB, only image files)"
     type: string
     format: binary
+    description: "Dish's photo (max 2MB, only image files)"
   time:
-    description: 'Cooking time in minutes'
-    type: number
+    type: integer
     minimum: 1
     maximum: 360
+    description: 'Cooking time in minutes'
     example: 60
   calories:
-    description: 'Calories per serving'
-    type: number
+    type: integer
     minimum: 1
     maximum: 10000
+    description: 'Calories per serving'
     example: 230
   ingredients:
     type: array
@@ -64,24 +64,24 @@ properties:
       properties:
         id:
           type: string
-          description: 'Ingredient ID'
           pattern: '^[0-9a-fA-F]{24}$'
+          description: 'Ingredient ID'
           example: '640c2dd963a319ea671e367e'
         measure:
           type: string
           description: 'Amount of the ingredient for this recipe'
           example: '175g'
   owner:
-    description: 'Id of the user who created the recipe'
     type: string
+    description: 'Id of the user who created the recipe'
     example: '64c8d958249fae54bae90bb9'
   createdAt:
-    description: 'Date when the recipe was created'
     type: string
     format: date-time
+    description: 'Date when the recipe was created'
     example: '2023-03-11T10:25:33Z'
   updatedAt:
-    description: 'Date when the recipe was last updated'
     type: string
     format: date-time
+    description: 'Date when the recipe was last updated'
     example: '2024-03-03T12:34:31Z'
