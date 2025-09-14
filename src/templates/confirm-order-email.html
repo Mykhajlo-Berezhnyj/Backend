@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Confirmation</title>
+  </head>
+
+  <body style="font-family: Arial, sans-serif; line-height: 1.6">
+    <h1 style="color: blue">Hello, {{name}}!</h1>
+    <h2>Your order #{{orderId}} is awaiting confirmation</h2>
+
+    <h3>Order Details:</h3>
+    <ul>
+      <li><strong>Order Number:</strong> {{orderId}}</li>
+      <li><strong>Car ID:</strong> {{carId}}</li>
+      <li><strong>Booking Date:</strong> {{bookingDate}}</li>
+    </ul>
+
+    <p>
+      Please click <a href="{{link}}" style="color: rgb(2, 0, 128)">here</a> to
+      view and confirm your order.
+    </p>
+
+    <p>
+      <strong>Note:</strong> This link will expire in
+      <span style="color: red">{{expires}} hours</span>.
+    </p>
+
+    <p>Thank you for choosing our service!</p>
+  </body>
+</html>
