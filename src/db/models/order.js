@@ -10,7 +10,11 @@ export const orderSchema = new Schema(
       type: String,
       required: true,
     },
-    bookingDate: {
+     BookingStartDate: {
+      type: String,
+      required: true,
+    },
+    BookingEndDate: {
       type: String,
       required: true,
     },
