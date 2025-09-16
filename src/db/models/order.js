@@ -12,11 +12,9 @@ export const orderSchema = new Schema(
     },
      BookingStartDate: {
       type: String,
-      required: true,
     },
     BookingEndDate: {
       type: String,
-      required: true,
     },
     comment: {
       type: String,
