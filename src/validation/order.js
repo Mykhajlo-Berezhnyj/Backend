@@ -12,10 +12,14 @@ export const orderSchema = Joi.object({
     'string.email': 'Email should be valid',
     'any.required': 'Email is required',
   }),
-  bookingDate: Joi.date().iso().min('now').required().messages({
+  BookingStartDate: Joi.date().iso().min('now').optional().allow(null).messages({
     'date.base': 'Date must be a valid date',
     'date.min': 'Date cannot be in the past',
-    'any.required': 'Date is required',
+  }),
+    BookingEndDate: Joi.date().iso().greater(Joi.ref('BookingStartDate')).optional().allow(null).messages({
+    'date.base': 'Date must be a valid date',
+    'date.min': 'Date cannot be in the past',
+    'greater': 'End date must be after start date',
   }),
   comment: Joi.string().allow('').optional(),
   carId: Joi.string().required().messages({
