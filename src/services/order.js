@@ -39,7 +39,6 @@ export const addOrder = async (payload) => {
     name: order.name,
     orderId: order._id,
     carId: order.carId,
-    bookingDate: order.bookingDate,
     orderDate: order.createdAt,
     link: link,
     expires,
